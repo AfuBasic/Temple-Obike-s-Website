@@ -52,9 +52,12 @@ export function BookTeaser() {
             <span className="inline-block text-[10px] font-bold tracking-[0.25em] text-primary uppercase mb-6">
               New Book · In Progress
             </span>
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-serif font-semibold text-foreground leading-tight mb-6">
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-serif font-semibold text-foreground leading-tight mb-3">
               Understanding Why Love Isn't Enough.<br className="hidden md:block" /> And What Comes After.
             </h2>
+            <p className="text-[10px] text-muted-foreground/40 tracking-[0.14em] uppercase mb-5">
+              The FERRG Relationship Model™ · © {new Date().getFullYear()} Temple Obike
+            </p>
             <p className="text-lg text-muted-foreground font-light leading-relaxed mb-5 max-w-xl">
               Temple's third book is a guide for couples who love each other but can't seem to break through to a deeper, more honest, more resilient version of their marriage.
             </p>

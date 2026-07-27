@@ -2,6 +2,7 @@ import logoSrc from '@assets/IMG-20260727-WA0003_1785149135010.jpg';
 import stageSrc from '@assets/Screenshot_20260727_110019_Gallery_1785147430425.jpg';
 import searchConsoleSrc from '@assets/Screenshot_20260727-130611_1785154220443.jpg';
 import businessElitesCover from '@assets/images_(9)_1785168480508.jpeg';
+import ferrgCover from '@assets/f123ebc6-1cd8-4218-836b-4da5f9aaa958_1785166711807.png';
 import soulBodegaCover from '@assets/51fywa6zgzL._UF1000,1000_QL80_FMwebp__1785167488103.webp';
 import authenticSelfCover from '@assets/71rO8W-nZZL._UF1000,1000_QL80_FMwebp__1785167488165.webp';
 
@@ -183,11 +184,12 @@ const books = [
     cover: authenticSelfCover,
   },
   {
-    title: "Memoirs of The Rail man's Son",
-    subtitle: '',
-    desc: 'A memoir tracing the formative experiences that shaped a therapist, a father, and a marriage advocate.',
-    link: 'https://www.amazon.com',
-    cover: null,
+    title: 'The FERRG Relationship Model™',
+    subtitle: 'From Conflict to Resilience · © 2026 Temple Obike',
+    desc: 'Coming Soon. A groundbreaking framework for couples who love each other but need more than love to build something lasting. Pre-order is open — free to reserve.',
+    link: '/ferrg-book',
+    cover: ferrgCover,
+    badge: 'Coming Soon',
   },
 ];
 
@@ -493,33 +495,41 @@ export default function MediaKit() {
         {/* Books */}
         <SectionLabel>Published Works</SectionLabel>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))', gap: 20 }}>
-          {books.map(b => (
-            <a
-              key={b.title}
-              href={b.link}
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{ textDecoration: 'none', background: '#111', border: '1px solid #1e1e1e', display: 'flex', flexDirection: 'column' }}
-            >
-              {b.cover && (
-                <div style={{ background: '#0a0a0a', display: 'flex', justifyContent: 'center', padding: '20px 20px 16px' }}>
-                  <img
-                    src={b.cover}
-                    alt={b.title}
-                    style={{ width: 120, height: 'auto', display: 'block', boxShadow: '0 8px 24px rgba(0,0,0,0.6)' }}
-                  />
+          {books.map(b => {
+            const isInternal = b.link.startsWith('/');
+            return (
+              <a
+                key={b.title}
+                href={b.link}
+                target={isInternal ? '_self' : '_blank'}
+                rel={isInternal ? '' : 'noopener noreferrer'}
+                style={{ textDecoration: 'none', background: '#111', border: '1px solid #1e1e1e', display: 'flex', flexDirection: 'column', position: 'relative' }}
+              >
+                {(b as any).badge && (
+                  <div style={{ position: 'absolute', top: 10, right: 10, background: gold, color: '#0a0a0a', fontSize: 9, fontWeight: 700, letterSpacing: '0.14em', textTransform: 'uppercase', padding: '3px 8px', zIndex: 1 }}>
+                    {(b as any).badge}
+                  </div>
+                )}
+                {b.cover && (
+                  <div style={{ background: '#0a0a0a', display: 'flex', justifyContent: 'center', padding: '20px 20px 16px' }}>
+                    <img
+                      src={b.cover}
+                      alt={b.title}
+                      style={{ width: 120, height: 'auto', display: 'block', boxShadow: '0 8px 24px rgba(0,0,0,0.6)' }}
+                    />
+                  </div>
+                )}
+                <div style={{ padding: '18px 20px 20px', borderTop: `2px solid ${gold}`, flex: 1, display: 'flex', flexDirection: 'column' }}>
+                  <div style={{ fontSize: 15, fontFamily: "'Playfair Display', Georgia, serif", fontStyle: 'italic', color: '#e5e5e5', marginBottom: 6, lineHeight: 1.3 }}>{b.title}</div>
+                  {b.subtitle && <div style={{ fontSize: 10, color: gold, letterSpacing: '0.06em', textTransform: 'uppercase', marginBottom: 10 }}>{b.subtitle}</div>}
+                  <div style={{ fontSize: 12, color: '#888', lineHeight: 1.7, marginBottom: 14, flex: 1 }}>{b.desc}</div>
+                  <div style={{ fontSize: 11, color: gold, letterSpacing: '0.08em', textTransform: 'uppercase' }}>
+                    {isInternal ? 'Reserve Your Copy →' : 'Available on Amazon →'}
+                  </div>
                 </div>
-              )}
-              <div style={{ padding: '18px 20px 20px', borderTop: `2px solid ${gold}`, flex: 1, display: 'flex', flexDirection: 'column' }}>
-                <div style={{ fontSize: 15, fontFamily: "'Playfair Display', Georgia, serif", fontStyle: 'italic', color: '#e5e5e5', marginBottom: 6, lineHeight: 1.3 }}>{b.title}</div>
-                {b.subtitle && <div style={{ fontSize: 10, color: gold, letterSpacing: '0.06em', textTransform: 'uppercase', marginBottom: 10 }}>{b.subtitle}</div>}
-                <div style={{ fontSize: 12, color: '#888', lineHeight: 1.7, marginBottom: 14, flex: 1 }}>{b.desc}</div>
-                <div style={{ fontSize: 11, color: gold, letterSpacing: '0.08em', textTransform: 'uppercase' }}>
-                  Available on Amazon →
-                </div>
-              </div>
-            </a>
-          ))}
+              </a>
+            );
+          })}
         </div>
 
         <Divider />
