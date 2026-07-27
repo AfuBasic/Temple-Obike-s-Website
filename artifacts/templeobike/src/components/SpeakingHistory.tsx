@@ -41,7 +41,7 @@ const engagements: Engagement[] = [
     hasPhoto: true,
     highlight: "Presidential Representative in Attendance",
     description:
-      "Temple was invited to deliver the keynote address at a landmark two-day national summit spanning Abuja and Nasarawa State — two events held a day apart, culminating on November 19th, 2025. The principal gathering drew the highest levels of Nigerian government and community leadership: the President of the Federal Republic of Nigeria was represented at the summit, the Minister of Mines sent a formal delegation, and the Governor of Nasarawa State attended alongside Honourable Commissioners, Local Government Area Chairmen, and the founding fathers of multiple communities across the state. To address an audience of that composition — political, civic, and traditional leadership in one room — is a testament to the national weight of Temple's voice and the reach of his work beyond the therapeutic and corporate spaces where he is already well known.",
+      "Temple was invited to deliver the keynote address at a landmark two-day national summit spanning Abuja and Nasarawa State, two events held a day apart, culminating on November 19th, 2025. The principal gathering drew the highest levels of Nigerian government and community leadership: the President of the Federal Republic of Nigeria was represented at the summit, the Minister of Mines sent a formal delegation, and the Governor of Nasarawa State attended alongside Honourable Commissioners, Local Government Area Chairmen, and the founding fathers of multiple communities across the state. To stand before political, civic, and traditional leadership in the same room and hold their attention is a testament to the national weight of Temple's voice and the reach of his work beyond the therapeutic and corporate spaces where he is already well known.",
   },
   {
     id: 3,
@@ -52,7 +52,7 @@ const engagements: Engagement[] = [
     formatIcon: "symposium",
     hasPhoto: false,
     description:
-      "As a facilitator at Rotary District 9127's Mental Health Awareness Day in Abuja, Temple contributed to a multi-specialist symposium focused on normalising mental health conversations in Nigerian workplaces. Alongside a panel of mental health and addiction specialists, he addressed burnout, emotional suppression, and the organisational cost of unaddressed psychological strain — making the case for Employee Assistance Programmes as a core business investment, not a soft benefit.",
+      "As a facilitator at Rotary District 9127's Mental Health Awareness Day in Abuja, Temple contributed to a symposium of mental health and addiction specialists focused on normalising these conversations in Nigerian workplaces. He addressed burnout, emotional suppression, and the organisational cost of unaddressed psychological strain. He made the case for Employee Assistance Programmes as a core business investment, not a soft benefit.",
   },
   {
     id: 4,
@@ -63,7 +63,7 @@ const engagements: Engagement[] = [
     formatIcon: "keynote",
     hasPhoto: false,
     description:
-      "Invited as keynote speaker for the Young Catholic Professionals at the YCP Resource Center in Lekki, Temple addressed the compounding pressure at the intersection of professional ambition and relationship health. He delivered evidence-based strategies for couples navigating high-demand careers without losing emotional intimacy — clinically grounded, practically structured, and precisely calibrated to the realities of the audience in front of him.",
+      "Invited as keynote speaker for the Young Catholic Professionals at the YCP Resource Center in Lekki, Temple addressed the compounding pressure at the intersection of professional ambition and relationship health. He delivered practical strategies for couples navigating demanding careers without losing emotional intimacy. The content was clinically grounded, practically structured, and calibrated precisely to who was sitting in the room.",
   },
   {
     id: 5,
@@ -96,7 +96,7 @@ const engagements: Engagement[] = [
     formatIcon: "webinar",
     hasPhoto: false,
     description:
-      "A landmark two-day virtual experience presented by Temple's Counsel and Mind Academy, #RECOVER brought couples at different stages of relational strain through a structured journey of conflict resolution, emotional reconnection, and deliberate repair. Temple led every session as primary facilitator — combining clinical rigour with practical tools couples could apply immediately after each session, without waiting for a next appointment.",
+      "A landmark two-day virtual experience presented by Temple's Counsel and Mind Academy, #RECOVER brought couples at different stages of relational strain through a structured journey of conflict resolution, emotional reconnection, and deliberate repair. Temple led every session as primary facilitator, combining clinical rigour with practical tools couples could apply immediately after each session, without waiting for a next appointment.",
   },
   {
     id: 8,
@@ -107,7 +107,7 @@ const engagements: Engagement[] = [
     formatIcon: "tv",
     hasPhoto: false,
     description:
-      "Joining Hot FM Lagos's Parent Connect Helpline alongside guidance counsellor Olutunde Edem, Temple addressed one of the most pressing blind spots in Nigerian family life: the father who is physically present but emotionally unavailable. The live panel — hosted by Sharon — explored the long-term psychological effects of emotional absence on children and what meaningful paternal repair actually looks like in practice.",
+      "Joining Hot FM Lagos's Parent Connect Helpline alongside guidance counsellor Olutunde Edem, Temple addressed one of the most pressing blind spots in Nigerian family life: the father who is physically present but emotionally unavailable. The live panel, hosted by Sharon, explored the lasting psychological effects of emotional absence on children and what meaningful paternal repair actually looks like in practice.",
   },
   {
     id: 9,
@@ -118,7 +118,7 @@ const engagements: Engagement[] = [
     formatIcon: "radio",
     hasPhoto: false,
     description:
-      "Temple joined Boss FM 95.5 Abuja for a candid radio conversation exploring one of the most misunderstood patterns in modern relationships — the trauma bond. He walked listeners through the psychological markers of trauma-based relationships: why they form, what compels people to remain in them, and the first concrete steps toward breaking the cycle. The interview reached a wide national audience and generated significant listener response.",
+      "Temple joined Boss FM 95.5 Abuja for a candid radio conversation exploring one of the most misunderstood patterns in modern relationships: the trauma bond. He walked listeners through the psychological markers of relationships built on trauma, why they form, what compels people to remain in them, and the first concrete steps toward breaking the cycle. The interview reached a wide national audience and generated significant listener response.",
   },
 ];
 
