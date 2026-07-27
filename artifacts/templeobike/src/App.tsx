@@ -13,6 +13,8 @@ import { Contact } from './components/Contact';
 import { Footer } from './components/Footer';
 import RateCard from './pages/rate-card';
 import MediaKit from './pages/media-kit';
+import FerrgBook from './pages/ferrg-book';
+import { BookTeaser } from './components/BookTeaser';
 
 const queryClient = new QueryClient();
 
@@ -25,6 +27,7 @@ function SpeakerSite() {
       <About />
       <Talks />
       <SpeakingHistory />
+      <BookTeaser />
       <Contact />
       <Footer />
     </main>
@@ -37,6 +40,7 @@ function Router() {
       <Route path="/" component={SpeakerSite} />
       <Route path="/rate-card" component={RateCard} />
       <Route path="/media-kit" component={MediaKit} />
+      <Route path="/ferrg-book" component={FerrgBook} />
       <Route component={NotFound} />
     </Switch>
   );
