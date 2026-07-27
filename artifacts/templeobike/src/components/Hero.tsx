@@ -64,10 +64,9 @@ export function Hero() {
                 Book Temple to Speak
               </a>
               <a
-                href="#"
+                href="/media-kit"
                 data-testid="link-media-kit"
                 className="w-full sm:w-auto inline-flex items-center justify-center px-10 py-5 border border-border text-foreground font-semibold text-sm tracking-wide transition-colors hover:border-primary hover:text-primary duration-200"
-                onClick={(e) => e.preventDefault()}
               >
                 Media Kit &rarr;
               </a>
