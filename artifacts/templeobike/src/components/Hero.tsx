@@ -16,12 +16,16 @@ export function Hero() {
           className="absolute inset-0 w-full h-full object-cover"
           style={{ filter: 'brightness(0.68) contrast(1.06)', objectPosition: 'center 46%' }}
         />
-        {/* Left gradient keeps headline readable; right side stays open so the live event scene shows */}
-        <div className="absolute inset-0 bg-gradient-to-r from-background via-background/80 to-background/15" />
-        {/* Bottom fade */}
-        <div className="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-t from-background to-transparent" />
-        {/* Top fade */}
-        <div className="absolute top-0 left-0 right-0 h-24 bg-gradient-to-b from-background to-transparent" />
+        {/* Mobile overlay — 30% lighter so the photo reads clearly on small screens */}
+        <div className="absolute inset-0 bg-gradient-to-r from-background/70 via-background/40 to-transparent sm:hidden" />
+        {/* Desktop overlay — full strength for headline legibility */}
+        <div className="absolute inset-0 bg-gradient-to-r from-background via-background/80 to-background/15 hidden sm:block" />
+        {/* Bottom fade — lighter on mobile */}
+        <div className="absolute bottom-0 left-0 right-0 h-28 bg-gradient-to-t from-background/70 to-transparent sm:hidden" />
+        <div className="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-t from-background to-transparent hidden sm:block" />
+        {/* Top fade — lighter on mobile */}
+        <div className="absolute top-0 left-0 right-0 h-16 bg-gradient-to-b from-background/70 to-transparent sm:hidden" />
+        <div className="absolute top-0 left-0 right-0 h-24 bg-gradient-to-b from-background to-transparent hidden sm:block" />
       </div>
 
       {/* Subtle gold ambient glow behind content */}
