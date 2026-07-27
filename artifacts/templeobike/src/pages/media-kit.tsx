@@ -3,9 +3,6 @@ import stageSrc from '@assets/Screenshot_20260727_110019_Gallery_1785147430425.j
 import searchConsoleSrc from '@assets/Screenshot_20260727-130611_1785154220443.jpg';
 import soulBodegaCover from '@assets/51fywa6zgzL._UF1000,1000_QL80_FMwebp__1785167488103.webp';
 import authenticSelfCover from '@assets/71rO8W-nZZL._UF1000,1000_QL80_FMwebp__1785167488165.webp';
-import leaflet1 from '@assets/1_20260727_120004_0000_1785150069581.png';
-import leaflet2 from '@assets/2_20260727_120004_0001_1785150069617.png';
-import leaflet3 from '@assets/3_20260727_120004_0002_1785150069652.png';
 
 const gold = '#B8874A';
 const dark = '#0A0A0A';
@@ -515,34 +512,6 @@ export default function MediaKit() {
                 <div style={{ fontSize: 11, color: gold, letterSpacing: '0.08em', textTransform: 'uppercase' }}>
                   Available on Amazon →
                 </div>
-              </div>
-            </a>
-          ))}
-        </div>
-
-        <Divider />
-
-        {/* TCMA Leaflet */}
-        <SectionLabel>Company Profile &amp; Fees Leaflet</SectionLabel>
-        <p style={{ fontSize: 13, color: '#777', lineHeight: 1.7, marginBottom: 20, maxWidth: 600 }}>
-          Temple's Counsel &amp; Mind Academy official workshop and training fees document. Three pages covering services overview, full fee schedule, and payment details.
-        </p>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))', gap: 16 }}>
-          {[
-            { src: leaflet1, label: 'Page 1 — Services Overview' },
-            { src: leaflet2, label: 'Page 2 — Fee Schedule' },
-            { src: leaflet3, label: 'Page 3 — Payment Details' },
-          ].map(({ src, label }) => (
-            <a
-              key={label}
-              href={src}
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{ textDecoration: 'none', border: '1px solid #1e1e1e', overflow: 'hidden', display: 'block' }}
-            >
-              <img src={src} alt={label} style={{ width: '100%', display: 'block' }} />
-              <div style={{ background: '#111', padding: '10px 14px', fontSize: 11, color: '#777', letterSpacing: '0.06em' }}>
-                {label}
               </div>
             </a>
           ))}

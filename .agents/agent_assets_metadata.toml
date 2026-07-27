@@ -1,0 +1,8 @@
+uploads = []
+generated = []
+
+[[outputs]]
+id = "0zDRGK-rzXDsGCfkQjX_f"
+uri = "file://attached_assets/TCMA-Workshop-Training-Fees.pdf"
+type = "pdf"
+title = "TCMA Workshop & Training Fees"
