@@ -25,7 +25,7 @@ export function About() {
                 He began counselling informally in 2008, advising youth groups in underserved Lagos neighbourhoods under the Grassroots and Shoots initiative. That foundation grew into Temple's Counsel and Mind Academy, a private practice that has now logged over 2,380 hours of live therapy sessions and whose writings have reached more than 2,300,000 readers online since 2021. He holds a Psychotherapy certification from the Karen Wells Institute in the United States, a professional counselling certificate from the Institute of Counseling Nigeria, and a John Maxwell Leadership Programme certification.
               </p>
               <p>
-                He is a published author twice over: <em>Soul Bodega</em> and <em>Memoirs of The Rail man's Son</em>, both available on Amazon. He is also happily married to his primary school sweetheart, and they are raising four children together. That personal foundation gives his work on marriage a credibility no qualification alone can confer.
+                He is a three-time published author: <em>Soul Bodega</em>, <em>Discover Your Best Authentic Self</em>, and <em>Memoirs of The Rail man's Son</em>, all available on Amazon. He is also happily married to his primary school sweetheart, and they are raising four children together. That personal foundation gives his work on marriage a credibility no qualification alone can confer.
               </p>
             </div>
           </motion.div>

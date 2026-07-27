@@ -25,8 +25,8 @@ export function CredibilityStrip() {
     },
     { 
       icon: BookOpen, 
-      label: "Two-Time Published Author", 
-      sub: "Soul Bodega · Memoirs of The Rail man's Son", 
+      label: "Three-Time Published Author", 
+      sub: "Soul Bodega · Discover Your Best Authentic Self · Memoirs of The Rail man's Son", 
       link: "https://www.amazon.com/s?k=temple+obike",
       testid: "link-credibility-author"
     },

@@ -1,6 +1,11 @@
 import logoSrc from '@assets/IMG-20260727-WA0003_1785149135010.jpg';
 import stageSrc from '@assets/Screenshot_20260727_110019_Gallery_1785147430425.jpg';
 import searchConsoleSrc from '@assets/Screenshot_20260727-130611_1785154220443.jpg';
+import soulBodegaCover from '@assets/51fywa6zgzL._UF1000,1000_QL80_FMwebp__1785167488103.webp';
+import authenticSelfCover from '@assets/71rO8W-nZZL._UF1000,1000_QL80_FMwebp__1785167488165.webp';
+import leaflet1 from '@assets/1_20260727_120004_0000_1785150069581.png';
+import leaflet2 from '@assets/2_20260727_120004_0001_1785150069617.png';
+import leaflet3 from '@assets/3_20260727_120004_0002_1785150069652.png';
 
 const gold = '#B8874A';
 const dark = '#0A0A0A';
@@ -12,7 +17,7 @@ const stats = [
   { figure: '2.3M+',       label: 'Online readers reached since 2021' },
   { figure: '70%',         label: 'Diaspora client base (UK, US, Canada)' },
   { figure: '9+',          label: 'Keynote & speaking engagements' },
-  { figure: '2',           label: 'Published books on Amazon' },
+  { figure: '3',           label: 'Published books on Amazon' },
   { figure: '15+ years',   label: 'In practice & community advocacy' },
 ];
 
@@ -174,13 +179,24 @@ const media = [
 const books = [
   {
     title: 'Soul Bodega',
-    desc: 'A candid exploration of the inner life — identity, pain, healing, and spiritual self-reconstruction.',
-    link: 'https://www.amazon.com',
+    subtitle: 'Your Straightforward Guide to Cleaning Up Negative Emotions & Habits',
+    desc: 'A practical guide to identifying and releasing the emotional patterns and habits that quietly hold people back from the life and relationships they want.',
+    link: 'https://www.amazon.com/Soul-Bodega-Straightforward-Cleaning-Negative-ebook/dp/B09C42J7HM',
+    cover: soulBodegaCover,
+  },
+  {
+    title: 'Discover Your Best Authentic Self',
+    subtitle: 'A Waste No Time Series Workbook',
+    desc: 'A workbook dedicated to helping readers start the quick journey toward their truest, most purposeful self — practical, direct, and designed for action.',
+    link: 'https://www.amazon.com/Discover-Your-Best-Authentic-Self-ebook/dp/B0BRHJ4B8T',
+    cover: authenticSelfCover,
   },
   {
     title: "Memoirs of The Rail man's Son",
+    subtitle: '',
     desc: 'A memoir tracing the formative experiences that shaped a therapist, a father, and a marriage advocate.',
     link: 'https://www.amazon.com',
+    cover: null,
   },
 ];
 
@@ -252,7 +268,7 @@ export default function MediaKit() {
         {/* Short bio */}
         <SectionLabel>Short Bio (for event programmes)</SectionLabel>
         <p style={{ fontSize: 15, lineHeight: 1.85, color: '#ccc', background: '#111', border: '1px solid #1e1e1e', padding: '24px 28px', borderLeft: `3px solid ${gold}` }}>
-          Temple Obike (LMFT, CHT) is a Lagos-based Licensed Marriage and Family Therapist, certified hypnotherapist, keynote speaker, and twice-published author. Founder of Temple's Counsel & Mind Academy, he has logged over 2,380 hours of live therapy sessions and reached more than 2,300,000 readers online since 2021. Seventy percent of his clients are drawn from the global diaspora across the UK, US, Canada, and South Africa. He speaks on emotional intelligence, trust architecture, and relational repair — to corporate audiences, faith communities, and government institutions. He is the author of <em>Soul Bodega</em> and <em>Memoirs of The Rail man's Son</em>, both available on Amazon.
+          Temple Obike (LMFT, CHT) is a Lagos-based Licensed Marriage and Family Therapist, certified hypnotherapist, keynote speaker, and three-time published author. Founder of Temple's Counsel & Mind Academy, he has logged over 2,380 hours of live therapy sessions and reached more than 2,300,000 readers online since 2021. Seventy percent of his clients are drawn from the global diaspora across the UK, US, Canada, and South Africa. He speaks on emotional intelligence, trust architecture, and relational repair to corporate audiences, faith communities, and government institutions. He is the author of <em>Soul Bodega</em>, <em>Discover Your Best Authentic Self</em>, and <em>Memoirs of The Rail man's Son</em>, all available on Amazon.
         </p>
 
         <Divider />
@@ -270,7 +286,7 @@ export default function MediaKit() {
             Temple's keynote work spans corporate wellness, marriage and family resilience, emotional intelligence for leaders, and faith-based personal development. He has addressed national summits attended by presidential representatives, Cabinet ministers, and state governors; international webinars drawing couples from over 14 countries; and community forums across Lagos, Abuja, and the diaspora.
           </p>
           <p>
-            He is the author of two books — <em>Soul Bodega</em> and <em>Memoirs of The Rail man's Son</em> — both available on Amazon. He is married to his primary school sweetheart; they are raising four children together. That personal foundation gives his work on marriage a credibility no qualification alone can confer.
+            He is the author of three books: <em>Soul Bodega</em>, <em>Discover Your Best Authentic Self</em>, and <em>Memoirs of The Rail man's Son</em>, all available on Amazon. He is married to his primary school sweetheart; they are raising four children together. That personal foundation gives his work on marriage a credibility no qualification alone can confer.
           </p>
         </div>
 
@@ -473,15 +489,61 @@ export default function MediaKit() {
 
         {/* Books */}
         <SectionLabel>Published Works</SectionLabel>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(260px, 1fr))', gap: 16 }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))', gap: 20 }}>
           {books.map(b => (
-            <div key={b.title} style={{ background: '#111', border: '1px solid #1e1e1e', borderTop: `2px solid ${gold}`, padding: '24px 24px' }}>
-              <div style={{ fontSize: 16, fontFamily: "'Playfair Display', Georgia, serif", fontStyle: 'italic', color: '#e5e5e5', marginBottom: 10 }}>{b.title}</div>
-              <div style={{ fontSize: 12, color: '#888', lineHeight: 1.7, marginBottom: 14 }}>{b.desc}</div>
-              <a href={b.link} target="_blank" rel="noopener noreferrer" style={{ fontSize: 11, color: gold, textDecoration: 'none', letterSpacing: '0.08em', textTransform: 'uppercase' }}>
-                Available on Amazon →
-              </a>
-            </div>
+            <a
+              key={b.title}
+              href={b.link}
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{ textDecoration: 'none', background: '#111', border: '1px solid #1e1e1e', display: 'flex', flexDirection: 'column' }}
+            >
+              {b.cover && (
+                <div style={{ background: '#0a0a0a', display: 'flex', justifyContent: 'center', padding: '20px 20px 16px' }}>
+                  <img
+                    src={b.cover}
+                    alt={b.title}
+                    style={{ width: 120, height: 'auto', display: 'block', boxShadow: '0 8px 24px rgba(0,0,0,0.6)' }}
+                  />
+                </div>
+              )}
+              <div style={{ padding: '18px 20px 20px', borderTop: `2px solid ${gold}`, flex: 1, display: 'flex', flexDirection: 'column' }}>
+                <div style={{ fontSize: 15, fontFamily: "'Playfair Display', Georgia, serif", fontStyle: 'italic', color: '#e5e5e5', marginBottom: 6, lineHeight: 1.3 }}>{b.title}</div>
+                {b.subtitle && <div style={{ fontSize: 10, color: gold, letterSpacing: '0.06em', textTransform: 'uppercase', marginBottom: 10 }}>{b.subtitle}</div>}
+                <div style={{ fontSize: 12, color: '#888', lineHeight: 1.7, marginBottom: 14, flex: 1 }}>{b.desc}</div>
+                <div style={{ fontSize: 11, color: gold, letterSpacing: '0.08em', textTransform: 'uppercase' }}>
+                  Available on Amazon →
+                </div>
+              </div>
+            </a>
+          ))}
+        </div>
+
+        <Divider />
+
+        {/* TCMA Leaflet */}
+        <SectionLabel>Company Profile &amp; Fees Leaflet</SectionLabel>
+        <p style={{ fontSize: 13, color: '#777', lineHeight: 1.7, marginBottom: 20, maxWidth: 600 }}>
+          Temple's Counsel &amp; Mind Academy official workshop and training fees document. Three pages covering services overview, full fee schedule, and payment details.
+        </p>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))', gap: 16 }}>
+          {[
+            { src: leaflet1, label: 'Page 1 — Services Overview' },
+            { src: leaflet2, label: 'Page 2 — Fee Schedule' },
+            { src: leaflet3, label: 'Page 3 — Payment Details' },
+          ].map(({ src, label }) => (
+            <a
+              key={label}
+              href={src}
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{ textDecoration: 'none', border: '1px solid #1e1e1e', overflow: 'hidden', display: 'block' }}
+            >
+              <img src={src} alt={label} style={{ width: '100%', display: 'block' }} />
+              <div style={{ background: '#111', padding: '10px 14px', fontSize: 11, color: '#777', letterSpacing: '0.06em' }}>
+                {label}
+              </div>
+            </a>
           ))}
         </div>
 
