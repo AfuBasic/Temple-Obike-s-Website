@@ -14,6 +14,7 @@ import { Footer } from './components/Footer';
 import RateCard from './pages/rate-card';
 import MediaKit from './pages/media-kit';
 import FerrgBook from './pages/ferrg-book';
+import Retreat from './pages/retreat';
 import { BookTeaser } from './components/BookTeaser';
 
 const queryClient = new QueryClient();
@@ -41,6 +42,7 @@ function Router() {
       <Route path="/rate-card" component={RateCard} />
       <Route path="/media-kit" component={MediaKit} />
       <Route path="/ferrg-book" component={FerrgBook} />
+      <Route path="/retreat" component={Retreat} />
       <Route component={NotFound} />
     </Switch>
   );

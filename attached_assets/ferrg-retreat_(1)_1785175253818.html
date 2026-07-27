@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Gold Retreat — The FERRG Relationship Model</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,450;9..144,600;9..144,700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0b0b0a;
+    --panel:#16140f;
+    --panel-2:#1d1a13;
+    --gold:#c9a227;
+    --gold-soft:#e2c15c;
+    --ember:#8c4a2f;
+    --cream:#f3ecdd;
+    --stone:#a79c87;
+    --line: rgba(243,236,221,0.12);
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--ink);
+    color:var(--cream);
+    font-family:'Inter', sans-serif;
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3{
+    font-family:'Fraunces', serif;
+    font-weight:600;
+    letter-spacing:-0.01em;
+    margin:0;
+  }
+  .eyebrow{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:0.72rem;
+    letter-spacing:0.16em;
+    text-transform:uppercase;
+    color:var(--gold-soft);
+  }
+  a{color:inherit;}
+  .wrap{max-width:1120px; margin:0 auto; padding:0 28px;}
+  .cta-btn{
+    display:inline-flex; align-items:center; gap:10px;
+    background:var(--gold);
+    color:#151107;
+    font-weight:600;
+    font-size:0.95rem;
+    padding:14px 26px;
+    border-radius:2px;
+    text-decoration:none;
+    border:none;
+    cursor:pointer;
+    transition:transform .25s ease, box-shadow .25s ease, background .25s ease;
+    font-family:'Inter', sans-serif;
+  }
+  .cta-btn:hover{ background:var(--gold-soft); transform:translateY(-1px); box-shadow:0 8px 24px rgba(201,162,39,0.25); }
+  .cta-btn.ghost{
+    background:transparent; color:var(--cream); border:1px solid var(--line);
+  }
+  .cta-btn.ghost:hover{ border-color:var(--gold); color:var(--gold-soft); background:transparent; box-shadow:none; }
+
+  /* ---------- NAV ---------- */
+  nav{
+    position:sticky; top:0; z-index:50;
+    background:rgba(11,11,10,0.85);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  nav .wrap{ display:flex; align-items:center; justify-content:space-between; padding:18px 28px; }
+  .brand{ font-family:'Fraunces', serif; font-size:1.1rem; letter-spacing:0.02em; }
+  .brand span{ color:var(--gold); }
+  nav .cta-btn{ padding:10px 20px; font-size:0.85rem; }
+
+  /* ---------- HERO ---------- */
+  .hero{
+    position:relative;
+    padding:96px 0 70px;
+    overflow:hidden;
+    background:
+      radial-gradient(ellipse 900px 500px at 15% -10%, rgba(201,162,39,0.14), transparent 60%),
+      radial-gradient(ellipse 700px 500px at 100% 10%, rgba(140,74,47,0.16), transparent 55%),
+      var(--ink);
+    border-bottom:1px solid var(--line);
+  }
+  .hero-grid{ display:grid; grid-template-columns:1.15fr 0.85fr; gap:56px; align-items:center; }
+  @media (max-width:900px){ .hero-grid{ grid-template-columns:1fr; } }
+
+  .stage-track{ display:flex; align-items:center; gap:0; margin:26px 0 30px; flex-wrap:wrap; }
+  .stage{ display:flex; align-items:center; }
+  .stage-node{
+    display:flex; flex-direction:column; align-items:center; gap:6px; min-width:56px;
+  }
+  .stage-letter{
+    width:34px; height:34px; border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+    font-family:'IBM Plex Mono', monospace; font-size:0.82rem; font-weight:500;
+    border:1px solid var(--line); color:var(--stone);
+  }
+  .stage-node.active .stage-letter{
+    background:var(--gold); color:#151107; border-color:var(--gold);
+    box-shadow:0 0 0 4px rgba(201,162,39,0.18);
+  }
+  .stage-label{ font-family:'IBM Plex Mono', monospace; font-size:0.62rem; letter-spacing:0.08em; color:var(--stone); text-transform:uppercase; }
+  .stage-node.active .stage-label{ color:var(--gold-soft); }
+  .stage-connector{ width:26px; height:1px; background:var(--line); margin:0 2px 18px; }
+  @media (max-width:560px){ .stage-connector{ width:14px; } .stage-node{ min-width:44px; } }
+
+  h1.headline{ font-size:3.1rem; line-height:1.06; }
+  @media (max-width:900px){ h1.headline{ font-size:2.3rem; } }
+  h1.headline .accent{ color:var(--gold-soft); font-style:italic; font-weight:450; }
+
+  .hero-sub{ color:var(--stone); font-size:1.05rem; max-width:46ch; margin-top:18px; }
+  .hero-actions{ display:flex; gap:14px; margin-top:32px; flex-wrap:wrap; }
+
+  .book-card{
+    background:var(--panel);
+    border:1px solid var(--line);
+    padding:28px;
+    position:relative;
+  }
+  .book-card::before{
+    content:'';
+    position:absolute; inset:-1px;
+    border:1px solid rgba(201,162,39,0.25);
+    pointer-events:none;
+  }
+  .book-card .eyebrow{ margin-bottom:10px; }
+  .book-card h3{ font-size:1.35rem; margin-bottom:10px; }
+  .book-card p{ color:var(--stone); font-size:0.92rem; margin:0 0 16px; }
+  .book-card ul{ margin:0 0 20px; padding-left:0; list-style:none; }
+  .book-card li{ display:flex; gap:10px; font-size:0.88rem; color:var(--cream); padding:7px 0; border-top:1px solid var(--line); }
+  .book-card li:first-child{ border-top:none; }
+  .book-card li::before{ content:'—'; color:var(--gold); flex-shrink:0; }
+
+  /* ---------- SECTION HEADERS ---------- */
+  section{ padding:78px 0; border-bottom:1px solid var(--line); }
+  .sec-head{ max-width:640px; margin-bottom:44px; }
+  .sec-head h2{ font-size:2rem; margin-top:12px; }
+  .sec-head p{ color:var(--stone); margin-top:14px; font-size:1rem; }
+
+  /* ---------- LOCATIONS ---------- */
+  .loc-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:22px; }
+  .loc-grid.cols-2{ grid-template-columns:repeat(2,1fr); max-width:760px; margin:0 auto; }
+  @media (max-width:900px){ .loc-grid{ grid-template-columns:1fr; } }
+  .loc-card{
+    background:var(--panel);
+    border:1px solid var(--line);
+    display:flex; flex-direction:column;
+    transition:border-color .25s ease, transform .25s ease;
+  }
+  .loc-card:hover{ border-color:rgba(201,162,39,0.4); transform:translateY(-4px); }
+  .loc-photo{
+    height:170px; position:relative;
+    display:flex; align-items:flex-end; padding:16px;
+  }
+  .loc-photo .loc-name{ font-family:'Fraunces', serif; font-size:1.5rem; color:#fff; position:relative; z-index:2; }
+  .loc-photo::after{ content:''; position:absolute; inset:0; background:linear-gradient(180deg, rgba(0,0,0,0) 20%, rgba(0,0,0,0.75) 100%); }
+  .loc-kenya .loc-photo{ background: linear-gradient(135deg,#2b2110,#4a3116), radial-gradient(circle at 70% 30%, rgba(201,162,39,0.35), transparent 55%); }
+  .loc-accra .loc-photo{ background: linear-gradient(135deg,#1c2a2b,#213b3a), radial-gradient(circle at 30% 30%, rgba(201,162,39,0.28), transparent 55%); }
+  .loc-mauritius .loc-photo{ background: linear-gradient(135deg,#231421,#3a1f34), radial-gradient(circle at 60% 20%, rgba(201,162,39,0.3), transparent 55%); }
+  .loc-body{ padding:20px 20px 24px; display:flex; flex-direction:column; gap:14px; flex:1; }
+  .loc-teasers{ list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:9px; }
+  .loc-teasers li{ font-size:0.87rem; color:var(--stone); display:flex; gap:9px; }
+  .loc-teasers li::before{ content:'✧'; color:var(--gold); flex-shrink:0; }
+  .loc-more{ font-family:'IBM Plex Mono', monospace; font-size:0.7rem; letter-spacing:0.06em; color:var(--gold-soft); text-transform:uppercase; }
+  .loc-footer{ margin-top:auto; display:flex; align-items:center; justify-content:space-between; padding-top:14px; border-top:1px solid var(--line); }
+  .loc-price{ font-family:'Fraunces', serif; font-size:1.15rem; }
+  .loc-price small{ font-family:'Inter', sans-serif; color:var(--stone); font-size:0.72rem; display:block; }
+  .loc-pick{ font-size:0.8rem; color:var(--stone); text-decoration:none; border-bottom:1px solid var(--line); padding-bottom:2px; }
+  .loc-pick:hover{ color:var(--gold-soft); border-color:var(--gold); }
+
+  /* virtual strip */
+  .virtual-strip{
+    margin-top:22px;
+    display:flex; align-items:center; justify-content:space-between; gap:24px; flex-wrap:wrap;
+    background:var(--panel-2); border:1px dashed var(--line); padding:22px 26px;
+  }
+  .virtual-strip .vs-left{ display:flex; align-items:center; gap:16px; }
+  .virtual-strip .vs-icon{ width:40px; height:40px; border-radius:50%; border:1px solid var(--gold); display:flex; align-items:center; justify-content:center; color:var(--gold-soft); font-family:'IBM Plex Mono',monospace; font-size:0.85rem; flex-shrink:0;}
+  .virtual-strip h4{ font-family:'Fraunces', serif; font-size:1.1rem; font-weight:600; margin:0 0 3px; }
+  .virtual-strip p{ margin:0; color:var(--stone); font-size:0.87rem; max-width:52ch; }
+  .virtual-price{ font-family:'Fraunces', serif; font-size:1.35rem; color:var(--gold-soft); white-space:nowrap; }
+  .virtual-price small{ display:block; font-family:'Inter'; color:var(--stone); font-size:0.72rem; font-weight:400; }
+
+  /* ---------- FORM ---------- */
+  .form-section{ background:var(--panel); }
+  .form-wrap{ display:grid; grid-template-columns:0.9fr 1.1fr; gap:56px; }
+  @media (max-width:900px){ .form-wrap{ grid-template-columns:1fr; } }
+  .form-side p{ color:var(--stone); }
+  .form-side .price-note{ margin-top:26px; padding-top:22px; border-top:1px solid var(--line); font-size:0.85rem; color:var(--stone); }
+
+  form{ display:flex; flex-direction:column; gap:16px; }
+  .field-row{ display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+  @media (max-width:560px){ .field-row{ grid-template-columns:1fr; } }
+  label{ font-family:'IBM Plex Mono', monospace; font-size:0.68rem; letter-spacing:0.08em; text-transform:uppercase; color:var(--stone); margin-bottom:7px; display:block; }
+  input, select, textarea{
+    width:100%;
+    background:var(--ink);
+    border:1px solid var(--line);
+    color:var(--cream);
+    padding:12px 14px;
+    font-family:'Inter', sans-serif;
+    font-size:0.92rem;
+    border-radius:1px;
+  }
+  input:focus, select:focus, textarea:focus{
+    outline:none; border-color:var(--gold);
+  }
+  .loc-select{ display:grid; grid-template-columns:repeat(3,1fr); gap:10px; }
+  @media (max-width:560px){ .loc-select{ grid-template-columns:repeat(2,1fr); } }
+  .loc-opt{ position:relative; }
+  .loc-opt input{ position:absolute; opacity:0; inset:0; cursor:pointer; }
+  .loc-opt .card{
+    border:1px solid var(--line); padding:12px 10px; text-align:center; font-size:0.82rem; cursor:pointer;
+    transition:border-color .2s ease, background .2s ease;
+  }
+  .loc-opt input:checked + .card{ border-color:var(--gold); background:rgba(201,162,39,0.08); color:var(--gold-soft); }
+  .loc-opt .card small{ display:block; color:var(--stone); font-size:0.68rem; margin-top:3px; }
+  .loc-opt input:checked + .card small{ color:var(--gold-soft); }
+
+  .submit-btn{ margin-top:6px; align-self:flex-start; }
+  .form-note{ font-size:0.78rem; color:var(--stone); margin-top:2px; }
+  #confirm{
+    display:none; margin-top:18px; padding:16px 18px;
+    border:1px solid rgba(201,162,39,0.4); background:rgba(201,162,39,0.06);
+    font-size:0.9rem; color:var(--gold-soft);
+  }
+
+  footer{ padding:40px 0; text-align:center; }
+  footer p{ color:var(--stone); font-size:0.82rem; }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <div class="brand">Temple's Counsel <span>· Mind Academy</span></div>
+    <a href="#book" class="cta-btn">Reserve Our Spot</a>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <div class="eyebrow">Coming Soon — Limited Cohorts</div>
+
+      <div class="stage-track" aria-label="The FERRG stages: Fracture, Exposure, Repair, Rebuild, Gold">
+        <div class="stage-node"><div class="stage-letter">F</div><div class="stage-label">Fracture</div></div>
+        <div class="stage-connector"></div>
+        <div class="stage-node"><div class="stage-letter">E</div><div class="stage-label">Exposure</div></div>
+        <div class="stage-connector"></div>
+        <div class="stage-node"><div class="stage-letter">R</div><div class="stage-label">Repair</div></div>
+        <div class="stage-connector"></div>
+        <div class="stage-node"><div class="stage-letter">R</div><div class="stage-label">Rebuild</div></div>
+        <div class="stage-connector"></div>
+        <div class="stage-node active"><div class="stage-letter">G</div><div class="stage-label">Gold</div></div>
+      </div>
+
+      <h1 class="headline">Three nights to reach<br><span class="accent">the Gold stage,</span> together.</h1>
+      <p class="hero-sub">The Gold Retreat is a private, therapist-led couples experience built on The FERRG Relationship Model — launching alongside the book itself, in Accra and Mauritius, with a virtual seat for couples who can't travel.</p>
+      <p class="hero-sub" style="margin-top:10px; font-size:0.92rem;">Fully managed, start to finish. Book once, send us a copy of your passport, and we handle flights, visas and logistics — you just arrive at the airport with your bags. Everyone flies out together, and comes home together.</p>
+
+      <div style="display:inline-flex; align-items:center; gap:10px; margin-top:20px; padding:10px 16px; border:1px solid var(--line); font-size:0.8rem; color:var(--stone);">
+        <span style="color:var(--gold-soft);">◆</span> The same week, our friend DJ Irons plays the first-ever DJ set at the summit of Kilimanjaro. Different trip, same milestone season.
+      </div>
+
+      <div class="hero-actions">
+        <a href="#book" class="cta-btn">Pre-Book Your Retreat</a>
+        <a href="#locations" class="cta-btn ghost">See the Locations</a>
+      </div>
+    </div>
+
+    <div class="book-card">
+      <div class="eyebrow">Launching With The Book</div>
+      <h3>The FERRG Relationship Model</h3>
+      <p>Every couple who books The Gold Retreat receives the book on day one — signed, in person, or shipped ahead for virtual attendees.</p>
+      <ul>
+        <li>Written by Temple Obike, psychotherapist &amp; relationship interventionist</li>
+        <li>The five-stage framework the retreat is built around, taught live</li>
+        <li>A guided companion workbook you'll actually use during your sessions</li>
+      </ul>
+      <a href="#book" class="cta-btn" style="width:100%; justify-content:center;">Reserve Our Spot</a>
+    </div>
+  </div>
+</header>
+
+<section id="locations">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">Choose Your Setting</div>
+      <h2>One retreat. Two settings. Your choice.</h2>
+      <p>Each location runs the same 3-night private curriculum — guided sessions each morning, free time to actually enjoy each other in the afternoon, and an evening ritual built around the day's stage of the FERRG model.</p>
+    </div>
+
+    <div class="loc-grid cols-2">
+
+      <div class="loc-card loc-accra">
+        <div class="loc-photo"><div class="loc-name">Accra</div></div>
+        <div class="loc-body">
+          <ul class="loc-teasers">
+            <li>Sunrise session on Labadi Beach</li>
+            <li>Jamestown lighthouse &amp; harbour walk</li>
+            <li>Reflection walk at the Kwame Nkrumah Memorial</li>
+            <li>Osu food &amp; culture night</li>
+          </ul>
+          <div class="loc-more">+ more, revealed on booking</div>
+          <div class="loc-footer">
+            <div class="loc-price">$1,990 <small>per couple / 3 nights</small></div>
+            <a href="#book" class="loc-pick" data-loc="Accra">Pick Accra →</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="loc-card loc-mauritius">
+        <div class="loc-photo"><div class="loc-name">Mauritius</div></div>
+        <div class="loc-body">
+          <ul class="loc-teasers">
+            <li>Private catamaran sail along the lagoon</li>
+            <li>Couple's spa evening overlooking the Indian Ocean</li>
+            <li>Chamarel seven-coloured earth &amp; waterfall walk</li>
+            <li>Beachfront dinner under the stars</li>
+          </ul>
+          <div class="loc-more">+ more, revealed on booking</div>
+          <div class="loc-footer">
+            <div class="loc-price">$3,200 <small>per couple / 3 nights</small></div>
+            <a href="#book" class="loc-pick" data-loc="Mauritius">Pick Mauritius →</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="virtual-strip">
+      <div class="vs-left">
+        <div class="vs-icon">V</div>
+        <div>
+          <h4>Can't travel? Join virtually.</h4>
+          <p>The same 3-night curriculum, delivered live over private video sessions, with your workbook shipped ahead of time. Built for couples anywhere in the world.</p>
+        </div>
+      </div>
+      <div class="virtual-price">$1,500 <small>per couple · one flat rate, either way</small></div>
+    </div>
+  </div>
+</section>
+
+<section id="how-it-works">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">How It Works</div>
+      <h2>You just have to show up.</h2>
+      <p>This isn't a DIY trip. Book once, and we take care of everything else — you won't touch a booking site or a visa portal again.</p>
+    </div>
+
+    <div class="loc-grid">
+      <div class="loc-card" style="padding:26px;">
+        <div class="eyebrow" style="margin-bottom:12px;">Step 1</div>
+        <h3 style="font-size:1.2rem; margin-bottom:10px;">Pay &amp; book</h3>
+        <p style="color:var(--stone); font-size:0.9rem; margin:0;">One payment secures your couple's seat and your chosen destination. No instalments, no second payment later.</p>
+      </div>
+      <div class="loc-card" style="padding:26px;">
+        <div class="eyebrow" style="margin-bottom:12px;">Step 2</div>
+        <h3 style="font-size:1.2rem; margin-bottom:10px;">Send your passport</h3>
+        <p style="color:var(--stone); font-size:0.9rem; margin:0;">We handle flights, visas and every travel detail on your behalf — you don't lift a finger.</p>
+      </div>
+      <div class="loc-card" style="padding:26px;">
+        <div class="eyebrow" style="margin-bottom:12px;">Step 3</div>
+        <h3 style="font-size:1.2rem; margin-bottom:10px;">Show up with your bags</h3>
+        <p style="color:var(--stone); font-size:0.9rem; margin:0;">We fly out together as a group, and fly home together — with real time to relax, connect and network with other couples along the way.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="book" class="form-section">
+  <div class="wrap form-wrap">
+    <div class="form-side">
+      <div class="eyebrow">Limited Cohorts Per City</div>
+      <h2 style="font-size:2rem; margin-top:12px;">Pre-book your spot</h2>
+      <p>Seats are held in the order deposits come in. Fill this in to lock your preferred city — our team will follow up by email and WhatsApp with dates and payment details.</p>
+      <div class="price-note">
+        Accra: <strong style="color:var(--cream)">$1,990</strong> per couple · Mauritius: <strong style="color:var(--cream)">$3,200</strong> per couple — 3 nights, flights, visas &amp; logistics included.<br>
+        Virtual: <strong style="color:var(--cream)">$1,500</strong> per couple.
+      </div>
+    </div>
+
+    <form id="retreat-form">
+      <div class="field-row">
+        <div>
+          <label for="p1">Your Name</label>
+          <input id="p1" type="text" required placeholder="First &amp; last name">
+        </div>
+        <div>
+          <label for="p2">Partner's Name</label>
+          <input id="p2" type="text" required placeholder="First &amp; last name">
+        </div>
+      </div>
+
+      <div class="field-row">
+        <div>
+          <label for="email">Email</label>
+          <input id="email" type="email" required placeholder="you@email.com">
+        </div>
+        <div>
+          <label for="phone">Phone / WhatsApp</label>
+          <input id="phone" type="tel" required placeholder="+234 ...">
+        </div>
+      </div>
+
+      <div>
+        <label>Preferred Location</label>
+        <div class="loc-select">
+          <label class="loc-opt">
+            <input type="radio" name="location" value="Accra" required>
+            <div class="card">Accra<small>$1,990</small></div>
+          </label>
+          <label class="loc-opt">
+            <input type="radio" name="location" value="Mauritius">
+            <div class="card">Mauritius<small>$3,200</small></div>
+          </label>
+          <label class="loc-opt">
+            <input type="radio" name="location" value="Virtual">
+            <div class="card">Virtual<small>$1,500</small></div>
+          </label>
+        </div>
+      </div>
+
+      <div>
+        <label for="note">Anything we should know? (optional)</label>
+        <textarea id="note" rows="3" placeholder="Anniversary trip, first retreat, dietary needs, etc."></textarea>
+      </div>
+
+      <button type="submit" class="cta-btn submit-btn">Reserve Our Spot</button>
+      <div class="form-note">No payment is taken now — this reserves your seat. Once confirmed, we'll send payment details and request a copy of each partner's passport so we can arrange your flights and visa.</div>
+      <div id="confirm"></div>
+    </form>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p>The Gold Retreat is hosted by Temple's Counsel &amp; Mind Academy. Questions? Reach us at hello@templescounsel.com</p>
+  </div>
+</footer>
+
+<script>
+  document.querySelectorAll('.loc-pick').forEach(function(link){
+    link.addEventListener('click', function(e){
+      var loc = this.getAttribute('data-loc');
+      var radio = document.querySelector('input[name="location"][value="' + loc + '"]');
+      if(radio){
+        // Delay to let smooth-scroll land first
+        setTimeout(function(){ radio.checked = true; }, 400);
+      }
+    });
+  });
+
+  document.getElementById('retreat-form').addEventListener('submit', function(e){
+    e.preventDefault();
+    var loc = document.querySelector('input[name="location"]:checked');
+    var box = document.getElementById('confirm');
+    box.style.display = 'block';
+    box.textContent = loc
+      ? 'Thank you — your seat request for ' + loc.value + ' has been noted. We\'ll follow up shortly by email and WhatsApp.'
+      : 'Thank you — please select a location above so we can hold the right seat for you.';
+  });
+</script>
+
+</body>
+</html>
