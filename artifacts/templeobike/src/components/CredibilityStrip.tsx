@@ -1,6 +1,6 @@
 import businessElitesCover from '@assets/images_(9)_1785168480508.jpeg';
 import soulBodegaCover from '@assets/soul-bodega-cover.jpg';
-import radioSrc from '@assets/Screenshot_20260727_101338_Gallery_1785143683280.jpg';
+import radioSrc from '@assets/Radio-Nigeria_1785170842313.jpg';
 
 const ntaThumbnail = 'https://img.youtube.com/vi/z3Ofsd6z9z8/hqdefault.jpg';
 
@@ -18,7 +18,7 @@ export function CredibilityStrip() {
       image: radioSrc,
       label: 'National Radio Interview',
       sub: 'Privacy vs. Secrecy in Marriage',
-      link: '#',
+      link: 'https://open.spreaker.com/A4NZ/0p3au0re',
       testid: 'link-credibility-radio',
       objectPosition: 'center top',
     },
