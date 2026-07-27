@@ -110,6 +110,9 @@ export function Contact() {
           <h2 className="text-4xl md:text-5xl font-serif font-semibold text-foreground">
             Request Booking
           </h2>
+          <p className="mt-4 text-sm text-muted-foreground font-light max-w-lg leading-relaxed">
+            Submit your enquiry below. A full rate card and availability will be sent to you within 24 hours.
+          </p>
         </motion.div>
 
         <div className="bg-card border border-border p-8 md:p-12 relative overflow-hidden">

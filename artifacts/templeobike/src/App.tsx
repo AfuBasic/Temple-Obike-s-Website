@@ -11,6 +11,7 @@ import { Talks } from './components/Talks';
 import { SpeakingHistory } from './components/SpeakingHistory';
 import { Contact } from './components/Contact';
 import { Footer } from './components/Footer';
+import RateCard from './pages/rate-card';
 
 const queryClient = new QueryClient();
 
@@ -33,6 +34,7 @@ function Router() {
   return (
     <Switch>
       <Route path="/" component={SpeakerSite} />
+      <Route path="/rate-card" component={RateCard} />
       <Route component={NotFound} />
     </Switch>
   );
