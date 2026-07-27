@@ -184,12 +184,13 @@ const books = [
     cover: authenticSelfCover,
   },
   {
-    title: 'The FERRG Relationship Model™',
-    subtitle: 'From Conflict to Resilience · © 2026 Temple Obike',
+    title: 'New Book — Coming Soon',
+    subtitle: '© 2026 Temple Obike · All Rights Reserved',
     desc: 'Coming Soon. A groundbreaking framework for couples who love each other but need more than love to build something lasting. Pre-order is open — free to reserve.',
     link: '/ferrg-book',
     cover: ferrgCover,
     badge: 'Coming Soon',
+    blurCover: true,
   },
 ];
 
@@ -335,7 +336,7 @@ export default function MediaKit() {
         >
           <div>
             <div style={{ fontSize: 10, color: gold, letterSpacing: '0.18em', textTransform: 'uppercase', fontWeight: 700, marginBottom: 4 }}>New Book — Free Pre-Order Open</div>
-            <div style={{ fontSize: 14, color: '#e5e5e5', fontFamily: "'Playfair Display', Georgia, serif", fontStyle: 'italic' }}>The FERRG Relationship Model™ — Reserve your copy before it drops</div>
+            <div style={{ fontSize: 14, color: '#e5e5e5', fontFamily: "'Playfair Display', Georgia, serif", fontStyle: 'italic' }}>New Book — Reserve your copy before it drops</div>
           </div>
           <div style={{ color: gold, fontSize: 20, marginLeft: 24, flexShrink: 0 }}>→</div>
         </a>

@@ -21,19 +21,14 @@ export function BookTeaser() {
             <div className="relative group">
               {/* Soft glow behind */}
               <div className="absolute inset-0 bg-primary/15 blur-[50px] rounded scale-90" />
-              {/* Cover — slightly blurred to tease */}
+              {/* Cover — blurred to protect unreleased work */}
               <img
                 src={bookCoverSrc}
                 alt="New book coming soon — Temple Obike"
-                className="relative w-56 md:w-64 shadow-2xl shadow-black/50 filter blur-[2px] group-hover:blur-0 transition-all duration-700 select-none"
+                className="relative w-56 md:w-64 shadow-2xl shadow-black/50 select-none"
+                style={{ filter: 'blur(4px)' }}
                 draggable={false}
               />
-              {/* Overlay label */}
-              <div className="absolute inset-0 flex items-end justify-center pb-4 pointer-events-none">
-                <span className="bg-background/80 backdrop-blur-sm text-primary text-[10px] font-bold tracking-[0.2em] uppercase px-4 py-2 border border-primary/30 group-hover:opacity-0 transition-opacity duration-500">
-                  Hover to Reveal
-                </span>
-              </div>
               {/* Coming soon badge */}
               <div className="absolute -top-3 -right-3 bg-primary text-primary-foreground text-[9px] font-bold tracking-[0.15em] uppercase px-3 py-1.5 shadow-lg">
                 Coming Soon
@@ -56,7 +51,7 @@ export function BookTeaser() {
               Understanding Why Love Isn't Enough.<br className="hidden md:block" /> And What Comes After.
             </h2>
             <p className="text-[10px] text-muted-foreground/40 tracking-[0.14em] uppercase mb-5">
-              The FERRG Relationship Model™ · © {new Date().getFullYear()} Temple Obike
+              © {new Date().getFullYear()} Temple Obike · All rights reserved
             </p>
             <p className="text-lg text-muted-foreground font-light leading-relaxed mb-5 max-w-xl">
               Temple's third book is a guide for couples who love each other but can't seem to break through to a deeper, more honest, more resilient version of their marriage.

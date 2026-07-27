@@ -86,8 +86,9 @@ export default function FerrgBook() {
                 <div className="absolute inset-0 bg-primary/20 blur-[60px] rounded-lg scale-90" />
                 <img
                   src={bookCoverSrc}
-                  alt="The FERRG Relationship Model — Coming Soon"
+                  alt="New book coming soon — Temple Obike"
                   className="relative w-72 md:w-80 shadow-2xl shadow-black/60"
+                  style={{ filter: 'blur(4px)' }}
                 />
                 {/* Coming soon ribbon */}
                 <div className="absolute -top-3 -right-3 bg-primary text-primary-foreground text-[10px] font-bold tracking-[0.15em] uppercase px-4 py-1.5 shadow-lg">
@@ -105,7 +106,7 @@ export default function FerrgBook() {
                 Understanding Why Love Isn't Enough.<br className="hidden md:block" /> And What Comes After.
               </h1>
               <p className="text-[10px] text-muted-foreground/40 tracking-[0.15em] uppercase mb-4">
-                The FERRG Relationship Model™ · © {new Date().getFullYear()} Temple Obike · All rights reserved
+                © {new Date().getFullYear()} Temple Obike · All rights reserved
               </p>
               <p className="text-lg text-muted-foreground font-light leading-relaxed mb-8 max-w-lg">
                 Most couples don't fail because they stopped loving each other. They fail because no one ever gave them a map for what love alone cannot fix. This book is that map.
@@ -371,7 +372,7 @@ export default function FerrgBook() {
         <div className="container mx-auto px-6 max-w-4xl flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-muted-foreground/50">
           <div className="flex flex-col gap-1">
             <span>© {new Date().getFullYear()} Temple Obike · Temple's Counsel &amp; Mind Academy Ltd. All rights reserved.</span>
-            <span className="text-muted-foreground/35">The FERRG Relationship Model™ is a trademark of Temple Obike. Unauthorised reproduction or use is prohibited.</span>
+            <span className="text-muted-foreground/35">This work and its methodology are protected intellectual property of Temple Obike. Unauthorised reproduction or use is prohibited.</span>
           </div>
           <a href="/" className="hover:text-primary transition whitespace-nowrap">← Back to templeobike.com</a>
         </div>
