@@ -3,6 +3,7 @@ import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { motion } from 'framer-motion';
+import { Loader2 } from 'lucide-react';
 
 const formSchema = z.object({
   name: z.string().min(2, "Name is required"),
@@ -16,20 +17,81 @@ const formSchema = z.object({
 
 type FormValues = z.infer<typeof formSchema>;
 
+// Web3Forms access key — set VITE_WEB3FORMS_KEY in your Replit Secrets.
+// Get a free key at https://web3forms.com (enter templescounsel@gmail.com as the destination).
+const WEB3FORMS_KEY = import.meta.env.VITE_WEB3FORMS_KEY as string | undefined;
+
 export function Contact() {
   const [submitted, setSubmitted] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
 
-  const { register, handleSubmit, formState: { errors } } = useForm<FormValues>({
+  const { register, handleSubmit, reset, formState: { errors } } = useForm<FormValues>({
     resolver: zodResolver(formSchema),
   });
 
-  const onSubmit = (data: FormValues) => {
-    const subject = `Speaking Inquiry: ${data.organization} - ${data.date}`;
-    const body = `Name: ${data.name}\nOrganization: ${data.organization}\nEvent Date: ${data.date}\nAudience Size: ${data.audience}\nTopic: ${data.topic}\nBudget: ${data.budget || 'Not specified'}\n\nMessage:\n${data.message}`;
+  const onSubmit = async (data: FormValues) => {
+    setSubmitting(true);
+    setSubmitError(null);
 
-    window.location.href = `mailto:hello@templeobike.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-    setSubmitted(true);
-    setTimeout(() => setSubmitted(false), 8000);
+    const submissionDate = new Date().toLocaleString('en-GB', {
+      dateStyle: 'full',
+      timeStyle: 'short',
+      timeZone: 'Africa/Lagos',
+    });
+
+    const messageBody = [
+      `Name: ${data.name}`,
+      `Organization: ${data.organization}`,
+      `Event Date: ${data.date}`,
+      `Audience Size: ${data.audience}`,
+      `Topic of Interest: ${data.topic}`,
+      `Budget Range: ${data.budget || 'Not specified'}`,
+      ``,
+      `Message:`,
+      data.message,
+      ``,
+      `---`,
+      `Submitted: ${submissionDate} (WAT)`,
+    ].join('\n');
+
+    if (WEB3FORMS_KEY) {
+      // Live delivery via Web3Forms → templescounsel@gmail.com
+      try {
+        const res = await fetch('https://api.web3forms.com/submit', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+          body: JSON.stringify({
+            access_key: WEB3FORMS_KEY,
+            subject: `Speaking Inquiry: ${data.organization} — ${data.date}`,
+            from_name: data.name,
+            name: data.name,
+            organization: data.organization,
+            event_date: data.date,
+            audience_size: data.audience,
+            topic: data.topic,
+            budget: data.budget || 'Not specified',
+            message: messageBody,
+          }),
+        });
+
+        const json = await res.json();
+        if (!json.success) throw new Error(json.message || 'Submission failed');
+
+        setSubmitted(true);
+        reset();
+      } catch (err) {
+        setSubmitError('Something went wrong sending your request. Please email directly: templescounsel@gmail.com');
+      }
+    } else {
+      // Fallback: open mailto if VITE_WEB3FORMS_KEY is not configured
+      const subject = `Speaking Inquiry: ${data.organization} — ${data.date}`;
+      window.location.href = `mailto:templescounsel@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(messageBody)}`;
+      setSubmitted(true);
+      reset();
+    }
+
+    setSubmitting(false);
   };
 
   return (
@@ -52,10 +114,10 @@ export function Contact() {
 
         <div className="bg-card border border-border p-8 md:p-12 relative overflow-hidden">
           {/* Subtle accent corner */}
-          <div className="absolute top-0 right-0 w-16 h-16 border-t-2 border-r-2 border-primary/20"></div>
+          <div className="absolute top-0 right-0 w-16 h-16 border-t-2 border-r-2 border-primary/20" />
 
           {submitted ? (
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               className="text-center py-20"
@@ -66,9 +128,9 @@ export function Contact() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                 </svg>
               </div>
-              <h3 className="text-2xl font-serif text-foreground mb-3">Request Drafted</h3>
+              <h3 className="text-2xl font-serif text-foreground mb-3">Request Sent</h3>
               <p className="text-muted-foreground font-light max-w-md mx-auto">
-                Your default email client has been opened to finalize and send this request to Temple's team.
+                Thanks — your request has been sent. Temple will follow up shortly.
               </p>
             </motion.div>
           ) : (
@@ -113,7 +175,7 @@ export function Contact() {
                     {...register('audience')}
                     data-testid="input-audience"
                     className="w-full bg-background border border-border focus:border-primary focus:ring-1 focus:ring-primary outline-none px-4 py-3.5 text-foreground transition-all rounded-none placeholder:text-muted-foreground/30 font-light"
-                    placeholder="e.g. 500-1000 attendees"
+                    placeholder="e.g. 500–1000 attendees"
                   />
                   {errors.audience && <p className="text-red-500 text-xs">{errors.audience.message}</p>}
                 </div>
@@ -129,15 +191,13 @@ export function Contact() {
                       className="w-full bg-background border border-border focus:border-primary focus:ring-1 focus:ring-primary outline-none px-4 py-3.5 text-foreground transition-all appearance-none rounded-none font-light"
                     >
                       <option value="">Select a topic...</option>
-                      <option value="Trust & Relationships">Trust & Relationships</option>
+                      <option value="Trust & Relationships">Trust &amp; Relationships</option>
                       <option value="Emotional Intelligence">Emotional Intelligence</option>
-                      <option value="Trauma & Repair">Trauma & Repair</option>
+                      <option value="Trauma & Repair">Trauma &amp; Repair</option>
                       <option value="Custom">Custom</option>
                     </select>
                     <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-muted-foreground">
-                      <svg width="10" height="6" viewBox="0 0 10 6" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M1 1L5 5L9 1" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                      </svg>
+                      <svg width="10" height="6" viewBox="0 0 10 6" fill="none"><path d="M1 1L5 5L9 1" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
                     </div>
                   </div>
                   {errors.topic && <p className="text-red-500 text-xs">{errors.topic.message}</p>}
@@ -158,9 +218,7 @@ export function Contact() {
                       <option value="Prefer not to say">Prefer not to say</option>
                     </select>
                     <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-muted-foreground">
-                      <svg width="10" height="6" viewBox="0 0 10 6" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M1 1L5 5L9 1" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                      </svg>
+                      <svg width="10" height="6" viewBox="0 0 10 6" fill="none"><path d="M1 1L5 5L9 1" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
                     </div>
                   </div>
                 </div>
@@ -178,13 +236,27 @@ export function Contact() {
                 {errors.message && <p className="text-red-500 text-xs">{errors.message.message}</p>}
               </div>
 
+              {submitError && (
+                <p className="text-red-400 text-sm bg-red-500/10 border border-red-500/20 px-4 py-3">
+                  {submitError}
+                </p>
+              )}
+
               <div className="pt-4">
                 <button
                   type="submit"
+                  disabled={submitting}
                   data-testid="button-submit-booking"
-                  className="w-full bg-primary hover:bg-[#c99a5e] text-primary-foreground font-semibold py-4.5 transition-all tracking-wide text-sm"
+                  className="w-full bg-primary hover:bg-[#c99a5e] disabled:opacity-60 disabled:cursor-not-allowed text-primary-foreground font-semibold py-4 transition-all tracking-wide text-sm flex items-center justify-center gap-2"
                 >
-                  Send Booking Request
+                  {submitting ? (
+                    <>
+                      <Loader2 className="w-4 h-4 animate-spin" />
+                      Sending…
+                    </>
+                  ) : (
+                    'Send Booking Request'
+                  )}
                 </button>
               </div>
             </form>
@@ -192,11 +264,21 @@ export function Contact() {
         </div>
 
         <div className="mt-12 flex flex-col md:flex-row items-center justify-center gap-6 text-sm text-muted-foreground">
-          <a href="mailto:hello@templeobike.com" data-testid="link-contact-email" className="hover:text-primary transition-colors flex items-center gap-2 pb-1 border-b border-transparent hover:border-primary">
-            hello@templeobike.com
+          <a
+            href="mailto:templescounsel@gmail.com"
+            data-testid="link-contact-email"
+            className="hover:text-primary transition-colors flex items-center gap-2 pb-1 border-b border-transparent hover:border-primary"
+          >
+            templescounsel@gmail.com
           </a>
           <span className="hidden md:inline text-border">—</span>
-          <a href="https://wa.me/234000000000" target="_blank" rel="noopener noreferrer" data-testid="link-contact-whatsapp" className="hover:text-primary transition-colors flex items-center gap-2 pb-1 border-b border-transparent hover:border-primary">
+          <a
+            href="https://wa.me/234000000000"
+            target="_blank"
+            rel="noopener noreferrer"
+            data-testid="link-contact-whatsapp"
+            className="hover:text-primary transition-colors flex items-center gap-2 pb-1 border-b border-transparent hover:border-primary"
+          >
             WhatsApp Inquiry
           </a>
         </div>

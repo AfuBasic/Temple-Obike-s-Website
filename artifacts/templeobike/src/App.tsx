@@ -8,6 +8,7 @@ import { Hero } from './components/Hero';
 import { CredibilityStrip } from './components/CredibilityStrip';
 import { About } from './components/About';
 import { Talks } from './components/Talks';
+import { SpeakingHistory } from './components/SpeakingHistory';
 import { Contact } from './components/Contact';
 import { Footer } from './components/Footer';
 
@@ -21,6 +22,7 @@ function SpeakerSite() {
       <CredibilityStrip />
       <About />
       <Talks />
+      <SpeakingHistory />
       <Contact />
       <Footer />
     </main>
