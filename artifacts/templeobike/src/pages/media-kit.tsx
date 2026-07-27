@@ -77,6 +77,7 @@ const media = [
     type: 'Television Feature',
     url: 'https://youtu.be/z3Ofsd6z9z8?feature=shared',
     videoId: 'z3Ofsd6z9z8',
+    kind: 'video' as const,
   },
   {
     title: 'Live Webinar — Relationship & Mental Health',
@@ -85,6 +86,25 @@ const media = [
     type: 'Webinar Recording',
     url: 'https://www.youtube.com/watch?v=GM5k6DRz6DU',
     videoId: 'GM5k6DRz6DU',
+    kind: 'video' as const,
+  },
+  {
+    title: '"Passion is 80% of the Success Game"',
+    description: 'Business Elites Africa profiles Temple Obike on the psychology of passion, purpose, and professional success — and what separates those who thrive from those who stall.',
+    outlet: 'Business Elites Africa',
+    type: 'Press Feature',
+    url: 'https://businesselitesafrica.com/2022/12/11/passion-is-80-of-the-success-game-temple-obike/',
+    videoId: '',
+    kind: 'article' as const,
+  },
+  {
+    title: 'YouTube Interview',
+    description: 'Temple Obike in conversation — covering emotional intelligence, marital resilience, and the mental health conversation happening across Africa and the diaspora.',
+    outlet: 'YouTube',
+    type: 'Video Interview',
+    url: 'https://www.youtube.com/watch?v=DTn2qapUFWI&t=32s',
+    videoId: 'DTn2qapUFWI',
+    kind: 'video' as const,
   },
 ];
 
@@ -332,51 +352,55 @@ export default function MediaKit() {
 
         {/* Press & Media */}
         <SectionLabel>Press & Media Appearances</SectionLabel>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(380px, 1fr))', gap: 20 }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(360px, 1fr))', gap: 20 }}>
           {media.map(m => (
             <a
-              key={m.videoId}
+              key={m.url}
               href={m.url}
               target="_blank"
               rel="noopener noreferrer"
-              style={{ display: 'block', textDecoration: 'none', background: '#111', border: '1px solid #1e1e1e', overflow: 'hidden', transition: 'border-color 0.2s' }}
+              style={{ display: 'block', textDecoration: 'none', background: '#111', border: '1px solid #1e1e1e', overflow: 'hidden' }}
               onMouseEnter={e => (e.currentTarget.style.borderColor = gold)}
               onMouseLeave={e => (e.currentTarget.style.borderColor = '#1e1e1e')}
             >
-              {/* Thumbnail */}
-              <div style={{ position: 'relative', width: '100%', paddingBottom: '56.25%', background: '#0d0d0d', overflow: 'hidden' }}>
-                <img
-                  src={`https://img.youtube.com/vi/${m.videoId}/hqdefault.jpg`}
-                  alt={m.title}
-                  style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', filter: 'brightness(0.85)' }}
-                />
-                {/* Play button overlay */}
-                <div style={{
-                  position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center',
-                }}>
-                  <div style={{
-                    width: 52, height: 52, borderRadius: '50%', background: 'rgba(0,0,0,0.65)',
-                    border: `2px solid ${gold}`, display: 'flex', alignItems: 'center', justifyContent: 'center',
-                  }}>
-                    <div style={{ width: 0, height: 0, borderTop: '10px solid transparent', borderBottom: '10px solid transparent', borderLeft: `16px solid ${gold}`, marginLeft: 4 }} />
+              {m.kind === 'video' ? (
+                /* ── Video card: YouTube thumbnail + play button ── */
+                <div style={{ position: 'relative', width: '100%', paddingBottom: '56.25%', background: '#0d0d0d', overflow: 'hidden' }}>
+                  <img
+                    src={`https://img.youtube.com/vi/${m.videoId}/hqdefault.jpg`}
+                    alt={m.title}
+                    style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', filter: 'brightness(0.85)' }}
+                  />
+                  <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    <div style={{ width: 52, height: 52, borderRadius: '50%', background: 'rgba(0,0,0,0.65)', border: `2px solid ${gold}`, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                      <div style={{ width: 0, height: 0, borderTop: '10px solid transparent', borderBottom: '10px solid transparent', borderLeft: `16px solid ${gold}`, marginLeft: 4 }} />
+                    </div>
+                  </div>
+                  <div style={{ position: 'absolute', top: 12, left: 12, background: 'rgba(0,0,0,0.75)', border: `1px solid ${gold}`, padding: '3px 10px', fontSize: 9, fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase', color: gold }}>
+                    {m.type}
                   </div>
                 </div>
-                {/* Type badge */}
-                <div style={{
-                  position: 'absolute', top: 12, left: 12,
-                  background: 'rgba(0,0,0,0.75)', border: `1px solid ${gold}`,
-                  padding: '3px 10px', fontSize: 9, fontWeight: 700,
-                  letterSpacing: '0.12em', textTransform: 'uppercase', color: gold,
-                }}>
-                  {m.type}
+              ) : (
+                /* ── Article card: typographic header band ── */
+                <div style={{ background: '#0d0d0d', borderBottom: '1px solid #1e1e1e', padding: '24px 22px', display: 'flex', alignItems: 'center', gap: 16, minHeight: 100 }}>
+                  <div style={{ width: 44, height: 44, borderRadius: '50%', border: `1.5px solid ${gold}`, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                    <span style={{ fontSize: 18, color: gold, lineHeight: 1 }}>✦</span>
+                  </div>
+                  <div>
+                    <div style={{ fontSize: 9, color: gold, letterSpacing: '0.18em', textTransform: 'uppercase', fontWeight: 700, marginBottom: 4 }}>{m.type}</div>
+                    <div style={{ fontSize: 12, color: '#aaa' }}>{m.outlet}</div>
+                  </div>
                 </div>
-              </div>
-              {/* Text */}
+              )}
+
+              {/* Text body — shared */}
               <div style={{ padding: '20px 22px 22px' }}>
                 <div style={{ fontSize: 10, color: '#555', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: 8 }}>{m.outlet}</div>
                 <div style={{ fontSize: 15, fontFamily: "'Playfair Display', Georgia, serif", color: '#e5e5e5', marginBottom: 10, lineHeight: 1.35 }}>{m.title}</div>
                 <p style={{ fontSize: 12, color: '#777', lineHeight: 1.7, margin: 0 }}>{m.description}</p>
-                <div style={{ marginTop: 14, fontSize: 11, color: gold, letterSpacing: '0.06em' }}>Watch on YouTube →</div>
+                <div style={{ marginTop: 14, fontSize: 11, color: gold, letterSpacing: '0.06em' }}>
+                  {m.kind === 'video' ? 'Watch on YouTube →' : 'Read the feature →'}
+                </div>
               </div>
             </a>
           ))}
