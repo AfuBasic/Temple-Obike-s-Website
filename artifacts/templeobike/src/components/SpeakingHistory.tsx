@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, Radio, Tv, Video, Users, MessageSquare, Mic, Building2, Star, Globe } from 'lucide-react';
 import stageSrc from '@assets/Screenshot_20260727_101338_Gallery_1785143683280.jpg';
+import logoSrc from '@assets/IMG-20260727-WA0003_1785149135010.jpg';
 
 type FormatIcon = 'radio' | 'tv' | 'webinar' | 'webinar2' | 'event' | 'panel' | 'keynote' | 'symposium' | 'stage';
 
@@ -196,8 +197,8 @@ function EventPoster({ engagement }: { engagement: Engagement }) {
             <h3 className="font-serif text-xl text-white leading-snug">{engagement.venue}</h3>
             <p className="text-sm text-white/60 font-light mt-1 leading-snug">{engagement.topic}</p>
           </div>
-          <div className="shrink-0 text-right">
-            <span className="font-serif text-3xl text-primary/50 font-bold tracking-tighter">TO</span>
+          <div className="shrink-0">
+            <img src={logoSrc} alt="Temple Obike logo" className="w-16 opacity-60 select-none" draggable={false} />
           </div>
         </div>
         <div className="mt-4 pt-4 border-t border-white/10">
@@ -300,14 +301,14 @@ function EngagementCard({
         </div>
       )}
 
-      <div className="flex flex-col items-center justify-center px-6 pt-10 pb-6 min-h-[220px]">
-        <span className="absolute text-[90px] font-serif font-bold text-primary/5 select-none leading-none tracking-tighter pointer-events-none">
-          TO
-        </span>
-        <span className="relative font-serif text-5xl font-bold text-primary tracking-tighter group-hover:text-[#c99a5e] transition-colors duration-300 z-10">
-          TO
-        </span>
-        <div className="w-6 h-[1px] bg-primary/40 mt-4 mb-4 group-hover:w-12 transition-all duration-500" />
+      <div className="flex flex-col items-center justify-center px-4 pt-8 pb-4 min-h-[220px]">
+        <img
+          src={logoSrc}
+          alt="Temple Obike logo"
+          className="w-28 select-none group-hover:opacity-90 transition-opacity duration-300 z-10 relative"
+          draggable={false}
+        />
+        <div className="w-6 h-[1px] bg-primary/40 mt-4 mb-3 group-hover:w-12 transition-all duration-500" />
         <p className="text-[10px] text-muted-foreground uppercase tracking-[0.18em] font-semibold text-center leading-snug z-10 relative">
           {engagement.date}
         </p>

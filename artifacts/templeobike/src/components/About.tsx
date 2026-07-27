@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion';
+import logoSrc from '@assets/IMG-20260727-WA0003_1785149135010.jpg';
 
 export function About() {
   return (
@@ -40,13 +41,13 @@ export function About() {
               Decorative Monogram / Structural Element 
               Replaces the missing secondary photo while maintaining presence.
             */}
-            <div className="relative w-72 h-72 md:w-96 md:h-96 flex items-center justify-center">
-              <div className="absolute inset-0 border border-primary/20 rounded-full animate-[spin_60s_linear_infinite]"></div>
-              <div className="absolute inset-4 border border-border rounded-full animate-[spin_40s_linear_infinite_reverse]"></div>
-              <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent rounded-full mix-blend-overlay"></div>
-              <span className="text-[120px] md:text-[160px] font-serif text-primary/30 select-none tracking-tighter">
-                TO
-              </span>
+            <div className="relative flex items-center justify-center">
+              <img
+                src={logoSrc}
+                alt="Temple Obike — TO monogram"
+                className="w-64 md:w-80 select-none"
+                draggable={false}
+              />
             </div>
           </motion.div>
           

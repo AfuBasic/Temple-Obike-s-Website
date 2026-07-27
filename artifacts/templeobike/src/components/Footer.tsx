@@ -1,3 +1,5 @@
+import logoSrc from '@assets/IMG-20260727-WA0003_1785149135010.jpg';
+
 export function Footer() {
   return (
     <footer className="bg-background border-t border-border py-16">
@@ -10,10 +12,12 @@ export function Footer() {
           </div>
 
           <div className="order-1 md:order-2">
-            {/* The TO Monogram logo placeholder */}
-            <div className="font-serif text-5xl text-primary font-bold tracking-tighter select-none">
-              TO
-            </div>
+            <img
+              src={logoSrc}
+              alt="Temple Obike logo"
+              className="w-28 select-none"
+              draggable={false}
+            />
           </div>
 
           <div className="flex flex-col items-center md:items-end gap-6 order-2 md:order-3">
