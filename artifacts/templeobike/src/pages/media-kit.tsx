@@ -16,7 +16,7 @@ const stats = [
   { figure: '2.3M+',       label: 'Online readers reached since 2021' },
   { figure: '70%',         label: 'Diaspora client base (UK, US, Canada)' },
   { figure: '9+',          label: 'Keynote & speaking engagements' },
-  { figure: '3',           label: 'Published books on Amazon' },
+  { figure: '2',           label: 'Published books on Amazon' },
   { figure: '15+ years',   label: 'In practice & community advocacy' },
 ];
 
@@ -262,7 +262,7 @@ export default function MediaKit() {
         {/* Short bio */}
         <SectionLabel>Short Bio (for event programmes)</SectionLabel>
         <p style={{ fontSize: 15, lineHeight: 1.85, color: '#ccc', background: '#111', border: '1px solid #1e1e1e', padding: '24px 28px', borderLeft: `3px solid ${gold}` }}>
-          Temple Obike (LMFT) is a Lagos-based Licensed Marriage and Family Therapist, marriage coach and interventionist, keynote speaker, entrepreneur, and three-time published author. He is the Founder and CEO of Temple's Counsel & Mind Academy, one of Nigeria's most recognised relationship and mental wellness brands, with offices in Victoria Island, Lagos and Wuse 2, Abuja. He has logged over 2,380 hours of live therapy sessions and reached more than 2,300,000 readers online since 2021. Seventy percent of his clients are drawn from the global diaspora across the UK, US, Canada, and South Africa. He is the author of <em>Soul Bodega</em>, <em>Discover Your Best Authentic Self</em>, and <em>Memoirs of The Rail man's Son</em>, all available on Amazon.
+          Temple Obike (LMFT) is a Lagos-based Licensed Marriage and Family Therapist, marriage coach and interventionist, keynote speaker, entrepreneur, and three-time published author. He is the Founder and CEO of Temple's Counsel & Mind Academy, one of Nigeria's most recognised relationship and mental wellness brands, with offices in Victoria Island, Lagos and Wuse 2, Abuja. He has logged over 2,380 hours of live therapy sessions and reached more than 2,300,000 readers online since 2021. Seventy percent of his clients are drawn from the global diaspora across the UK, US, Canada, and South Africa. He is the author of <em>Soul Bodega</em> and <em>Discover Your Best Authentic Self</em>, both available on Amazon, with a new book coming soon in 2026.
         </p>
 
         <Divider />
@@ -280,7 +280,7 @@ export default function MediaKit() {
             Temple's keynote work spans corporate wellness, marriage and family resilience, emotional intelligence for leaders, and faith-based personal development. He has addressed national summits attended by presidential representatives, Cabinet ministers, and state governors; international webinars drawing couples from over 14 countries; and community forums across Lagos, Abuja, and the diaspora.
           </p>
           <p>
-            He is the author of three books: <em>Soul Bodega</em>, <em>Discover Your Best Authentic Self</em>, and <em>Memoirs of The Rail man's Son</em>, all available on Amazon. He is married to his primary school sweetheart; they are raising four children together. That personal foundation gives his work on marriage a credibility no qualification alone can confer.
+            He is the author of <em>Soul Bodega</em> and <em>Discover Your Best Authentic Self</em>, both available on Amazon, with a new book forthcoming in 2026. He is married to his primary school sweetheart; they are raising four children together. That personal foundation gives his work on marriage a credibility no qualification alone can confer.
           </p>
         </div>
 
