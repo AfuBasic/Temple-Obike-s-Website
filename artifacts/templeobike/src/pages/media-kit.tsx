@@ -15,6 +15,21 @@ const stats = [
   { figure: '15+ years',   label: 'In practice & community advocacy' },
 ];
 
+const searchStats = [
+  { figure: '3.4M',   label: 'Google Search impressions', sub: '16-month period' },
+  { figure: '36.7K',  label: 'Organic clicks from search', sub: '16-month period' },
+  { figure: '7.5',    label: 'Average Google ranking position', sub: 'Top 10 consistently' },
+  { figure: '254+',   label: 'Indexed pages on Google', sub: 'templescounsel.com' },
+];
+
+const topPages = [
+  { path: 'How to Handle Your Partner\'s Sexual Past (Retroactive Jealousy)', clicks: '20,911', impressions: '1,129,242' },
+  { path: 'Powerful Ways to Stop the Four Horsemen That Ruins Marriages', clicks: '5,744', impressions: '709,902' },
+  { path: 'Book Appointment', clicks: '1,470', impressions: '101,730' },
+  { path: 'Emotional Affairs — How to Get Yourself Back', clicks: '835', impressions: '39,085' },
+  { path: 'Hero Syndrome Psychology', clicks: '709', impressions: '94,892' },
+];
+
 const credentials = [
   'Licensed Marriage and Family Therapist (LMFT)',
   'Certified Hypnotherapist (CHT) — Karen Wells Institute, USA',
@@ -167,6 +182,44 @@ export default function MediaKit() {
               <div style={{ fontSize: 12, color: '#888', marginTop: 8, lineHeight: 1.5 }}>{s.label}</div>
             </div>
           ))}
+        </div>
+
+        <Divider />
+
+        {/* Digital reach */}
+        <SectionLabel>Digital Reach — Google Search (16 months, templescounsel.com)</SectionLabel>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: 16, marginBottom: 24 }}>
+          {searchStats.map(s => (
+            <div key={s.label} style={{ background: '#111', border: '1px solid #1e1e1e', padding: '22px 24px' }}>
+              <div style={{ fontSize: 30, fontFamily: "'Playfair Display', Georgia, serif", fontWeight: 600, color: gold, lineHeight: 1 }}>{s.figure}</div>
+              <div style={{ fontSize: 12, color: '#888', marginTop: 8, lineHeight: 1.5 }}>{s.label}</div>
+              <div style={{ fontSize: 10, color: '#555', marginTop: 4, letterSpacing: '0.05em' }}>{s.sub}</div>
+            </div>
+          ))}
+        </div>
+        <div style={{ background: '#111', border: '1px solid #1e1e1e', padding: '20px 24px' }}>
+          <div style={{ fontSize: 10, color: gold, letterSpacing: '0.15em', textTransform: 'uppercase', marginBottom: 14 }}>Top Performing Content</div>
+          <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+            <thead>
+              <tr style={{ borderBottom: '1px solid #1e1e1e' }}>
+                <th style={{ textAlign: 'left', fontSize: 10, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: '#555', padding: '6px 0', width: '60%' }}>Article</th>
+                <th style={{ textAlign: 'right', fontSize: 10, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: '#555', padding: '6px 8px' }}>Clicks</th>
+                <th style={{ textAlign: 'right', fontSize: 10, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: '#555', padding: '6px 0' }}>Impressions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {topPages.map((p, i) => (
+                <tr key={p.path} style={{ borderBottom: i < topPages.length - 1 ? '1px solid #161616' : 'none' }}>
+                  <td style={{ padding: '11px 0', fontSize: 12, color: '#aaa', lineHeight: 1.4 }}>{p.path}</td>
+                  <td style={{ padding: '11px 8px', fontSize: 12, fontWeight: 600, color: gold, textAlign: 'right' }}>{p.clicks}</td>
+                  <td style={{ padding: '11px 0', fontSize: 12, color: '#666', textAlign: 'right' }}>{p.impressions}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+          <div style={{ marginTop: 14, fontSize: 11, color: '#444', fontStyle: 'italic' }}>
+            Source: Google Search Console · Data period: March 2025 – July 2026 · 254+ pages indexed
+          </div>
         </div>
 
         <Divider />
