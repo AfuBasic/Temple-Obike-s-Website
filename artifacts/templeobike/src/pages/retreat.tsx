@@ -20,14 +20,6 @@ interface FormFields {
 
 // ─── Data ─────────────────────────────────────────────────────────────────────
 
-const stages = [
-  { letter: 'F', label: 'Fracture' },
-  { letter: 'E', label: 'Exposure' },
-  { letter: 'R', label: 'Repair' },
-  { letter: 'R', label: 'Rebuild' },
-  { letter: 'G', label: 'Gold', active: true },
-];
-
 const locations = [
   {
     id: 'accra' as const,
@@ -156,6 +148,65 @@ const css = `
   .retreat-loc-opt input:checked + .card { border-color: var(--gold); background: rgba(201,162,39,0.08); color: var(--gold-soft); }
   .loc-card-hover { transition: border-color .25s, transform .25s; }
   .loc-card-hover:hover { border-color: rgba(201,162,39,0.4) !important; transform: translateY(-4px); }
+
+  /* ── Responsive grids ── */
+  .retreat-hero-grid {
+    display: grid;
+    grid-template-columns: 1.15fr 0.85fr;
+    gap: 56px;
+    align-items: center;
+  }
+  .retreat-book-grid {
+    display: grid;
+    grid-template-columns: 0.9fr 1.1fr;
+    gap: 56px;
+    align-items: start;
+  }
+  .retreat-form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  .retreat-loc-grid {
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    gap: 10px;
+  }
+  .retreat-nav-inner {
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: 16px 28px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .retreat-nav-inner .retreat-btn {
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  @media (max-width: 768px) {
+    .retreat-hero-grid {
+      grid-template-columns: 1fr;
+      gap: 32px;
+    }
+    .retreat-book-grid {
+      grid-template-columns: 1fr;
+      gap: 32px;
+    }
+    .retreat-form-row {
+      grid-template-columns: 1fr;
+    }
+    .retreat-loc-grid {
+      grid-template-columns: 1fr;
+    }
+    .retreat-nav-inner {
+      padding: 14px 18px;
+      gap: 12px;
+    }
+    .retreat-nav-inner span {
+      font-size: 0.85rem !important;
+    }
+  }
 `;
 
 // ─── Page ─────────────────────────────────────────────────────────────────────
@@ -219,7 +270,7 @@ export default function Retreat() {
 
       {/* ── NAV ── */}
       <nav style={{ position: 'sticky', top: 0, zIndex: 50, background: 'rgba(11,11,10,0.88)', backdropFilter: 'blur(10px)', borderBottom: `1px solid ${line}` }}>
-        <div style={{ maxWidth: 1120, margin: '0 auto', padding: '16px 28px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+        <div className="retreat-nav-inner">
           <a href="/" style={{ display: 'flex', alignItems: 'center', gap: 12, textDecoration: 'none' }}>
             <img src={logoSrc} alt="Temple Obike" style={{ width: 34, opacity: 0.9 }} />
             <span style={{ fontFamily: "'Fraunces', Georgia, serif", fontSize: '1.05rem', color: cream }}>
@@ -238,34 +289,13 @@ export default function Retreat() {
         overflow: 'hidden',
         position: 'relative',
       }}>
-        <div style={{ maxWidth: 1120, margin: '0 auto', padding: '0 28px', display: 'grid', gridTemplateColumns: '1.15fr 0.85fr', gap: 56, alignItems: 'center' }}>
+        <div className="retreat-hero-grid" style={{ maxWidth: 1120, margin: '0 auto', padding: '0 28px' }}>
 
           {/* Left */}
           <div>
             <div className="retreat-eyebrow">Limited Cohorts · October 2026</div>
 
-            {/* Stage track */}
-            <div style={{ display: 'flex', alignItems: 'center', margin: '24px 0 28px', flexWrap: 'wrap' as const }}>
-              {stages.map((s, i) => (
-                <div key={i} style={{ display: 'flex', alignItems: 'center' }}>
-                  <div style={{ display: 'flex', flexDirection: 'column' as const, alignItems: 'center', gap: 6, minWidth: 56 }}>
-                    <div style={{
-                      width: 34, height: 34, borderRadius: '50%',
-                      display: 'flex', alignItems: 'center', justifyContent: 'center',
-                      fontFamily: "'IBM Plex Mono', monospace", fontSize: '0.82rem',
-                      background: s.active ? gold : 'transparent',
-                      color: s.active ? '#151107' : stone,
-                      border: `1px solid ${s.active ? gold : line}`,
-                      boxShadow: s.active ? '0 0 0 4px rgba(201,162,39,0.18)' : 'none',
-                    }}>{s.letter}</div>
-                    <div style={{ fontFamily: "'IBM Plex Mono', monospace", fontSize: '0.6rem', letterSpacing: '0.08em', textTransform: 'uppercase' as const, color: s.active ? '#e2c15c' : stone }}>{s.label}</div>
-                  </div>
-                  {i < stages.length - 1 && <div style={{ width: 26, height: 1, background: line, margin: '0 2px 18px' }} />}
-                </div>
-              ))}
-            </div>
-
-            <h1 style={{ fontSize: '3rem', lineHeight: 1.06, color: cream }}>
+            <h1 style={{ marginTop: 24 }} style={{ fontSize: '3rem', lineHeight: 1.06, color: cream }}>
               Three nights to reach<br />
               <span style={{ color: '#e2c15c', fontStyle: 'italic', fontWeight: 450 }}>the Gold stage,</span> together.
             </h1>
@@ -420,7 +450,7 @@ export default function Retreat() {
 
       {/* ── BOOKING FORM ── */}
       <section id="book" style={{ padding: '78px 0', background: panel }}>
-        <div style={{ maxWidth: 1120, margin: '0 auto', padding: '0 28px', display: 'grid', gridTemplateColumns: '0.9fr 1.1fr', gap: 56, alignItems: 'start' }}>
+        <div className="retreat-book-grid" style={{ maxWidth: 1120, margin: '0 auto', padding: '0 28px' }}>
 
           {/* Left */}
           <div>
@@ -437,7 +467,7 @@ export default function Retreat() {
 
           {/* Form */}
           <form onSubmit={submit} style={{ display: 'flex', flexDirection: 'column' as const, gap: 16 }}>
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
+            <div className="retreat-form-row">
               <div>
                 <label className="retreat-label" htmlFor="name">Your Name</label>
                 <input id="name" className="retreat-input" value={form.name} onChange={set('name')} placeholder="First & last name" />
@@ -450,7 +480,7 @@ export default function Retreat() {
               </div>
             </div>
 
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
+            <div className="retreat-form-row">
               <div>
                 <label className="retreat-label" htmlFor="email">Email</label>
                 <input id="email" type="email" className="retreat-input" value={form.email} onChange={set('email')} placeholder="you@email.com" />
@@ -465,7 +495,7 @@ export default function Retreat() {
 
             <div>
               <label className="retreat-label">Preferred Location</label>
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 10 }}>
+              <div className="retreat-loc-grid">
                 {(['Accra', 'Mauritius', 'Virtual'] as Location[]).map(loc => (
                   <label key={loc} className="retreat-loc-opt" style={{ cursor: 'pointer' }}>
                     <input type="radio" name="location" value={loc} checked={form.location === loc} onChange={() => setForm(f => ({ ...f, location: loc }))} />
