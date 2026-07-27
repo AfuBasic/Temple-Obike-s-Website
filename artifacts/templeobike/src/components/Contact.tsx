@@ -272,15 +272,20 @@ export function Contact() {
             templescounsel@gmail.com
           </a>
           <span className="hidden md:inline text-border">—</span>
-          <a
-            href="https://wa.me/234000000000"
-            target="_blank"
-            rel="noopener noreferrer"
-            data-testid="link-contact-whatsapp"
-            className="hover:text-primary transition-colors flex items-center gap-2 pb-1 border-b border-transparent hover:border-primary"
-          >
-            WhatsApp Inquiry
-          </a>
+          <div className="flex flex-col items-center md:items-start gap-1">
+            <a
+              href="https://wa.me/2348109055475?text=Hi%20Temple%2C%20I'd%20like%20to%20enquire%20about%20a%20speaking%20engagement."
+              target="_blank"
+              rel="noopener noreferrer"
+              data-testid="link-contact-whatsapp"
+              className="hover:text-primary transition-colors flex items-center gap-2 pb-1 border-b border-transparent hover:border-primary"
+            >
+              WhatsApp: +234 810 905 5475
+            </a>
+            <span className="text-xs text-muted-foreground/50 font-light">
+              Goes directly to Temple's team — expect a quick response.
+            </span>
+          </div>
         </div>
       </div>
     </section>
