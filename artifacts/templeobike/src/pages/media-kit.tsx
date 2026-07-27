@@ -285,6 +285,63 @@ export default function MediaKit() {
 
         <Divider />
 
+        {/* Published Works — after full bio */}
+        <SectionLabel>Published Works</SectionLabel>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))', gap: 20, marginBottom: 28 }}>
+          {books.map(b => {
+            const isInternal = b.link.startsWith('/');
+            const isComing = !!(b as any).badge;
+            return (
+              <div key={b.title} style={{ position: 'relative', display: 'flex', flexDirection: 'column', background: '#111', border: '1px solid #1e1e1e' }}>
+                {/* Cover area */}
+                {b.cover && (
+                  <div style={{ background: '#0a0a0a', display: 'flex', justifyContent: 'center', padding: '20px 20px 16px', position: 'relative', overflow: 'hidden' }}>
+                    <img
+                      src={b.cover}
+                      alt={b.title}
+                      style={{ width: 120, height: 'auto', display: 'block', boxShadow: '0 8px 24px rgba(0,0,0,0.6)', filter: isComing ? 'blur(4px)' : 'none', transition: 'filter 0.3s' }}
+                    />
+                    {isComing && (
+                      <div style={{ position: 'absolute', inset: 0, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 6 }}>
+                        <div style={{ background: gold, color: '#0a0a0a', fontSize: 9, fontWeight: 700, letterSpacing: '0.18em', textTransform: 'uppercase', padding: '4px 12px' }}>
+                          Coming Soon
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                )}
+                {/* Text */}
+                <div style={{ padding: '18px 20px 20px', borderTop: `2px solid ${gold}`, flex: 1, display: 'flex', flexDirection: 'column' }}>
+                  <div style={{ fontSize: 15, fontFamily: "'Playfair Display', Georgia, serif", fontStyle: 'italic', color: '#e5e5e5', marginBottom: 6, lineHeight: 1.3 }}>{b.title}</div>
+                  {b.subtitle && <div style={{ fontSize: 10, color: gold, letterSpacing: '0.06em', textTransform: 'uppercase', marginBottom: 10 }}>{b.subtitle}</div>}
+                  <div style={{ fontSize: 12, color: '#888', lineHeight: 1.7, marginBottom: 14, flex: 1 }}>{b.desc}</div>
+                  <a
+                    href={b.link}
+                    target={isInternal ? '_self' : '_blank'}
+                    rel={isInternal ? '' : 'noopener noreferrer'}
+                    style={{ fontSize: 11, color: gold, letterSpacing: '0.08em', textTransform: 'uppercase', textDecoration: 'none' }}
+                  >
+                    {isInternal ? 'Reserve Your Copy →' : 'Available on Amazon →'}
+                  </a>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+        {/* Pre-order CTA for FERRG */}
+        <a
+          href="/ferrg-book"
+          style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', background: '#111', border: `1px solid ${gold}`, padding: '18px 24px', textDecoration: 'none', marginBottom: 0 }}
+        >
+          <div>
+            <div style={{ fontSize: 10, color: gold, letterSpacing: '0.18em', textTransform: 'uppercase', fontWeight: 700, marginBottom: 4 }}>New Book — Free Pre-Order Open</div>
+            <div style={{ fontSize: 14, color: '#e5e5e5', fontFamily: "'Playfair Display', Georgia, serif", fontStyle: 'italic' }}>The FERRG Relationship Model™ — Reserve your copy before it drops</div>
+          </div>
+          <div style={{ color: gold, fontSize: 20, marginLeft: 24, flexShrink: 0 }}>→</div>
+        </a>
+
+        <Divider />
+
         {/* Stats grid */}
         <SectionLabel>By the Numbers</SectionLabel>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))', gap: 16 }}>
@@ -488,48 +545,6 @@ export default function MediaKit() {
               </div>
             </a>
           ))}
-        </div>
-
-        <Divider />
-
-        {/* Books */}
-        <SectionLabel>Published Works</SectionLabel>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))', gap: 20 }}>
-          {books.map(b => {
-            const isInternal = b.link.startsWith('/');
-            return (
-              <a
-                key={b.title}
-                href={b.link}
-                target={isInternal ? '_self' : '_blank'}
-                rel={isInternal ? '' : 'noopener noreferrer'}
-                style={{ textDecoration: 'none', background: '#111', border: '1px solid #1e1e1e', display: 'flex', flexDirection: 'column', position: 'relative' }}
-              >
-                {(b as any).badge && (
-                  <div style={{ position: 'absolute', top: 10, right: 10, background: gold, color: '#0a0a0a', fontSize: 9, fontWeight: 700, letterSpacing: '0.14em', textTransform: 'uppercase', padding: '3px 8px', zIndex: 1 }}>
-                    {(b as any).badge}
-                  </div>
-                )}
-                {b.cover && (
-                  <div style={{ background: '#0a0a0a', display: 'flex', justifyContent: 'center', padding: '20px 20px 16px' }}>
-                    <img
-                      src={b.cover}
-                      alt={b.title}
-                      style={{ width: 120, height: 'auto', display: 'block', boxShadow: '0 8px 24px rgba(0,0,0,0.6)' }}
-                    />
-                  </div>
-                )}
-                <div style={{ padding: '18px 20px 20px', borderTop: `2px solid ${gold}`, flex: 1, display: 'flex', flexDirection: 'column' }}>
-                  <div style={{ fontSize: 15, fontFamily: "'Playfair Display', Georgia, serif", fontStyle: 'italic', color: '#e5e5e5', marginBottom: 6, lineHeight: 1.3 }}>{b.title}</div>
-                  {b.subtitle && <div style={{ fontSize: 10, color: gold, letterSpacing: '0.06em', textTransform: 'uppercase', marginBottom: 10 }}>{b.subtitle}</div>}
-                  <div style={{ fontSize: 12, color: '#888', lineHeight: 1.7, marginBottom: 14, flex: 1 }}>{b.desc}</div>
-                  <div style={{ fontSize: 11, color: gold, letterSpacing: '0.08em', textTransform: 'uppercase' }}>
-                    {isInternal ? 'Reserve Your Copy →' : 'Available on Amazon →'}
-                  </div>
-                </div>
-              </a>
-            );
-          })}
         </div>
 
         <Divider />
