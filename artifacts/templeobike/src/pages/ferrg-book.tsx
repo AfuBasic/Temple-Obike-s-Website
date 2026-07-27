@@ -6,10 +6,11 @@ import bookCoverSrc from '@assets/f123ebc6-1cd8-4218-836b-4da5f9aaa958_178516671
 import logoSrc from '@assets/IMG-20260727-WA0003_1785149135010.jpg';
 
 const schema = z.object({
-  name:  z.string().min(2, 'Please enter your name'),
-  email: z.string().email('Please enter a valid email address'),
-  phone: z.string().optional(),
-  note:  z.string().optional(),
+  name:     z.string().min(2, 'Please enter your name'),
+  email:    z.string().email('Please enter a valid email address'),
+  phone:    z.string().optional(),
+  note:     z.string().optional(),
+  botcheck: z.string().optional(), // honeypot — must stay empty for real users
 });
 type FormData = z.infer<typeof schema>;
 
@@ -23,6 +24,12 @@ export default function FerrgBook() {
   });
 
   const onSubmit = async (data: FormData) => {
+    // Honeypot: if a bot filled the hidden field, silently discard
+    if (data.botcheck) {
+      setStatus('sent');
+      reset();
+      return;
+    }
     setStatus('sending');
     try {
       const res = await fetch('https://api.web3forms.com/submit', {
@@ -34,8 +41,10 @@ export default function FerrgBook() {
           subject: 'Pre-Order: The FERRG Relationship Model',
           from_name: data.name,
           email: data.email,
+          replyto: data.email,
           phone: data.phone || 'Not provided',
           note: data.note || 'Not provided',
+          botcheck: data.botcheck ?? '',
         }),
       });
       const json = await res.json();
@@ -295,6 +304,8 @@ export default function FerrgBook() {
             </div>
           ) : (
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
+              {/* Honeypot — hidden from real users; bots fill it in, causing the submission to be discarded */}
+              <input {...register('botcheck')} type="text" name="botcheck" tabIndex={-1} autoComplete="off" style={{ display: 'none' }} aria-hidden="true" />
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                 <div>
                   <label className="block text-xs font-semibold tracking-[0.12em] uppercase text-muted-foreground mb-2">

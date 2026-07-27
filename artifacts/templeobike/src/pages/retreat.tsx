@@ -24,6 +24,7 @@ interface FormFields {
   location: Location | '';
   virtualTier: VirtualTier | '';
   note: string;
+  botcheck: string; // honeypot — must stay empty for real users
 }
 
 // ─── Data ─────────────────────────────────────────────────────────────────────
@@ -220,7 +221,7 @@ const css = `
 // ─── Page ─────────────────────────────────────────────────────────────────────
 
 export default function Retreat() {
-  const [form, setForm] = useState<FormFields>({ name: '', partner: '', email: '', phone: '', location: '', virtualTier: '', note: '' });
+  const [form, setForm] = useState<FormFields>({ name: '', partner: '', email: '', phone: '', location: '', virtualTier: '', note: '', botcheck: '' });
   const [status, setStatus] = useState<Status>('idle');
   const [errors, setErrors] = useState<Partial<Record<keyof FormFields, string>>>({});
 
@@ -253,6 +254,12 @@ export default function Retreat() {
 
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
+    // Honeypot: if a bot filled the hidden field, silently discard
+    if (form.botcheck) {
+      setStatus('sent');
+      setForm({ name: '', partner: '', email: '', phone: '', location: '', virtualTier: '', note: '', botcheck: '' });
+      return;
+    }
     const errs = validate();
     if (Object.keys(errs).length) { setErrors(errs); return; }
     setErrors({});
@@ -267,16 +274,18 @@ export default function Retreat() {
           subject: `Gold Retreat Booking — ${form.location}${form.location === 'Virtual' ? ` · ${virtualTierLabel(form.virtualTier)}` : ''}`,
           from_name: form.name,
           email: form.email,
+          replyto: form.email,
           phone: form.phone,
           partner: form.partner,
           location: form.location,
           ...(form.location === 'Virtual' && { virtual_package: virtualTierLabel(form.virtualTier) }),
           note: form.note || 'Not provided',
+          botcheck: '',
         }),
       });
       const json = await res.json();
       setStatus(json.success ? 'sent' : 'error');
-      if (json.success) setForm({ name: '', partner: '', email: '', phone: '', location: '', virtualTier: '', note: '' });
+      if (json.success) setForm({ name: '', partner: '', email: '', phone: '', location: '', virtualTier: '', note: '', botcheck: '' });
     } catch { setStatus('error'); }
   };
 
@@ -489,6 +498,8 @@ export default function Retreat() {
 
           {/* Form */}
           <form onSubmit={submit} style={{ display: 'flex', flexDirection: 'column' as const, gap: 16 }}>
+            {/* Honeypot — hidden from real users; bots fill it in, causing the submission to be discarded */}
+            <input type="text" name="botcheck" value={form.botcheck} onChange={set('botcheck')} tabIndex={-1} autoComplete="off" style={{ display: 'none' }} aria-hidden="true" />
             <div className="retreat-form-row">
               <div>
                 <label className="retreat-label" htmlFor="name">Your Name</label>
