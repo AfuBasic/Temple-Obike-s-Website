@@ -25,8 +25,8 @@ export function CredibilityStrip() {
     },
     { 
       icon: BookOpen, 
-      label: "Published Author", 
-      sub: "Available on Amazon", 
+      label: "Two-Time Published Author", 
+      sub: "Soul Bodega · Memoirs of The Rail man's Son", 
       link: "https://www.amazon.com/s?k=temple+obike",
       testid: "link-credibility-author"
     },

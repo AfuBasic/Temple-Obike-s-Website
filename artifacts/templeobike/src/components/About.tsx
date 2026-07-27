@@ -18,13 +18,13 @@ export function About() {
             </span>
             <div className="space-y-6 text-lg md:text-xl text-muted-foreground font-light leading-relaxed">
               <p className="text-foreground font-normal">
-                Temple Obike is a Lagos psychotherapist, relationship interventionist, and business strategist who has spent his career helping individuals, couples, and brands move through fracture toward repair.
+                Temple Obike (LMFT, CHT) is a Licensed Marriage and Family Therapist, certified hypnotherapist, keynote speaker, and author based in Lagos. Seventy percent of his client base spans the global diaspora. The remaining thirty percent is drawn from Nigeria and the broader pan-African community.
               </p>
               <p>
-                His work spans trauma resolution, emotional intelligence, and market entry strategy. That combination has made him a recurring voice on Nigerian television and radio, and a recognised name in African branding and PR circles.
+                He began counselling informally in 2008, advising youth groups in underserved Lagos neighbourhoods under the Grassroots and Shoots initiative. That foundation grew into Temple's Counsel and Mind Academy, a private practice that has now logged over 70,000 minutes of live and virtual therapy and empowered more than a thousand individuals. He holds a Psychotherapy certification from the Karen Wells Institute in the United States, a professional counselling certificate from the Institute of Counseling Nigeria, and a John Maxwell Leadership Programme certification.
               </p>
               <p>
-                He speaks on the psychology of trust, the architecture of repair after betrayal, and what leaders get wrong about emotional intelligence. His material draws on both clinical practice and years advising brands on positioning and market entry across Africa.
+                He is a published author twice over: <em>Soul Bodega</em> and <em>Memoirs of The Rail man's Son</em>, both available on Amazon. He is also happily married to his primary school sweetheart, and they are raising four children together. That personal foundation gives his work on marriage a credibility no qualification alone can confer.
               </p>
             </div>
           </motion.div>
