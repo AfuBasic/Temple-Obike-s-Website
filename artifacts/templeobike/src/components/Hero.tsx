@@ -14,7 +14,7 @@ export function Hero() {
           src={stageSrc}
           alt="Temple Obike speaking at a live event — photographers and camera crew visible in the foreground"
           className="absolute inset-0 w-full h-full object-cover"
-          style={{ filter: 'brightness(0.68) contrast(1.06)', objectPosition: 'center 62%' }}
+          style={{ filter: 'brightness(0.68) contrast(1.06)', objectPosition: 'center 46%' }}
         />
         {/* Left gradient keeps headline readable; right side stays open so the live event scene shows */}
         <div className="absolute inset-0 bg-gradient-to-r from-background via-background/80 to-background/15" />
