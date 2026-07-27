@@ -3,46 +3,46 @@ import logoSrc from '@assets/IMG-20260727-WA0003_1785149135010.jpg';
 // ─── Data ────────────────────────────────────────────────────────────────────
 
 const speaking = [
-  { service: 'Full-Day Conference Speaking',  local: '₦1,350,000', intl: '$7,000'  },
-  { service: 'Keynote Speech (45–60 mins)',    local: '₦475,000',   intl: '$5,000'  },
-  { service: 'Panel Participation (per hour)', local: '₦340,000',   intl: '$4,000'  },
+  { service: 'Full-Day Conference Speaking',  local: '₦1,200,000', intl: '$7,000'  },
+  { service: 'Keynote Speech (45–60 mins)',    local: '₦1,000,000', intl: '$5,000'  },
+  { service: 'Panel Participation (per hour)', local: '₦1,000,000', intl: '$4,000'  },
 ];
 
 const corporate = [
-  { service: '3-Day Intensive Workshop',              local: '₦3,850,000', intl: '$12,000' },
-  { service: 'Full-Day Workshop (6–8 hours)',         local: '₦1,350,000', intl: '$7,000'  },
-  { service: 'Half-Day Workshop (3–4 hours)',         local: '₦610,000',   intl: '$4,000'  },
-  { service: 'Virtual Corporate Workshop (per hour)', local: '₦200,000',   intl: '$300'    },
+  { service: '3-Day Intensive Workshop',              local: '₦2,850,000', intl: '$12,000' },
+  { service: 'Full-Day Workshop (6–8 hours)',         local: '₦1,400,000', intl: '$7,000'  },
+  { service: 'Half-Day Workshop (3–4 hours)',         local: '₦1,000,000', intl: '$4,000'  },
+  { service: 'Virtual Corporate Workshop (per hour)', local: '₦350,000',   intl: '$300'    },
 ];
 
 const community = [
   {
     service: 'Community Development & Advocacy Speech (45–60 mins)',
-    local: '₦150,000',
+    local: '₦500,000',
     intl: '$3,500',
     note: 'Tailored for grassroots initiatives, faith-based organisations, and non-profits.',
   },
   {
     service: 'Social Impact & Mental Health Awareness Workshop (Half-Day)',
-    local: '₦200,000',
+    local: '₦700,000',
     intl: '$3,500',
     note: 'Focuses on mental health, social change, and capacity building.',
   },
   {
     service: 'Full-Day Leadership & Capacity-Building Training (6–8 hours)',
-    local: '₦350,000',
+    local: '₦1,000,000',
     intl: '$5,500',
     note: 'Equips leaders and volunteers with skills for sustainable impact.',
   },
   {
     service: 'Panel Discussion (per hour)',
-    local: '₦100,000',
+    local: '₦400,000',
     intl: '$3,500',
     note: 'Participation in forums, symposiums, or faith-based conferences.',
   },
   {
     service: 'Faith & Personal Development Seminar (45–60 mins)',
-    local: '₦100,000',
+    local: '₦500,000',
     intl: '$2,000',
     note: 'Addresses resilience, purpose, and faith-led marital transformation.',
   },
@@ -54,7 +54,7 @@ const community = [
   },
   {
     service: 'Virtual Coaching / Training (per hour)',
-    local: '₦50,000',
+    local: '₦150,000',
     intl: '$150',
     note: 'Flexible online engagements for global accessibility.',
   },
