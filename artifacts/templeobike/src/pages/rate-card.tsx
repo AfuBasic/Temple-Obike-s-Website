@@ -141,7 +141,7 @@ export default function RateCard() {
           Workshop & Speaking Fees
         </h1>
         <p style={{ fontSize: 13, color: '#666', marginBottom: 8 }}>
-          <strong>Temple Obike</strong> LMFT, CHT · Psychotherapist · Marriage Counsellor · Keynote Speaker · Author
+          <strong>Temple Obike</strong> LMFT · Marriage Coach & Interventionist · Founder, TCMA · Keynote Speaker · Author
         </p>
         <p style={{ fontSize: 12, color: '#888', marginBottom: 32 }}>
           Serving Nigeria (Lagos & Abuja) · Ghana · UK · South Africa · USA · Canada — In-person and Virtual

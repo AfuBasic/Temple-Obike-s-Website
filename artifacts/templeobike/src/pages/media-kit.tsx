@@ -1,6 +1,7 @@
 import logoSrc from '@assets/IMG-20260727-WA0003_1785149135010.jpg';
 import stageSrc from '@assets/Screenshot_20260727_110019_Gallery_1785147430425.jpg';
 import searchConsoleSrc from '@assets/Screenshot_20260727-130611_1785154220443.jpg';
+import businessElitesCover from '@assets/images_(9)_1785168480508.jpeg';
 import soulBodegaCover from '@assets/51fywa6zgzL._UF1000,1000_QL80_FMwebp__1785167488103.webp';
 import authenticSelfCover from '@assets/71rO8W-nZZL._UF1000,1000_QL80_FMwebp__1785167488165.webp';
 
@@ -84,21 +85,13 @@ const media = [
   },
   {
     title: '"Passion is 80% of the Success Game"',
-    description: 'Business Elites Africa profiles Temple Obike on the psychology of passion, purpose, and professional success — and what separates those who thrive from those who stall.',
+    description: 'Business Elites Africa profiles Temple Obike on the psychology of passion, purpose, and professional success — and what separates those who thrive from those who stall. Featured in their Top 30 Branding & PR Elites in Africa edition.',
     outlet: 'Business Elites Africa',
     type: 'Press Feature',
     url: 'https://businesselitesafrica.com/2022/12/11/passion-is-80-of-the-success-game-temple-obike/',
     videoId: '',
     kind: 'article' as const,
-  },
-  {
-    title: 'Video Interview',
-    description: 'Temple Obike in conversation — covering emotional intelligence, marital resilience, and the mental health conversation happening across Africa and the diaspora.',
-    outlet: 'YouTube',
-    type: 'Video Interview',
-    url: 'https://www.youtube.com/watch?v=DTn2qapUFWI&t=32s',
-    videoId: 'DTn2qapUFWI',
-    kind: 'video' as const,
+    image: businessElitesCover,
   },
   {
     title: 'Video Feature',
@@ -453,6 +446,18 @@ export default function MediaKit() {
                       <div style={{ width: 0, height: 0, borderTop: '10px solid transparent', borderBottom: '10px solid transparent', borderLeft: `16px solid ${gold}`, marginLeft: 4 }} />
                     </div>
                   </div>
+                  <div style={{ position: 'absolute', top: 12, left: 12, background: 'rgba(0,0,0,0.75)', border: `1px solid ${gold}`, padding: '3px 10px', fontSize: 9, fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase', color: gold }}>
+                    {m.type}
+                  </div>
+                </div>
+              ) : (m as any).image ? (
+                /* ── Article card: real cover image ── */
+                <div style={{ position: 'relative', width: '100%', overflow: 'hidden', background: '#0d0d0d' }}>
+                  <img
+                    src={(m as any).image}
+                    alt={m.title}
+                    style={{ width: '100%', height: 200, objectFit: 'cover', objectPosition: 'top', display: 'block', filter: 'brightness(0.9)' }}
+                  />
                   <div style={{ position: 'absolute', top: 12, left: 12, background: 'rgba(0,0,0,0.75)', border: `1px solid ${gold}`, padding: '3px 10px', fontSize: 9, fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase', color: gold }}>
                     {m.type}
                   </div>
