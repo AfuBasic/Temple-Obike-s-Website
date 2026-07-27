@@ -7,7 +7,14 @@ const WEB3FORMS_KEY = import.meta.env.VITE_WEB3FORMS_KEY as string;
 // ─── Types ────────────────────────────────────────────────────────────────────
 
 type Location = 'Accra' | 'Mauritius' | 'Virtual';
+type VirtualTier = 'day3' | '2days' | 'all3';
 type Status = 'idle' | 'sending' | 'sent' | 'error';
+
+const virtualTiers: { id: VirtualTier; label: string; sub: string; price: string }[] = [
+  { id: 'day3',  label: 'Day 3 only',  sub: '1 session',   price: '$200' },
+  { id: '2days', label: '2 days',      sub: '2 sessions',  price: '$350' },
+  { id: 'all3',  label: 'All 3 days',  sub: 'Full retreat', price: '$500' },
+];
 
 interface FormFields {
   name: string;
@@ -15,6 +22,7 @@ interface FormFields {
   email: string;
   phone: string;
   location: Location | '';
+  virtualTier: VirtualTier | '';
   note: string;
 }
 
@@ -212,7 +220,7 @@ const css = `
 // ─── Page ─────────────────────────────────────────────────────────────────────
 
 export default function Retreat() {
-  const [form, setForm] = useState<FormFields>({ name: '', partner: '', email: '', phone: '', location: '', note: '' });
+  const [form, setForm] = useState<FormFields>({ name: '', partner: '', email: '', phone: '', location: '', virtualTier: '', note: '' });
   const [status, setStatus] = useState<Status>('idle');
   const [errors, setErrors] = useState<Partial<Record<keyof FormFields, string>>>({});
 
@@ -233,7 +241,14 @@ export default function Retreat() {
     if (!form.email.match(/^[^@]+@[^@]+\.[^@]+$/)) e.email = 'Valid email required';
     if (!form.phone.trim()) e.phone = 'Required';
     if (!form.location) e.location = 'Please pick a location';
+    if (form.location === 'Virtual' && !form.virtualTier) e.virtualTier = 'Please pick a session package';
     return e;
+  };
+
+  const virtualTierLabel = (tier: VirtualTier | '') => {
+    if (!tier) return '';
+    const t = virtualTiers.find(t => t.id === tier);
+    return t ? `${t.label} (${t.price}/couple)` : '';
   };
 
   const submit = async (e: React.FormEvent) => {
@@ -249,18 +264,19 @@ export default function Retreat() {
         body: JSON.stringify({
           access_key: WEB3FORMS_KEY,
           to: 'templescounsel@gmail.com',
-          subject: `Gold Retreat Booking — ${form.location}`,
+          subject: `Gold Retreat Booking — ${form.location}${form.location === 'Virtual' ? ` · ${virtualTierLabel(form.virtualTier)}` : ''}`,
           from_name: form.name,
           email: form.email,
           phone: form.phone,
           partner: form.partner,
           location: form.location,
+          ...(form.location === 'Virtual' && { virtual_package: virtualTierLabel(form.virtualTier) }),
           note: form.note || 'Not provided',
         }),
       });
       const json = await res.json();
       setStatus(json.success ? 'sent' : 'error');
-      if (json.success) setForm({ name: '', partner: '', email: '', phone: '', location: '', note: '' });
+      if (json.success) setForm({ name: '', partner: '', email: '', phone: '', location: '', virtualTier: '', note: '' });
     } catch { setStatus('error'); }
   };
 
@@ -416,8 +432,13 @@ export default function Retreat() {
                 <p style={{ margin: 0, color: stone, fontSize: '0.87rem', maxWidth: '52ch' }}>The same 3-night curriculum, delivered live over private video sessions, with your workbook shipped ahead of time. Built for couples anywhere in the world.</p>
               </div>
             </div>
-            <div style={{ fontFamily: "'Fraunces', Georgia, serif", fontSize: '1.35rem', color: '#e2c15c', whiteSpace: 'nowrap' as const }}>
-              $1,500 <small style={{ display: 'block', fontFamily: 'inherit', color: stone, fontSize: '0.72rem', fontWeight: 400 }}>per couple · one flat rate</small>
+            <div style={{ display: 'flex', gap: 14, flexWrap: 'wrap' as const }}>
+              {virtualTiers.map(t => (
+                <div key={t.id} style={{ textAlign: 'center' as const, padding: '10px 14px', border: `1px solid ${line}`, minWidth: 80 }}>
+                  <div style={{ fontFamily: "'Fraunces', Georgia, serif", fontSize: '1.1rem', color: '#e2c15c' }}>{t.price}</div>
+                  <div style={{ fontFamily: "'IBM Plex Mono', monospace", fontSize: '0.62rem', letterSpacing: '0.06em', textTransform: 'uppercase' as const, color: stone, marginTop: 3 }}>{t.label}</div>
+                </div>
+              ))}
             </div>
           </div>
         </div>
@@ -460,7 +481,8 @@ export default function Retreat() {
             <div style={{ marginTop: 26, paddingTop: 22, borderTop: `1px solid ${line}`, fontSize: '0.85rem', color: stone, lineHeight: 1.8 }}>
               <div><strong style={{ color: cream }}>Accra</strong> — $1,990 per couple · 8–10 Oct 2026</div>
               <div><strong style={{ color: cream }}>Mauritius</strong> — $3,200 per couple · 22–24 Oct 2026 <span style={{ color: '#e2c15c' }}>★ Book launch</span></div>
-              <div><strong style={{ color: cream }}>Virtual</strong> — $1,500 per couple</div>
+              <div><strong style={{ color: cream }}>Virtual</strong> — $200 · $350 · $500 per couple</div>
+              <div style={{ fontSize: '0.76rem', paddingLeft: 8 }}>Day 3 only · 2 days · All 3 days</div>
               <div style={{ marginTop: 10, fontSize: '0.78rem' }}>Flights, visas & logistics included in all in-person packages.</div>
             </div>
           </div>
@@ -502,7 +524,7 @@ export default function Retreat() {
                     <div className="card">
                       {loc}
                       <small style={{ display: 'block', color: stone, fontSize: '0.68rem', marginTop: 3 }}>
-                        {loc === 'Accra' ? '$1,990' : loc === 'Mauritius' ? '$3,200' : '$1,500'}
+                        {loc === 'Accra' ? '$1,990' : loc === 'Mauritius' ? '$3,200' : 'from $200'}
                       </small>
                     </div>
                   </label>
@@ -510,6 +532,27 @@ export default function Retreat() {
               </div>
               {errors.location && <div style={{ color: '#e2c15c', fontSize: '0.72rem', marginTop: 4 }}>{errors.location}</div>}
             </div>
+
+            {form.location === 'Virtual' && (
+              <div>
+                <label className="retreat-label">Virtual Session Package</label>
+                <div style={{ display: 'flex', flexDirection: 'column' as const, gap: 8 }}>
+                  {virtualTiers.map(t => (
+                    <label key={t.id} className="retreat-loc-opt" style={{ cursor: 'pointer' }}>
+                      <input type="radio" name="virtualTier" value={t.id} checked={form.virtualTier === t.id} onChange={() => setForm(f => ({ ...f, virtualTier: t.id }))} />
+                      <div className="card" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', textAlign: 'left' as const, padding: '11px 14px' }}>
+                        <div>
+                          <span style={{ fontWeight: 600 }}>{t.label}</span>
+                          <small style={{ display: 'block', color: stone, fontSize: '0.68rem', marginTop: 2 }}>{t.sub}</small>
+                        </div>
+                        <span style={{ fontFamily: "'Fraunces', Georgia, serif", fontSize: '1rem' }}>{t.price}</span>
+                      </div>
+                    </label>
+                  ))}
+                </div>
+                {errors.virtualTier && <div style={{ color: '#e2c15c', fontSize: '0.72rem', marginTop: 4 }}>{errors.virtualTier}</div>}
+              </div>
+            )}
 
             <div>
               <label className="retreat-label" htmlFor="note">Anything we should know? (optional)</label>
