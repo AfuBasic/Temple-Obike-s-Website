@@ -35,6 +35,13 @@ export function Footer() {
               ))}
             </div>
             <a
+              href="/retreat"
+              data-testid="link-retreat-footer"
+              className="text-xs text-muted-foreground hover:text-primary transition-colors border-b border-transparent hover:border-primary pb-0.5"
+            >
+              The Gold Retreat — Oct 2026 &rarr;
+            </a>
+            <a
               href="https://templescounsel.com"
               target="_blank"
               rel="noopener noreferrer"

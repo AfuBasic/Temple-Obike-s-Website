@@ -16,6 +16,7 @@ import MediaKit from './pages/media-kit';
 import FerrgBook from './pages/ferrg-book';
 import Retreat from './pages/retreat';
 import { BookTeaser } from './components/BookTeaser';
+import { RetreatTeaser } from './components/RetreatTeaser';
 
 const queryClient = new QueryClient();
 
@@ -29,6 +30,7 @@ function SpeakerSite() {
       <Talks />
       <SpeakingHistory />
       <BookTeaser />
+      <RetreatTeaser />
       <Contact />
       <Footer />
     </main>

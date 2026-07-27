@@ -70,6 +70,13 @@ export function Hero() {
               >
                 Media Kit &rarr;
               </a>
+              <a
+                href="/retreat"
+                data-testid="link-retreat"
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 text-sm font-semibold tracking-wide text-primary hover:text-[#c99a5e] transition-colors duration-200"
+              >
+                <span className="text-xs">✦</span> The Gold Retreat
+              </a>
             </div>
           </motion.div>
         </div>
