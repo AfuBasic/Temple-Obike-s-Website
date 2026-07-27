@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import stageSrc from '@assets/Screenshot_20260727_101338_Gallery_1785143683280.jpg';
+import stageSrc from '@assets/Screenshot_20260727_110019_Gallery_1785147430425.jpg';
 
 export function Hero() {
   return (
@@ -12,12 +12,12 @@ export function Hero() {
         {/* Stage photo — positioned right so portrait fills the right side of the hero */}
         <img
           src={stageSrc}
-          alt="Temple Obike speaking on stage"
-          className="absolute inset-0 w-full h-full object-cover object-center"
-          style={{ filter: 'brightness(0.35) contrast(1.1)' }}
+          alt="Temple Obike speaking at a live event — photographers and camera crew visible in the foreground"
+          className="absolute inset-0 w-full h-full object-cover"
+          style={{ filter: 'brightness(0.68) contrast(1.06)', objectPosition: 'center 62%' }}
         />
-        {/* Strong left gradient so headline text is always readable */}
-        <div className="absolute inset-0 bg-gradient-to-r from-background via-background/85 to-background/30" />
+        {/* Left gradient keeps headline readable; right side stays open so the live event scene shows */}
+        <div className="absolute inset-0 bg-gradient-to-r from-background via-background/80 to-background/15" />
         {/* Bottom fade */}
         <div className="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-t from-background to-transparent" />
         {/* Top fade */}
