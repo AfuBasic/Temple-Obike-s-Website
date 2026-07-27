@@ -96,14 +96,14 @@ const engagements: Engagement[] = [
   },
   {
     id: 8,
-    venue: "Summit Keynote",
+    venue: "Summit Keynote — Abuja & Nasarawa State",
     topic: "Lead Keynote Address",
-    date: "TBC",
-    format: "In-Person Keynote · Addo-Ekiti",
+    date: "November 2025",
+    format: "Two-Day National Summit · Abuja & Nasarawa State",
     formatIcon: "stage",
     hasPhoto: true,
     description:
-      "Temple travelled to Addo-Ekiti to deliver a keynote address at a regional summit, bringing his signature blend of psychological insight and strategic clarity to an audience of community leaders, professionals, and entrepreneurs. The engagement marked a milestone in his growing national profile — demonstrating the cross-sector reach of his work well beyond Lagos.",
+      "Temple was invited to deliver the keynote address at a landmark two-day national summit spanning Abuja and Nasarawa State — events held a day apart, culminating on November 19th, 2025. The principal gathering drew the highest levels of Nigerian government and community leadership: the President of the Federal Republic was represented at the summit, the Minister of Mines sent a delegation, and the Governor of Nasarawa State attended alongside Honourable Commissioners, Local Government Area Chairmen, and the founding fathers of multiple communities across the state. To address an audience of that composition — political, civic, and traditional leadership in one room — is a testament to the national weight of Temple's voice and the reach of his work beyond the therapeutic and corporate spaces where he is already well known.",
   },
 ];
 
