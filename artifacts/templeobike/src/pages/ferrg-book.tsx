@@ -30,11 +30,12 @@ export default function FerrgBook() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           access_key: WEB3FORMS_KEY,
+          to: 'templescounsel@gmail.com',
           subject: 'Pre-Order: The FERRG Relationship Model',
           from_name: data.name,
           email: data.email,
-          phone: data.phone || '—',
-          note: data.note || '—',
+          phone: data.phone || 'Not provided',
+          note: data.note || 'Not provided',
         }),
       });
       const json = await res.json();
@@ -101,19 +102,19 @@ export default function FerrgBook() {
                 New Book · Temple Obike
               </span>
               <h1 className="text-4xl md:text-5xl lg:text-[3.2rem] font-serif font-semibold leading-[1.1] text-foreground mb-6">
-                Understanding Why Love Isn't Enough —<br className="hidden md:block" /> And What Comes After
+                Understanding Why Love Isn't Enough.<br className="hidden md:block" /> And What Comes After.
               </h1>
               <p className="text-lg text-muted-foreground font-light leading-relaxed mb-8 max-w-lg">
                 Most couples don't fail because they stopped loving each other. They fail because no one ever gave them a map for what love alone cannot fix. This book is that map.
               </p>
               <p className="text-base text-muted-foreground font-light leading-relaxed mb-10 max-w-lg">
-                Written by Temple Obike — therapist, marriage counsellor, and the person couples call when everything else has failed — this is a book about the real journey: the parts nobody talks about, the moments that either break a relationship permanently or quietly make it something stronger than it was before.
+                Written by Temple Obike, therapist, marriage counsellor, and the person couples call when everything else has failed. This is a book about the real journey: the parts nobody talks about, the moments that either break a relationship permanently or quietly make it something stronger than it was before.
               </p>
               <a
                 href="#reserve"
                 className="inline-flex items-center px-10 py-5 bg-primary text-primary-foreground font-semibold text-sm tracking-wide hover:bg-[#c99a5e] transition active:scale-[0.98]"
               >
-                Reserve My Copy — It's Free to Pre-Order
+                Reserve My Copy. Free to Pre-Order.
               </a>
               <p className="mt-4 text-xs text-muted-foreground/60">
                 No payment required now. We'll notify you when it's ready.
@@ -144,11 +145,11 @@ export default function FerrgBook() {
               },
               {
                 heading: "A way through conflict that doesn't destroy you",
-                body: "Not a formula. Not a set of rules. A framework grounded in real clinical work with real couples — one that acknowledges that conflict, handled correctly, can become the foundation of something more resilient than what you had before.",
+                body: "Not a formula. Not a set of rules. A framework grounded in real clinical work with real couples, one that acknowledges that conflict, handled correctly, can become the foundation of something more resilient than what you had before.",
               },
               {
                 heading: "Practical tools, not just principles",
-                body: "Every insight in this book is followed by something you can do. Because a marriage is not improved by understanding alone — it is improved by two people choosing to act on what they now understand.",
+                body: "Every insight in this book is followed by something you can do. Because a marriage is not improved by understanding alone. It is improved by two people choosing to act on what they now understand.",
               },
             ].map(({ heading, body }) => (
               <div
@@ -179,7 +180,7 @@ export default function FerrgBook() {
                 This isn't a book about saving a dying marriage. It's a book about building a great one.
               </h2>
               <p className="text-muted-foreground font-light leading-relaxed mb-6">
-                Whether you're in crisis or simply aware that something between you and your partner could be deeper, more honest, more resilient — this book was written for you.
+                Whether you're in crisis or simply aware that something between you and your partner could be deeper, more honest, more resilient, this book was written for you.
               </p>
               <p className="text-muted-foreground font-light leading-relaxed">
                 It speaks to the couple that tried counselling and felt like something was still missing. To the couple that loves each other but keeps having the same argument. To the couple that made it through something hard and isn't sure how to move forward from here.
@@ -191,10 +192,10 @@ export default function FerrgBook() {
                 "You've been through something that changed how you see each other",
                 'You want a marriage that goes deeper than getting along',
                 "You've read the generic advice and found it doesn't hold up in real life",
-                "You're willing to do the work — if someone can show you what the work actually is",
+                "You're willing to do the work if someone can show you what the work actually is",
               ].map((item) => (
                 <div key={item} className="flex items-start gap-4 p-5 bg-card border border-border">
-                  <span className="text-primary mt-0.5 text-lg leading-none flex-shrink-0">—</span>
+                  <span className="text-primary mt-0.5 text-lg leading-none flex-shrink-0">·</span>
                   <p className="text-sm text-muted-foreground font-light leading-relaxed">{item}</p>
                 </div>
               ))}
@@ -210,7 +211,7 @@ export default function FerrgBook() {
             <img src={logoSrc} alt="Temple Obike" className="w-24 flex-shrink-0" />
             <div>
               <p className="text-lg font-serif text-foreground mb-3 leading-relaxed">
-                "I have sat with over 2,380 hours of live therapy sessions. I have heard every version of the same story. This book is not theory. It is what I have seen actually work — distilled into something every couple can use."
+                "I have sat with over 2,380 hours of live therapy sessions. I have heard every version of the same story. This book is not theory. It is what I have seen actually work, distilled into something every couple can use."
               </p>
               <p className="text-sm text-primary font-semibold tracking-wide">
                 Temple Obike, LMFT, CHT
@@ -233,18 +234,18 @@ export default function FerrgBook() {
             The book is the beginning, not the end
           </h2>
           <p className="text-muted-foreground font-light leading-relaxed max-w-2xl mx-auto mb-14">
-            Pre-order readers will be the first to hear about companion resources being built alongside the book — designed for couples who want to go further than reading.
+            Pre-order readers will be the first to hear about companion resources being built alongside the book, designed for couples who want to go further than reading.
           </p>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {[
               {
                 label: 'Online Course',
-                desc: "A structured video programme that walks couples through the book's principles at their own pace — with exercises, reflections, and guided sessions.",
+                desc: "A structured video programme that walks couples through the book's principles at their own pace, with exercises, reflections, and guided sessions.",
                 badge: 'Coming Soon',
               },
               {
                 label: 'Couples Workshop',
-                desc: 'Live, intimate group workshops with Temple — in Lagos, Abuja, and virtually — for couples who want to do this work in community.',
+                desc: 'Live, intimate group workshops with Temple in Lagos, Abuja, and virtually, for couples who want to do this work in community.',
                 badge: 'Coming Soon',
               },
               {
@@ -276,7 +277,7 @@ export default function FerrgBook() {
               Be first in line when it drops
             </h2>
             <p className="text-muted-foreground font-light leading-relaxed">
-              No payment now. Just your details — and we'll reach out the moment it's ready, plus give you early access to companion courses and events.
+              No payment now. Just your details, and we'll reach out the moment it's ready, plus give you early access to companion courses and events.
             </p>
           </div>
 
@@ -285,7 +286,7 @@ export default function FerrgBook() {
               <div className="text-3xl mb-4">✦</div>
               <h3 className="text-xl font-serif font-semibold text-foreground mb-3">You're on the list.</h3>
               <p className="text-muted-foreground font-light leading-relaxed">
-                We'll be in touch the moment the book is ready. Thank you for your trust — Temple looks forward to putting this in your hands.
+                We'll be in touch the moment the book is ready. Thank you for your trust. Temple looks forward to putting this in your hands.
               </p>
             </div>
           ) : (
@@ -322,7 +323,7 @@ export default function FerrgBook() {
 
               <div>
                 <label className="block text-xs font-semibold tracking-[0.12em] uppercase text-muted-foreground mb-2">
-                  WhatsApp / Phone <span className="text-muted-foreground/40 font-normal normal-case tracking-normal">(optional — for early event invites)</span>
+                  WhatsApp / Phone <span className="text-muted-foreground/40 font-normal normal-case tracking-normal">(optional, for early event invites)</span>
                 </label>
                 <input
                   {...register('phone')}
@@ -352,7 +353,7 @@ export default function FerrgBook() {
                 disabled={status === 'sending'}
                 className="w-full py-5 bg-primary text-primary-foreground font-semibold text-sm tracking-wide hover:bg-[#c99a5e] transition active:scale-[0.99] disabled:opacity-60"
               >
-                {status === 'sending' ? 'Reserving…' : 'Reserve My Copy — Free Pre-Order'}
+                {status === 'sending' ? 'Reserving…' : 'Reserve My Copy. Free Pre-Order.'}
               </button>
               <p className="text-center text-xs text-muted-foreground/50">
                 Your details are kept private. No spam, ever.

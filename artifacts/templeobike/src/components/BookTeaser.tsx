@@ -53,10 +53,10 @@ export function BookTeaser() {
               New Book · In Progress
             </span>
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-serif font-semibold text-foreground leading-tight mb-6">
-              Understanding Why Love Isn't Enough —<br className="hidden md:block" /> And What Comes After
+              Understanding Why Love Isn't Enough.<br className="hidden md:block" /> And What Comes After.
             </h2>
             <p className="text-lg text-muted-foreground font-light leading-relaxed mb-5 max-w-xl">
-              Temple's third book is a guide for couples who love each other but can't seem to break through — to a deeper, more honest, more resilient version of their marriage.
+              Temple's third book is a guide for couples who love each other but can't seem to break through to a deeper, more honest, more resilient version of their marriage.
             </p>
             <p className="text-base text-muted-foreground font-light leading-relaxed mb-8 max-w-xl">
               Drawn from over 2,380 hours of live clinical work, it gives couples language for what they're actually going through, and a clear path through conflict toward something stronger. A companion course and live workshop series are being built alongside it.
@@ -67,7 +67,7 @@ export function BookTeaser() {
                 href="/ferrg-book"
                 className="inline-flex items-center justify-center px-10 py-5 bg-primary text-primary-foreground font-semibold text-sm tracking-wide hover:bg-[#c99a5e] transition active:scale-[0.98] duration-200"
               >
-                Reserve My Copy — Free Pre-Order
+                Reserve My Copy. Free Pre-Order.
               </a>
               <a
                 href="/ferrg-book"
