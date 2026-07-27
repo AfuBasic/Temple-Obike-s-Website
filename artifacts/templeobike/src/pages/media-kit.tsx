@@ -38,10 +38,11 @@ const topPages = [
 
 const credentials = [
   'Licensed Marriage and Family Therapist (LMFT)',
-  'Certified Hypnotherapist (CHT) — Karen Wells Institute, USA',
+  'Marriage Coach and Interventionist',
   'Professional Counselling Certificate — Institute of Counseling Nigeria',
   'John Maxwell Leadership Programme Certification',
-  'Founder, Temple\'s Counsel & Mind Academy (TCMA)',
+  'Founder & CEO, Temple\'s Counsel & Mind Academy Ltd. (TCMA)',
+  'Employee Assistance Practitioner (EAP)',
 ];
 
 const talks = [
@@ -256,7 +257,7 @@ export default function MediaKit() {
               Temple Obike
             </h1>
             <p style={{ fontSize: 14, color: '#aaa', marginTop: 8, letterSpacing: '0.04em' }}>
-              LMFT, CHT · Psychotherapist · Marriage Counsellor · Keynote Speaker · Author
+              LMFT · Marriage Coach & Interventionist · Founder, TCMA · Keynote Speaker · Author
             </p>
           </div>
         </div>
@@ -268,7 +269,7 @@ export default function MediaKit() {
         {/* Short bio */}
         <SectionLabel>Short Bio (for event programmes)</SectionLabel>
         <p style={{ fontSize: 15, lineHeight: 1.85, color: '#ccc', background: '#111', border: '1px solid #1e1e1e', padding: '24px 28px', borderLeft: `3px solid ${gold}` }}>
-          Temple Obike (LMFT, CHT) is a Lagos-based Licensed Marriage and Family Therapist, certified hypnotherapist, keynote speaker, and three-time published author. Founder of Temple's Counsel & Mind Academy, he has logged over 2,380 hours of live therapy sessions and reached more than 2,300,000 readers online since 2021. Seventy percent of his clients are drawn from the global diaspora across the UK, US, Canada, and South Africa. He speaks on emotional intelligence, trust architecture, and relational repair to corporate audiences, faith communities, and government institutions. He is the author of <em>Soul Bodega</em>, <em>Discover Your Best Authentic Self</em>, and <em>Memoirs of The Rail man's Son</em>, all available on Amazon.
+          Temple Obike (LMFT) is a Lagos-based Licensed Marriage and Family Therapist, marriage coach and interventionist, keynote speaker, entrepreneur, and three-time published author. He is the Founder and CEO of Temple's Counsel & Mind Academy, one of Nigeria's most recognised relationship and mental wellness brands, with offices in Victoria Island, Lagos and Wuse 2, Abuja. He has logged over 2,380 hours of live therapy sessions and reached more than 2,300,000 readers online since 2021. Seventy percent of his clients are drawn from the global diaspora across the UK, US, Canada, and South Africa. He is the author of <em>Soul Bodega</em>, <em>Discover Your Best Authentic Self</em>, and <em>Memoirs of The Rail man's Son</em>, all available on Amazon.
         </p>
 
         <Divider />

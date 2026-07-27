@@ -214,10 +214,10 @@ export default function FerrgBook() {
                 "I have sat with over 2,380 hours of live therapy sessions. I have heard every version of the same story. This book is not theory. It is what I have seen actually work, distilled into something every couple can use."
               </p>
               <p className="text-sm text-primary font-semibold tracking-wide">
-                Temple Obike, LMFT, CHT
+                Temple Obike, LMFT
               </p>
               <p className="text-xs text-muted-foreground mt-1">
-                Licensed Marriage & Family Therapist · Certified Hypnotherapist · Author
+                Licensed Marriage & Family Therapist · Marriage Coach & Interventionist · Founder, TCMA · Author
               </p>
             </div>
           </div>

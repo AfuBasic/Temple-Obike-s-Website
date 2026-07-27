@@ -19,13 +19,16 @@ export function About() {
             </span>
             <div className="space-y-6 text-lg md:text-xl text-muted-foreground font-light leading-relaxed">
               <p className="text-foreground font-normal">
-                Temple Obike (LMFT, CHT) is a Licensed Marriage and Family Therapist, certified hypnotherapist, keynote speaker, and author based in Lagos. Seventy percent of his client base spans the global diaspora. The remaining thirty percent is drawn from Nigeria and the broader pan-African community.
+                Temple Obike (LMFT) is a Licensed Marriage and Family Therapist, marriage coach and interventionist, keynote speaker, entrepreneur, and author based in Lagos. Seventy percent of his client base spans the global diaspora. The remaining thirty percent is drawn from Nigeria and the broader pan-African community.
               </p>
               <p>
-                He began counselling informally in 2008, advising youth groups in underserved Lagos neighbourhoods under the Grassroots and Shoots initiative. That foundation grew into Temple's Counsel and Mind Academy, a private practice that has now logged over 2,380 hours of live therapy sessions and whose writings have reached more than 2,300,000 readers online since 2021. He holds a Psychotherapy certification from the Karen Wells Institute in the United States, a professional counselling certificate from the Institute of Counseling Nigeria, and a John Maxwell Leadership Programme certification.
+                He began counselling informally in 2008, advising youth groups in underserved Lagos neighbourhoods under the Grassroots and Shoots initiative. That work evolved into Temple's Counsel and Mind Academy, a private practice and commercial enterprise he founded and built into one of Nigeria's most recognised relationship brands, with offices in Victoria Island, Lagos and Wuse 2, Abuja. The practice has logged over 2,380 hours of live therapy sessions, and his writing has reached more than 2,300,000 readers online since 2021.
               </p>
               <p>
-                He is a three-time published author: <em>Soul Bodega</em>, <em>Discover Your Best Authentic Self</em>, and <em>Memoirs of The Rail man's Son</em>, all available on Amazon. He is also happily married to his primary school sweetheart, and they are raising four children together. That personal foundation gives his work on marriage a credibility no qualification alone can confer.
+                Beyond the consulting room, Temple has built a growing content and education business: three published books on Amazon, a forthcoming couples course, live workshop programmes, and a corporate Employee Assistance Programme (EAP) arm serving organisations across Nigeria and Africa. He holds a John Maxwell Leadership Programme certification and a professional counselling certificate from the Institute of Counseling Nigeria.
+              </p>
+              <p>
+                He is married to his primary school sweetheart, and they are raising four children together. That personal foundation gives his work on marriage a credibility no qualification alone can confer.
               </p>
             </div>
           </motion.div>
