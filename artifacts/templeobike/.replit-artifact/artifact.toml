@@ -1,0 +1,27 @@
+kind = "web"
+previewPath = "/"
+title = "Temple Obike — Speaker Site"
+version = "1.0.0"
+id = "artifacts/templeobike"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 19672
+
+[services.development]
+run = "pnpm --filter @workspace/templeobike run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/templeobike", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/templeobike/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "19672"
+BASE_PATH = "/"
