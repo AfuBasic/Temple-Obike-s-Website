@@ -1,5 +1,6 @@
 import logoSrc from '@assets/IMG-20260727-WA0003_1785149135010.jpg';
 import stageSrc from '@assets/Screenshot_20260727_110019_Gallery_1785147430425.jpg';
+import searchConsoleSrc from '@assets/Screenshot_20260727-130611_1785154220443.jpg';
 
 const gold = '#B8874A';
 const dark = '#0A0A0A';
@@ -220,6 +221,32 @@ export default function MediaKit() {
           <div style={{ marginTop: 14, fontSize: 11, color: '#444', fontStyle: 'italic' }}>
             Source: Google Search Console · Data period: March 2025 – July 2026 · 254+ pages indexed
           </div>
+          <details style={{ marginTop: 16 }}>
+            <summary style={{
+              cursor: 'pointer',
+              fontSize: 12,
+              color: gold,
+              letterSpacing: '0.08em',
+              userSelect: 'none',
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: 6,
+              listStyle: 'none',
+              outline: 'none',
+            }}>
+              <span style={{ fontSize: 10 }}>▶</span> View source screenshot
+            </summary>
+            <div style={{ marginTop: 16, borderTop: '1px solid #1e1e1e', paddingTop: 16 }}>
+              <img
+                src={searchConsoleSrc}
+                alt="Google Search Console screenshot — templescounsel.com performance data"
+                style={{ maxWidth: '100%', width: 420, display: 'block', border: '1px solid #2a2a2a' }}
+              />
+              <div style={{ marginTop: 8, fontSize: 10, color: '#444', fontStyle: 'italic' }}>
+                Google Search Console · templescounsel.com · Screenshot taken 27 July 2026
+              </div>
+            </div>
+          </details>
         </div>
 
         <Divider />
