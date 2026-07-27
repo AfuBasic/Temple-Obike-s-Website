@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import { Radio, Tv, Video, Users, MessageSquare, Mic, Building2, Star } from 'lucide-react';
+import stageSrc from '@assets/Screenshot_20260727_101338_Gallery_1785143683280.jpg';
 
 type FormatIcon = 'radio' | 'tv' | 'webinar' | 'event' | 'panel' | 'keynote' | 'symposium' | 'stage';
 
@@ -121,20 +122,17 @@ function GraphicCard({ engagement }: { engagement: Engagement }) {
 function StagePhotoCard({ engagement }: { engagement: Engagement }) {
   return (
     <div className="flex flex-col h-full">
-      {/*
-        STAGE PHOTO — Card 8
-        Temple speaking on stage with a handheld mic at a podium, purple-carpeted stage.
-        Once the photo is uploaded to attached_assets/, import it and replace the placeholder:
-        
-        import stageSrc from '@assets/your-stage-photo-filename.jpg';
-        Then replace the placeholder div below with:
-        <img src={stageSrc} alt="Temple Obike speaking on stage" className="w-full aspect-video object-cover object-top mb-5" />
-      */}
-      <div className="aspect-video bg-background border border-dashed border-primary/30 flex items-center justify-center mb-5 relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent" />
-        <div className="text-center z-10">
-          <Building2 className="w-6 h-6 text-primary/40 mx-auto mb-2" />
-          <span className="text-[10px] text-primary/50 uppercase tracking-widest font-semibold">Stage Photo</span>
+      <div className="aspect-video mb-5 relative overflow-hidden">
+        <img
+          src={stageSrc}
+          alt="Temple Obike delivering a keynote address on stage"
+          className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
+          style={{ filter: 'brightness(0.9) contrast(1.05)' }}
+        />
+        {/* Subtle gold vignette overlay for polish */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/20 pointer-events-none" />
+        <div className="absolute bottom-2 right-2">
+          <span className="text-[9px] text-primary/70 uppercase tracking-widest font-semibold bg-black/50 px-2 py-1">Keynote</span>
         </div>
       </div>
       <CardContent engagement={engagement} />
