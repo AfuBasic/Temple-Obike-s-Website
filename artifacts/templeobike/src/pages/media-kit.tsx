@@ -69,6 +69,25 @@ const engagements = [
   { event: 'Boss FM 95.5 Abuja', role: 'Radio Feature', year: 'Aug 2022', detail: '' },
 ];
 
+const media = [
+  {
+    title: 'NTA Interview',
+    description: 'Temple Obike featured on NTA — Nigeria\'s national television network — discussing mental health, relationships, and societal wellbeing.',
+    outlet: 'NTA (Nigerian Television Authority)',
+    type: 'Television Feature',
+    url: 'https://youtu.be/z3Ofsd6z9z8?feature=shared',
+    videoId: 'z3Ofsd6z9z8',
+  },
+  {
+    title: 'Live Webinar — Relationship & Mental Health',
+    description: 'Temple Obike leads a live audience webinar on relationship dynamics, emotional health, and practical frameworks for personal transformation.',
+    outlet: 'YouTube Live Webinar',
+    type: 'Webinar Recording',
+    url: 'https://www.youtube.com/watch?v=GM5k6DRz6DU',
+    videoId: 'GM5k6DRz6DU',
+  },
+];
+
 const books = [
   {
     title: 'Soul Bodega',
@@ -308,6 +327,60 @@ export default function MediaKit() {
             ))}
           </tbody>
         </table>
+
+        <Divider />
+
+        {/* Press & Media */}
+        <SectionLabel>Press & Media Appearances</SectionLabel>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(380px, 1fr))', gap: 20 }}>
+          {media.map(m => (
+            <a
+              key={m.videoId}
+              href={m.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{ display: 'block', textDecoration: 'none', background: '#111', border: '1px solid #1e1e1e', overflow: 'hidden', transition: 'border-color 0.2s' }}
+              onMouseEnter={e => (e.currentTarget.style.borderColor = gold)}
+              onMouseLeave={e => (e.currentTarget.style.borderColor = '#1e1e1e')}
+            >
+              {/* Thumbnail */}
+              <div style={{ position: 'relative', width: '100%', paddingBottom: '56.25%', background: '#0d0d0d', overflow: 'hidden' }}>
+                <img
+                  src={`https://img.youtube.com/vi/${m.videoId}/hqdefault.jpg`}
+                  alt={m.title}
+                  style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', filter: 'brightness(0.85)' }}
+                />
+                {/* Play button overlay */}
+                <div style={{
+                  position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center',
+                }}>
+                  <div style={{
+                    width: 52, height: 52, borderRadius: '50%', background: 'rgba(0,0,0,0.65)',
+                    border: `2px solid ${gold}`, display: 'flex', alignItems: 'center', justifyContent: 'center',
+                  }}>
+                    <div style={{ width: 0, height: 0, borderTop: '10px solid transparent', borderBottom: '10px solid transparent', borderLeft: `16px solid ${gold}`, marginLeft: 4 }} />
+                  </div>
+                </div>
+                {/* Type badge */}
+                <div style={{
+                  position: 'absolute', top: 12, left: 12,
+                  background: 'rgba(0,0,0,0.75)', border: `1px solid ${gold}`,
+                  padding: '3px 10px', fontSize: 9, fontWeight: 700,
+                  letterSpacing: '0.12em', textTransform: 'uppercase', color: gold,
+                }}>
+                  {m.type}
+                </div>
+              </div>
+              {/* Text */}
+              <div style={{ padding: '20px 22px 22px' }}>
+                <div style={{ fontSize: 10, color: '#555', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: 8 }}>{m.outlet}</div>
+                <div style={{ fontSize: 15, fontFamily: "'Playfair Display', Georgia, serif", color: '#e5e5e5', marginBottom: 10, lineHeight: 1.35 }}>{m.title}</div>
+                <p style={{ fontSize: 12, color: '#777', lineHeight: 1.7, margin: 0 }}>{m.description}</p>
+                <div style={{ marginTop: 14, fontSize: 11, color: gold, letterSpacing: '0.06em' }}>Watch on YouTube →</div>
+              </div>
+            </a>
+          ))}
+        </div>
 
         <Divider />
 
