@@ -1,5 +1,6 @@
-import { motion } from 'framer-motion';
-import { Radio, Tv, Video, Users, MessageSquare, Mic, Building2, Star } from 'lucide-react';
+import { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { X, Radio, Tv, Video, Users, MessageSquare, Mic, Building2, Star } from 'lucide-react';
 import stageSrc from '@assets/Screenshot_20260727_101338_Gallery_1785143683280.jpg';
 
 type FormatIcon = 'radio' | 'tv' | 'webinar' | 'event' | 'panel' | 'keynote' | 'symposium' | 'stage';
@@ -12,82 +13,97 @@ interface Engagement {
   format: string;
   formatIcon: FormatIcon;
   hasPhoto: boolean;
-  photoComment?: string;
+  description: string;
 }
 
 const engagements: Engagement[] = [
   {
     id: 1,
-    venue: "Boss FM 95.5, Abuja",
+    venue: "Boss FM 95.5",
     topic: "Signs of a Trauma-Based Relationship",
     date: "August 2022",
-    format: "Live Radio Interview",
+    format: "Live Radio Interview · Abuja",
     formatIcon: "radio",
     hasPhoto: false,
+    description:
+      "Temple joined Boss FM 95.5 Abuja for a candid radio conversation exploring one of the most misunderstood patterns in modern relationships — the trauma bond. He walked listeners through the psychological markers of trauma-based relationships: why they form, what compels people to remain in them, and the first concrete steps toward breaking the cycle. The interview reached a wide audience and generated significant listener response.",
   },
   {
     id: 2,
-    venue: "Hot FM, Lagos — Parent Connect Helpline",
+    venue: "Hot FM Lagos — Parent Connect Helpline",
     topic: "The Present But Absent Father",
     date: "November 2022",
-    format: "Live TV/Radio Panel",
+    format: "Live TV/Radio Panel · Lagos",
     formatIcon: "tv",
     hasPhoto: false,
+    description:
+      "Joining Hot FM Lagos's Parent Connect Helpline alongside guidance counsellor Olutunde Edem, Temple addressed one of the most pressing blind spots in Nigerian family life: the father who is physically present but emotionally unavailable. The live panel — hosted by Sharon — explored the long-term psychological effects on children and what meaningful paternal repair looks like in practice.",
   },
   {
     id: 3,
     venue: "#RECOVER — 2-Day Couples Webinar",
-    topic: "Temple's Counsel & Mind Academy",
+    topic: "A Journey Through Relational Repair",
     date: "December 2022",
-    format: "Ticketed Virtual Webinar",
+    format: "Ticketed Virtual Webinar · Temple's Counsel & Mind Academy",
     formatIcon: "webinar",
     hasPhoto: false,
+    description:
+      "A landmark two-day virtual experience presented by Temple's Counsel and Mind Academy, #RECOVER brought couples at different stages of relational strain through a structured journey of conflict resolution, emotional reconnection, and deliberate repair. Temple led every session as primary facilitator — combining clinical rigour with practical tools couples could apply immediately after each session.",
   },
   {
     id: 4,
     venue: "Sunset & Soulmate: A Date Night",
-    topic: "Guided Q&A — Karaoke & Dinner",
+    topic: "Rebuilding Intimacy Through Experience",
     date: "June 2023",
-    format: "In-Person Hosted Event · Lekki Leisure, Oniru",
+    format: "In-Person Hosted Event · Lekki Leisure, Oniru, Lekki",
     formatIcon: "event",
     hasPhoto: false,
+    description:
+      "Hosted by Temple himself at Lekki Leisure in Oniru, Sunset & Soulmate was an evening designed to rebuild intimacy through shared experience rather than instruction — karaoke, a candlelit dinner, and a guided couples Q&A that opened conversations most couples never have in ordinary life. The event drew couples from across Lagos and left a strong impression for its warmth and psychological depth.",
   },
   {
     id: 5,
     venue: "RelationSHIP Talk — The Marriage Haven",
     topic: "Common Challenges with Knowledge Dispensers",
     date: "November 2023",
-    format: "Live Instagram Panel",
+    format: "Live Instagram Panel · Hosted by Nike Adekunle",
     formatIcon: "panel",
     hasPhoto: false,
+    description:
+      "Temple joined host Nike Adekunle on The Marriage Haven's Instagram Live for an honest conversation about one of the most underexplored tensions in relationship support: the challenge of receiving guidance from knowledge dispensers — coaches, therapists, and mentors. He examined why the messenger shapes whether the message lands, and how couples can discern which counsel to trust.",
   },
   {
     id: 6,
-    venue: "Young Catholic Professionals, SS Philip & James Parish",
-    topic: "Strategies for Sustaining Relationship Health Amidst Demanding Careers",
+    venue: "Young Catholic Professionals",
+    topic: "Sustaining Relationship Health Amidst Demanding Careers",
     date: "February 2024",
-    format: "In-Person Keynote · YCP Resource Center, Lekki",
+    format: "In-Person Keynote · YCP Resource Center, SS Philip & James Parish, Lekki",
     formatIcon: "keynote",
     hasPhoto: false,
+    description:
+      "Invited as keynote speaker for the Young Catholic Professionals at the YCP Resource Center in Lekki, Temple addressed the compounding pressure at the intersection of professional ambition and relationship health. He delivered evidence-based strategies for couples navigating high-demand careers without losing emotional intimacy — clinically grounded and precisely calibrated to the audience's realities.",
   },
   {
     id: 7,
-    venue: "Rotary District 9127 — Mental Health Awareness Day",
+    venue: "Rotary District 9127",
     topic: "Prioritizing Mental Health in Workplaces",
     date: "October 2024",
     format: "In-Person Symposium · Rotary Center, Jabi, Abuja",
     formatIcon: "symposium",
     hasPhoto: false,
+    description:
+      "As a facilitator at Rotary District 9127's Mental Health Awareness Day in Abuja, Temple contributed to a multi-specialist symposium focused on normalising mental health conversations in Nigerian workplaces. Alongside a panel of mental health and addiction specialists, he addressed burnout, emotional suppression, and the organisational cost of unaddressed psychological strain.",
   },
   {
     id: 8,
-    venue: "Summit Keynote — Addo-Ekiti",
-    topic: "Lead Speaker",
-    date: "[Date TBC]", // PLACEHOLDER — update when confirmed
-    format: "In-Person Keynote · Addo-Ekiti", // PLACEHOLDER — update summit name when confirmed
+    venue: "Summit Keynote",
+    topic: "Lead Keynote Address",
+    date: "TBC",
+    format: "In-Person Keynote · Addo-Ekiti",
     formatIcon: "stage",
     hasPhoto: true,
-    photoComment: "Replace the placeholder below with the stage photo once uploaded: import stageSrc from '@assets/stage-photo.jpg' and set src={stageSrc}",
+    description:
+      "Temple travelled to Addo-Ekiti to deliver a keynote address at a regional summit, bringing his signature blend of psychological insight and strategic clarity to an audience of community leaders, professionals, and entrepreneurs. The engagement marked a milestone in his growing national profile — demonstrating the cross-sector reach of his work well beyond Lagos.",
   },
 ];
 
@@ -102,66 +118,203 @@ const formatIcons: Record<FormatIcon, React.ComponentType<{ className?: string }
   stage: Building2,
 };
 
-function GraphicCard({ engagement }: { engagement: Engagement }) {
-  const Icon = formatIcons[engagement.formatIcon];
-  return (
-    <div className="flex flex-col h-full">
-      {/* 
-        PLACEHOLDER IMAGE SLOT for Card #{engagement.id}
-        Replace this div with an <img> tag when a real event photo is available.
-        Suggested size: 16:9 aspect ratio, e.g. 400×225px minimum.
-      */}
-      <div className="aspect-video bg-background border border-dashed border-border/50 flex items-center justify-center mb-5 group-hover:border-primary/30 transition-colors duration-300">
-        <Icon className="w-6 h-6 text-primary/30 group-hover:text-primary/50 transition-colors duration-300" />
-      </div>
-      <CardContent engagement={engagement} />
-    </div>
-  );
-}
+const formatLabels: Record<FormatIcon, string> = {
+  radio: "Radio",
+  tv: "Television",
+  webinar: "Webinar",
+  event: "Live Event",
+  panel: "Panel",
+  keynote: "Keynote",
+  symposium: "Symposium",
+  stage: "Keynote",
+};
 
-function StagePhotoCard({ engagement }: { engagement: Engagement }) {
+// ── Modal poster ──────────────────────────────────────────────────────────────
+
+function EventPoster({ engagement }: { engagement: Engagement }) {
+  const Icon = formatIcons[engagement.formatIcon];
+  const label = formatLabels[engagement.formatIcon];
+
   return (
-    <div className="flex flex-col h-full">
-      <div className="aspect-video mb-5 relative overflow-hidden">
-        <img
-          src={stageSrc}
-          alt="Temple Obike delivering a keynote address on stage"
-          className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
-          style={{ filter: 'brightness(0.9) contrast(1.05)' }}
-        />
-        {/* Subtle gold vignette overlay for polish */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/20 pointer-events-none" />
-        <div className="absolute bottom-2 right-2">
-          <span className="text-[9px] text-primary/70 uppercase tracking-widest font-semibold bg-black/50 px-2 py-1">Keynote</span>
+    <div className="relative bg-[#0A0A0A] border border-primary/30 overflow-hidden select-none">
+      {/* Photo for card 8, typographic poster for all others */}
+      {engagement.hasPhoto ? (
+        <div className="relative">
+          <img
+            src={stageSrc}
+            alt="Temple Obike keynote address"
+            className="w-full object-cover"
+            style={{ maxHeight: 340, objectPosition: 'top', filter: 'brightness(0.75) contrast(1.1)' }}
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A] via-[#0A0A0A]/40 to-transparent" />
+          {/* Gold frame lines */}
+          <div className="absolute top-4 left-4 w-12 h-12 border-t border-l border-primary/60" />
+          <div className="absolute top-4 right-4 w-12 h-12 border-t border-r border-primary/60" />
+        </div>
+      ) : (
+        <div className="relative flex items-center justify-center" style={{ minHeight: 220 }}>
+          {/* Oversized "TO" watermark */}
+          <span className="absolute text-[140px] font-serif font-bold text-primary/8 select-none leading-none tracking-tighter pointer-events-none">
+            TO
+          </span>
+          {/* Gold corner accents */}
+          <div className="absolute top-4 left-4 w-10 h-10 border-t border-l border-primary/50" />
+          <div className="absolute top-4 right-4 w-10 h-10 border-t border-r border-primary/50" />
+          <div className="absolute bottom-4 left-4 w-10 h-10 border-b border-l border-primary/50" />
+          <div className="absolute bottom-4 right-4 w-10 h-10 border-b border-r border-primary/50" />
+          {/* Format icon centred */}
+          <div className="relative z-10 flex flex-col items-center gap-3">
+            <div className="w-12 h-12 border border-primary/40 flex items-center justify-center">
+              <Icon className="w-5 h-5 text-primary" />
+            </div>
+            <span className="text-[10px] tracking-[0.25em] text-primary uppercase font-semibold">{label}</span>
+          </div>
+        </div>
+      )}
+
+      {/* Poster footer */}
+      <div className="px-6 py-5 border-t border-primary/20">
+        <div className="flex items-start justify-between gap-4">
+          <div className="flex-1 min-w-0">
+            <p className="text-[10px] text-primary uppercase tracking-[0.2em] font-semibold mb-1">{engagement.date}</p>
+            <h3 className="font-serif text-xl text-white leading-snug">{engagement.venue}</h3>
+            <p className="text-sm text-white/60 font-light mt-1 leading-snug">{engagement.topic}</p>
+          </div>
+          <div className="shrink-0 text-right">
+            <span className="font-serif text-3xl text-primary/50 font-bold tracking-tighter">TO</span>
+          </div>
+        </div>
+        <div className="mt-4 pt-4 border-t border-white/10">
+          <p className="text-[11px] text-white/40 font-light uppercase tracking-widest">{engagement.format}</p>
         </div>
       </div>
-      <CardContent engagement={engagement} />
     </div>
   );
 }
 
-function CardContent({ engagement }: { engagement: Engagement }) {
-  const Icon = formatIcons[engagement.formatIcon];
+// ── Modal ─────────────────────────────────────────────────────────────────────
+
+function EventModal({
+  engagement,
+  onClose,
+}: {
+  engagement: Engagement;
+  onClose: () => void;
+}) {
   return (
-    <div className="flex flex-col flex-1">
-      <div className="flex items-center gap-2 mb-3">
-        <Icon className="w-3.5 h-3.5 text-primary/60 shrink-0" />
-        <span className="text-[10px] text-primary uppercase tracking-[0.18em] font-semibold">{engagement.date}</span>
-      </div>
-      <h3 className="font-serif text-lg text-foreground leading-snug mb-2">
-        {engagement.venue}
-      </h3>
-      <p className="text-sm text-muted-foreground font-light leading-relaxed mb-3 flex-1">
-        {engagement.topic}
-      </p>
-      <p className="text-xs text-muted-foreground/60 font-light mt-auto pt-3 border-t border-border">
-        {engagement.format}
-      </p>
-    </div>
+    <AnimatePresence>
+      <motion.div
+        key="overlay"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        transition={{ duration: 0.2 }}
+        className="fixed inset-0 z-50 bg-black/85 backdrop-blur-sm flex items-center justify-center p-4"
+        onClick={onClose}
+        data-testid="modal-overlay"
+      >
+        <motion.div
+          key="panel"
+          initial={{ opacity: 0, y: 24, scale: 0.97 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          exit={{ opacity: 0, y: 12, scale: 0.97 }}
+          transition={{ duration: 0.28, ease: [0.16, 1, 0.3, 1] }}
+          className="relative w-full max-w-xl bg-card border border-border overflow-y-auto"
+          style={{ maxHeight: '90vh' }}
+          onClick={(e) => e.stopPropagation()}
+          data-testid={`modal-engagement-${engagement.id}`}
+        >
+          {/* Close button */}
+          <button
+            onClick={onClose}
+            data-testid="button-modal-close"
+            className="absolute top-4 right-4 z-10 w-8 h-8 flex items-center justify-center border border-border text-muted-foreground hover:text-foreground hover:border-primary transition-colors duration-200 bg-card/80 backdrop-blur-sm"
+            aria-label="Close"
+          >
+            <X className="w-4 h-4" />
+          </button>
+
+          {/* Poster */}
+          <EventPoster engagement={engagement} />
+
+          {/* Description */}
+          <div className="px-8 py-8">
+            <p className="text-base text-muted-foreground font-light leading-[1.85]">
+              {engagement.description}
+            </p>
+          </div>
+
+          {/* Bottom gold line */}
+          <div className="h-[2px] bg-gradient-to-r from-primary/60 via-primary/20 to-transparent" />
+        </motion.div>
+      </motion.div>
+    </AnimatePresence>
   );
 }
+
+// ── Card (default state — TO monogram only) ────────────────────────────────────
+
+function EngagementCard({
+  engagement,
+  onClick,
+  index,
+}: {
+  engagement: Engagement;
+  onClick: () => void;
+  index: number;
+}) {
+  return (
+    <motion.button
+      type="button"
+      onClick={onClick}
+      data-testid={`card-engagement-${engagement.id}`}
+      initial={{ opacity: 0, y: 30 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.6, delay: Math.min(index * 0.08, 0.48) }}
+      className="group w-full text-left bg-card border border-border hover:border-primary/50 transition-all duration-300 hover:-translate-y-1 relative overflow-hidden focus:outline-none focus-visible:ring-1 focus-visible:ring-primary cursor-pointer"
+    >
+      {/* Gold top border */}
+      <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-primary/60 via-primary/20 to-transparent" />
+
+      {/* Card face — TO monogram only */}
+      <div className="flex flex-col items-center justify-center px-6 pt-10 pb-6 min-h-[220px]">
+        {/* Oversized faded TO behind the main TO */}
+        <span className="absolute text-[90px] font-serif font-bold text-primary/5 select-none leading-none tracking-tighter pointer-events-none">
+          TO
+        </span>
+        <span className="relative font-serif text-5xl font-bold text-primary tracking-tighter group-hover:text-[#c99a5e] transition-colors duration-300 z-10">
+          TO
+        </span>
+        <div className="w-6 h-[1px] bg-primary/40 mt-4 mb-4 group-hover:w-12 transition-all duration-500" />
+        <p className="text-[10px] text-muted-foreground uppercase tracking-[0.18em] font-semibold text-center leading-snug z-10 relative">
+          {engagement.date}
+        </p>
+      </div>
+
+      {/* Card footer */}
+      <div className="px-6 pb-6 border-t border-border pt-4">
+        <h3 className="font-serif text-sm text-foreground leading-snug mb-1 group-hover:text-primary transition-colors duration-200">
+          {engagement.venue}
+        </h3>
+        <p className="text-[11px] text-muted-foreground/60 font-light">
+          {formatLabels[engagement.formatIcon]}
+        </p>
+      </div>
+
+      {/* Hover hint */}
+      <div className="absolute bottom-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+        <span className="text-[9px] text-primary uppercase tracking-widest font-semibold">View →</span>
+      </div>
+    </motion.button>
+  );
+}
+
+// ── Section ───────────────────────────────────────────────────────────────────
 
 export function SpeakingHistory() {
+  const [active, setActive] = useState<Engagement | null>(null);
+
   return (
     <section className="py-24 md:py-32 bg-background border-y border-border">
       <div className="container mx-auto px-6 max-w-7xl">
@@ -180,29 +333,22 @@ export function SpeakingHistory() {
           </h2>
         </motion.div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
           {engagements.map((engagement, idx) => (
-            <motion.div
+            <EngagementCard
               key={engagement.id}
-              data-testid={`card-engagement-${engagement.id}`}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: Math.min(idx * 0.08, 0.48) }}
-              className="group bg-card border border-border hover:border-primary/30 p-6 transition-all duration-300 hover:-translate-y-1 relative overflow-hidden"
-            >
-              {/* Gold top border accent */}
-              <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-primary/60 via-primary/20 to-transparent" />
-
-              {engagement.hasPhoto ? (
-                <StagePhotoCard engagement={engagement} />
-              ) : (
-                <GraphicCard engagement={engagement} />
-              )}
-            </motion.div>
+              engagement={engagement}
+              onClick={() => setActive(engagement)}
+              index={idx}
+            />
           ))}
         </div>
       </div>
+
+      {/* Modal */}
+      {active && (
+        <EventModal engagement={active} onClose={() => setActive(null)} />
+      )}
     </section>
   );
 }
