@@ -1,3 +1,4 @@
+import { SiteNav } from '../components/SiteNav';
 import logoSrc from '@assets/IMG-20260727-WA0003_1785149135010.jpg';
 import stageSrc from '@assets/Screenshot_20260727_110019_Gallery_1785147430425.jpg';
 import searchConsoleSrc from '@assets/Screenshot_20260727-130611_1785154220443.jpg';
@@ -218,20 +219,16 @@ export default function MediaKit() {
   return (
     <div style={{ fontFamily: "'DM Sans', 'Segoe UI', sans-serif", background: dark, color: '#e5e5e5', minHeight: '100vh' }}>
 
-      {/* Top bar */}
-      <div className="print:hidden" style={{ background: '#111', borderBottom: '1px solid #1e1e1e', padding: '12px 32px', display: 'flex', justifyContent: 'flex-end', gap: 12 }}>
+      <SiteNav />
+
+      {/* Top bar — print action, shown below the fixed nav */}
+      <div className="print:hidden" style={{ marginTop: 64, background: '#111', borderBottom: '1px solid #1e1e1e', padding: '12px 32px', display: 'flex', justifyContent: 'flex-end', gap: 12 }}>
         <button
           onClick={() => window.print()}
           style={{ background: gold, color: '#fff', border: 'none', padding: '8px 22px', fontWeight: 600, fontSize: 12, cursor: 'pointer', letterSpacing: '0.06em' }}
         >
           Download / Print PDF
         </button>
-        <a
-          href="/"
-          style={{ background: 'transparent', color: '#888', border: '1px solid #2a2a2a', padding: '8px 22px', fontWeight: 500, fontSize: 12, textDecoration: 'none', letterSpacing: '0.05em' }}
-        >
-          ← Back to Site
-        </a>
       </div>
 
       {/* Hero band */}

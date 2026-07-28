@@ -18,7 +18,7 @@ import Retreat from './pages/retreat';
 import Admin from './pages/admin';
 import { BookTeaser } from './components/BookTeaser';
 import { RetreatTeaser } from './components/RetreatTeaser';
-import { MobileNav } from './components/MobileNav';
+import { SiteNav } from './components/SiteNav';
 import { PracticeBanner } from './components/PracticeBanner';
 
 const queryClient = new QueryClient();
@@ -27,7 +27,7 @@ const queryClient = new QueryClient();
 function SpeakerSite() {
   return (
     <main className="min-h-screen w-full bg-background text-foreground font-sans selection:bg-primary/30 selection:text-foreground">
-      <MobileNav />
+      <SiteNav />
       <Hero />
       <CredibilityStrip />
       <About />

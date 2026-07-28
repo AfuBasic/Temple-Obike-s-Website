@@ -1,7 +1,7 @@
 import { useState } from 'react';
+import { SiteNav } from '../components/SiteNav';
 import { RetreatCountdown } from '../components/RetreatCountdown';
 import { COHORTS } from '../data/retreat';
-import logoSrc from '@assets/IMG-20260727-WA0003_1785149135010.jpg';
 import bookCoverSrc from '@assets/f123ebc6-1cd8-4218-836b-4da5f9aaa958_1785166711807.png';
 
 const WEB3FORMS_KEY = import.meta.env.VITE_WEB3FORMS_KEY as string;
@@ -336,18 +336,7 @@ export default function Retreat() {
     <div className="retreat-root">
       <style>{css}</style>
 
-      {/* ── NAV ── */}
-      <nav style={{ position: 'sticky', top: 0, zIndex: 50, background: 'rgba(11,11,10,0.88)', backdropFilter: 'blur(10px)', borderBottom: `1px solid ${line}` }}>
-        <div className="retreat-nav-inner">
-          <a href={base || '/'} style={{ display: 'flex', alignItems: 'center', gap: 12, textDecoration: 'none' }}>
-            <img src={logoSrc} alt="Temple Obike" style={{ width: 34, opacity: 0.9 }} />
-            <span style={{ fontFamily: "'Fraunces', Georgia, serif", fontSize: '1.05rem', color: cream }}>
-              Temple's Counsel <span style={{ color: gold }}>· Mind Academy</span>
-            </span>
-          </a>
-          <a href="#book" className="retreat-btn" style={{ padding: '10px 20px', fontSize: '0.82rem' }}>Reserve Our Spot</a>
-        </div>
-      </nav>
+      <SiteNav />
 
       {/* ── HERO ── */}
       <header style={{

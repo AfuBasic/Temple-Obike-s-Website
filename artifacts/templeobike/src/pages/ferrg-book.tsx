@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { SiteNav } from '../components/SiteNav';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
@@ -80,23 +81,9 @@ export default function FerrgBook() {
   };
 
   return (
-    <div className="min-h-screen bg-[#06080F] text-foreground font-sans">
+    <div className="min-h-screen bg-[#06080F] text-foreground font-sans pt-16">
 
-      {/* Nav bar */}
-      <nav className="border-b border-white/5 px-6 py-4 flex items-center justify-between">
-        <a href={BASE_URL || '/'} className="flex items-center gap-3 group">
-          <img src={logoSrc} alt="Temple Obike" className="w-9 opacity-90 group-hover:opacity-100 transition" />
-          <span className="text-xs tracking-[0.18em] text-muted-foreground uppercase font-medium group-hover:text-primary transition">
-            Temple Obike
-          </span>
-        </a>
-        <a
-          href="#reserve"
-          className="hidden sm:inline-flex items-center px-6 py-2.5 bg-primary text-primary-foreground text-xs font-semibold tracking-wide hover:bg-[#c99a5e] transition"
-        >
-          Reserve My Copy
-        </a>
-      </nav>
+      <SiteNav />
 
       {/* Hero */}
       <section className="relative overflow-hidden">
