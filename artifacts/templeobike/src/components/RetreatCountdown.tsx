@@ -4,14 +4,17 @@ interface Props {
   /** 'light' = dark text on light bg (homepage teaser), 'dark' = gold/cream on dark bg (retreat page) */
   variant?: 'light' | 'dark';
   className?: string;
+  /** Optional: pin to a specific cohort date instead of the next upcoming one */
+  cohortDate?: Date;
+  cohortLabel?: string;
 }
 
 function pad(n: number) {
   return String(n).padStart(2, '0');
 }
 
-export function RetreatCountdown({ variant = 'light', className }: Props) {
-  const { label, days, hours, minutes, seconds, active } = useCountdown();
+export function RetreatCountdown({ variant = 'light', className, cohortDate, cohortLabel }: Props) {
+  const { label, days, hours, minutes, seconds, active } = useCountdown(cohortDate, cohortLabel);
   if (!active) return null;
 
   const isDark = variant === 'dark';

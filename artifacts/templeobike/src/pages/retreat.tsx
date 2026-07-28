@@ -363,12 +363,13 @@ export default function Retreat() {
               Fully managed, start to finish. Book once, send us your passport, and we handle flights, visas, and logistics — you just arrive at the airport with your bags. Everyone flies out together and comes home to Nigeria together.
             </p>
 
-            <div style={{ display: 'inline-flex', alignItems: 'center', gap: 10, marginTop: 20, padding: '10px 16px', border: `1px solid ${line}`, fontSize: '0.78rem', color: stone }}>
-              <span style={{ color: '#e2c15c' }}>◆</span> The same season, our friend DJ Irons plays the first-ever DJ set at the summit of Kilimanjaro. Different trip, same milestone season.
-            </div>
-
-            <div style={{ marginTop: 28 }}>
-              <RetreatCountdown variant="dark" />
+            <div style={{ marginTop: 28, display: 'flex', flexWrap: 'wrap' as const, gap: 28 }}>
+              <RetreatCountdown variant="dark"
+                cohortDate={new Date('2026-10-07T23:00:00Z')}
+                cohortLabel="Accra cohort" />
+              <RetreatCountdown variant="dark"
+                cohortDate={new Date('2026-10-21T23:00:00Z')}
+                cohortLabel="Mauritius cohort" />
             </div>
 
             <div style={{ display: 'flex', gap: 14, marginTop: 24, flexWrap: 'wrap' as const }}>
