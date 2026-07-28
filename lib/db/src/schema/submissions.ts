@@ -1,4 +1,4 @@
-import { pgTable, serial, text, timestamp } from "drizzle-orm/pg-core";
+import { pgTable, serial, text, timestamp, boolean } from "drizzle-orm/pg-core";
 import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod/v4";
 
@@ -10,6 +10,7 @@ export const preorderSubmissions = pgTable("preorder_submissions", {
   email: text("email").notNull(),
   phone: text("phone"),
   note: text("note"),
+  followedUp: boolean("followed_up").default(false).notNull(),
   createdAt: timestamp("created_at").defaultNow().notNull(),
 });
 
@@ -30,6 +31,7 @@ export const retreatBookings = pgTable("retreat_bookings", {
   location: text("location").notNull(), // 'Accra' | 'Mauritius' | 'Virtual'
   virtualTier: text("virtual_tier"),    // 'day3' | '2days' | 'all3' | null
   note: text("note"),
+  followedUp: boolean("followed_up").default(false).notNull(),
   createdAt: timestamp("created_at").defaultNow().notNull(),
 });
 

@@ -60,4 +60,52 @@ router.get("/admin/submissions", async (req, res) => {
   }
 });
 
+// ─── PATCH /api/admin/submissions/:type/:id/followed-up ──────────────────────
+//
+//   Toggles the followed_up flag for a retreat or preorder row.
+//   Body: { followedUp: boolean }
+//   Requires:  Authorization: Bearer <SESSION_SECRET>
+
+router.patch("/admin/submissions/:type/:id/followed-up", async (req, res) => {
+  if (!isAuthorised(req.headers.authorization)) {
+    res.status(401).json({ error: "Unauthorised" });
+    return;
+  }
+
+  const { type, id } = req.params;
+  const rowId = parseInt(id, 10);
+  if (isNaN(rowId)) {
+    res.status(400).json({ error: "Invalid id" });
+    return;
+  }
+
+  const { followedUp } = req.body as { followedUp?: boolean };
+  if (typeof followedUp !== "boolean") {
+    res.status(400).json({ error: "followedUp must be a boolean" });
+    return;
+  }
+
+  try {
+    if (type === "retreat") {
+      await db
+        .update(retreatBookings)
+        .set({ followedUp })
+        .where(eq(retreatBookings.id, rowId));
+    } else if (type === "preorder") {
+      await db
+        .update(preorderSubmissions)
+        .set({ followedUp })
+        .where(eq(preorderSubmissions.id, rowId));
+    } else {
+      res.status(400).json({ error: "type must be retreat or preorder" });
+      return;
+    }
+
+    res.json({ ok: true });
+  } catch (err) {
+    req.log.error({ err }, "Failed to update followed_up");
+    res.status(500).json({ error: "Failed to update" });
+  }
+});
+
 export default router;

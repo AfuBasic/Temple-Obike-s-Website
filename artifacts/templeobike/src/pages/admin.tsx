@@ -8,6 +8,7 @@ interface Preorder {
   email: string;
   phone: string | null;
   note: string | null;
+  followedUp: boolean;
   createdAt: string;
 }
 
@@ -20,6 +21,7 @@ interface RetreatBooking {
   location: string;
   virtualTier: string | null;
   note: string | null;
+  followedUp: boolean;
   createdAt: string;
 }
 
@@ -42,7 +44,6 @@ function formatDate(iso: string) {
 
 function escapeCsvCell(value: string | number | null | undefined): string {
   const str = value == null ? '' : String(value);
-  // Wrap in quotes if the value contains a comma, quote, or newline
   if (str.includes(',') || str.includes('"') || str.includes('\n') || str.includes('\r')) {
     return `"${str.replace(/"/g, '""')}"`;
   }
@@ -73,6 +74,7 @@ export default function Admin() {
   const [loading, setLoading] = useState(false);
   const [locationFilter, setLocationFilter] = useState<string>('');
   const [tab, setTab] = useState<'retreats' | 'preorders'>('retreats');
+  const [togglingId, setTogglingId] = useState<string | null>(null);
 
   const fetchData = useCallback(async (pwd: string, loc?: string) => {
     setLoading(true);
@@ -109,6 +111,46 @@ export default function Admin() {
   const handleFilterChange = (loc: string) => {
     setLocationFilter(loc);
     fetchData(password, loc || undefined);
+  };
+
+  const toggleFollowedUp = async (type: 'retreat' | 'preorder', id: number, current: boolean) => {
+    const key = `${type}-${id}`;
+    setTogglingId(key);
+    try {
+      const res = await fetch(`${BASE_URL}/api/admin/submissions/${type}/${id}/followed-up`, {
+        method: 'PATCH',
+        headers: {
+          Authorization: `Bearer ${password}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ followedUp: !current }),
+      });
+      if (!res.ok) throw new Error(`Server error ${res.status}`);
+
+      // Optimistically update local state
+      setData(prev => {
+        if (!prev) return prev;
+        if (type === 'retreat') {
+          return {
+            ...prev,
+            retreats: prev.retreats.map(r =>
+              r.id === id ? { ...r, followedUp: !current } : r,
+            ),
+          };
+        } else {
+          return {
+            ...prev,
+            preorders: prev.preorders.map(p =>
+              p.id === id ? { ...p, followedUp: !current } : p,
+            ),
+          };
+        }
+      });
+    } catch {
+      // Silent failure — the toggle will revert visually on next fetch
+    } finally {
+      setTogglingId(null);
+    }
   };
 
   // ── Login screen ────────────────────────────────────────────────────────────
@@ -161,6 +203,9 @@ export default function Admin() {
   const retreats = data?.retreats ?? [];
   const preorders = data?.preorders ?? [];
 
+  const retreatsPending = retreats.filter(r => !r.followedUp).length;
+  const preordersPending = preorders.filter(p => !p.followedUp).length;
+
   // ── Dashboard ───────────────────────────────────────────────────────────────
   return (
     <div className="min-h-screen bg-[#06080F] text-foreground font-sans">
@@ -191,7 +236,7 @@ export default function Admin() {
       <div className="max-w-6xl mx-auto px-6 py-8">
 
         {/* Summary stats */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-8">
+        <div className="grid grid-cols-2 sm:grid-cols-5 gap-4 mb-8">
           {[
             { label: 'Total Enquiries', value: retreats.length + preorders.length },
             { label: 'Retreat Bookings', value: retreats.length },
@@ -200,13 +245,26 @@ export default function Admin() {
               label: 'Accra / Mauritius / Virtual',
               value: `${retreats.filter(r => r.location === 'Accra').length} / ${retreats.filter(r => r.location === 'Mauritius').length} / ${retreats.filter(r => r.location === 'Virtual').length}`,
             },
+            {
+              label: 'Pending Follow-up',
+              value: retreatsPending + preordersPending,
+              highlight: retreatsPending + preordersPending > 0,
+            },
           ].map(stat => (
             <div
               key={stat.label}
-              className="bg-card border border-border p-4"
+              className={`border p-4 ${
+                'highlight' in stat && stat.highlight
+                  ? 'bg-amber-950/30 border-amber-700/40'
+                  : 'bg-card border-border'
+              }`}
             >
-              <div className="text-xs text-muted-foreground mb-1">{stat.label}</div>
-              <div className="text-xl font-serif font-semibold text-foreground">{stat.value}</div>
+              <div className={`text-xs mb-1 ${'highlight' in stat && stat.highlight ? 'text-amber-400/70' : 'text-muted-foreground'}`}>
+                {stat.label}
+              </div>
+              <div className={`text-xl font-serif font-semibold ${'highlight' in stat && stat.highlight ? 'text-amber-300' : 'text-foreground'}`}>
+                {stat.value}
+              </div>
             </div>
           ))}
         </div>
@@ -223,7 +281,9 @@ export default function Admin() {
                   : 'border-transparent text-muted-foreground hover:text-foreground'
               }`}
             >
-              {t === 'retreats' ? `Retreat Bookings (${retreats.length})` : `Book Pre-orders (${preorders.length})`}
+              {t === 'retreats'
+                ? `Retreat Bookings (${retreats.length})${retreatsPending > 0 ? ` · ${retreatsPending} pending` : ''}`
+                : `Book Pre-orders (${preorders.length})${preordersPending > 0 ? ` · ${preordersPending} pending` : ''}`}
             </button>
           ))}
         </div>
@@ -255,7 +315,7 @@ export default function Admin() {
                     const suffix = locationFilter ? `-${locationFilter.toLowerCase()}` : '';
                     downloadCsv(
                       `retreat-bookings${suffix}.csv`,
-                      ['Date', 'Name', 'Partner', 'Email', 'Phone', 'Location', 'Package', 'Note'],
+                      ['Date', 'Name', 'Partner', 'Email', 'Phone', 'Location', 'Package', 'Note', 'Followed Up'],
                       retreats.map(r => [
                         formatDate(r.createdAt),
                         r.name,
@@ -265,6 +325,7 @@ export default function Admin() {
                         r.location,
                         r.virtualTier ?? '',
                         r.note ?? '',
+                        r.followedUp ? 'Yes' : 'No',
                       ]),
                     );
                   }}
@@ -284,7 +345,7 @@ export default function Admin() {
                 <table className="w-full text-sm border-collapse">
                   <thead>
                     <tr className="border-b border-white/5">
-                      {['Date', 'Name', 'Partner', 'Email', 'Phone', 'Location', 'Package', 'Note'].map(h => (
+                      {['', 'Date', 'Name', 'Partner', 'Email', 'Phone', 'Location', 'Package', 'Note'].map(h => (
                         <th
                           key={h}
                           className="text-left px-3 py-3 text-xs font-semibold tracking-[0.1em] uppercase text-muted-foreground whitespace-nowrap"
@@ -298,10 +359,39 @@ export default function Admin() {
                     {retreats.map((r, i) => (
                       <tr
                         key={r.id}
-                        className={`border-b border-white/5 hover:bg-card/50 transition ${i % 2 === 0 ? '' : 'bg-white/[0.015]'}`}
+                        className={`border-b border-white/5 hover:bg-card/50 transition ${
+                          !r.followedUp
+                            ? 'bg-amber-950/20'
+                            : i % 2 === 0 ? '' : 'bg-white/[0.015]'
+                        }`}
                       >
+                        <td className="px-3 py-3 whitespace-nowrap">
+                          <button
+                            onClick={() => toggleFollowedUp('retreat', r.id, r.followedUp)}
+                            disabled={togglingId === `retreat-${r.id}`}
+                            title={r.followedUp ? 'Mark as not followed up' : 'Mark as followed up'}
+                            className={`w-5 h-5 border-2 rounded-sm flex items-center justify-center transition-all ${
+                              r.followedUp
+                                ? 'bg-emerald-600 border-emerald-600 text-white'
+                                : 'border-amber-500/60 bg-transparent hover:border-amber-400'
+                            } disabled:opacity-40`}
+                          >
+                            {r.followedUp && (
+                              <svg className="w-3 h-3" viewBox="0 0 12 12" fill="none">
+                                <path d="M2 6l3 3 5-5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                              </svg>
+                            )}
+                          </button>
+                        </td>
                         <td className="px-3 py-3 text-muted-foreground text-xs whitespace-nowrap">{formatDate(r.createdAt)}</td>
-                        <td className="px-3 py-3 text-foreground font-medium whitespace-nowrap">{r.name}</td>
+                        <td className="px-3 py-3 font-medium whitespace-nowrap">
+                          <span className={r.followedUp ? 'text-foreground' : 'text-amber-200'}>{r.name}</span>
+                          {!r.followedUp && (
+                            <span className="ml-2 inline-block px-1.5 py-0.5 text-[9px] font-bold tracking-wide uppercase bg-amber-900/50 text-amber-400 rounded-sm">
+                              pending
+                            </span>
+                          )}
+                        </td>
                         <td className="px-3 py-3 text-foreground whitespace-nowrap">{r.partner}</td>
                         <td className="px-3 py-3">
                           <a href={`mailto:${r.email}`} className="text-primary hover:underline whitespace-nowrap">{r.email}</a>
@@ -340,13 +430,14 @@ export default function Admin() {
                   onClick={() => {
                     downloadCsv(
                       'book-preorders.csv',
-                      ['Date', 'Name', 'Email', 'Phone', 'Note'],
+                      ['Date', 'Name', 'Email', 'Phone', 'Note', 'Followed Up'],
                       preorders.map(p => [
                         formatDate(p.createdAt),
                         p.name,
                         p.email,
                         p.phone ?? '',
                         p.note ?? '',
+                        p.followedUp ? 'Yes' : 'No',
                       ]),
                     );
                   }}
@@ -365,7 +456,7 @@ export default function Admin() {
                 <table className="w-full text-sm border-collapse">
                   <thead>
                     <tr className="border-b border-white/5">
-                      {['Date', 'Name', 'Email', 'Phone', 'Note'].map(h => (
+                      {['', 'Date', 'Name', 'Email', 'Phone', 'Note'].map(h => (
                         <th
                           key={h}
                           className="text-left px-3 py-3 text-xs font-semibold tracking-[0.1em] uppercase text-muted-foreground whitespace-nowrap"
@@ -379,10 +470,39 @@ export default function Admin() {
                     {preorders.map((p, i) => (
                       <tr
                         key={p.id}
-                        className={`border-b border-white/5 hover:bg-card/50 transition ${i % 2 === 0 ? '' : 'bg-white/[0.015]'}`}
+                        className={`border-b border-white/5 hover:bg-card/50 transition ${
+                          !p.followedUp
+                            ? 'bg-amber-950/20'
+                            : i % 2 === 0 ? '' : 'bg-white/[0.015]'
+                        }`}
                       >
+                        <td className="px-3 py-3 whitespace-nowrap">
+                          <button
+                            onClick={() => toggleFollowedUp('preorder', p.id, p.followedUp)}
+                            disabled={togglingId === `preorder-${p.id}`}
+                            title={p.followedUp ? 'Mark as not followed up' : 'Mark as followed up'}
+                            className={`w-5 h-5 border-2 rounded-sm flex items-center justify-center transition-all ${
+                              p.followedUp
+                                ? 'bg-emerald-600 border-emerald-600 text-white'
+                                : 'border-amber-500/60 bg-transparent hover:border-amber-400'
+                            } disabled:opacity-40`}
+                          >
+                            {p.followedUp && (
+                              <svg className="w-3 h-3" viewBox="0 0 12 12" fill="none">
+                                <path d="M2 6l3 3 5-5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                              </svg>
+                            )}
+                          </button>
+                        </td>
                         <td className="px-3 py-3 text-muted-foreground text-xs whitespace-nowrap">{formatDate(p.createdAt)}</td>
-                        <td className="px-3 py-3 text-foreground font-medium whitespace-nowrap">{p.name}</td>
+                        <td className="px-3 py-3 font-medium whitespace-nowrap">
+                          <span className={p.followedUp ? 'text-foreground' : 'text-amber-200'}>{p.name}</span>
+                          {!p.followedUp && (
+                            <span className="ml-2 inline-block px-1.5 py-0.5 text-[9px] font-bold tracking-wide uppercase bg-amber-900/50 text-amber-400 rounded-sm">
+                              pending
+                            </span>
+                          )}
+                        </td>
                         <td className="px-3 py-3">
                           <a href={`mailto:${p.email}`} className="text-primary hover:underline whitespace-nowrap">{p.email}</a>
                         </td>
