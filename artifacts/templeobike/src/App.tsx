@@ -15,6 +15,7 @@ import RateCard from './pages/rate-card';
 import MediaKit from './pages/media-kit';
 import FerrgBook from './pages/ferrg-book';
 import Retreat from './pages/retreat';
+import Admin from './pages/admin';
 import { BookTeaser } from './components/BookTeaser';
 import { RetreatTeaser } from './components/RetreatTeaser';
 
@@ -45,6 +46,7 @@ function Router() {
       <Route path="/media-kit" component={MediaKit} />
       <Route path="/ferrg-book" component={FerrgBook} />
       <Route path="/retreat" component={Retreat} />
+      <Route path="/admin" component={Admin} />
       <Route component={NotFound} />
     </Switch>
   );

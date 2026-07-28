@@ -3,6 +3,7 @@ import logoSrc from '@assets/IMG-20260727-WA0003_1785149135010.jpg';
 import bookCoverSrc from '@assets/f123ebc6-1cd8-4218-836b-4da5f9aaa958_1785166711807.png';
 
 const WEB3FORMS_KEY = import.meta.env.VITE_WEB3FORMS_KEY as string;
+const BASE_URL = import.meta.env.BASE_URL?.replace(/\/$/, '') ?? '';
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -265,27 +266,46 @@ export default function Retreat() {
     setErrors({});
     setStatus('sending');
     try {
-      const res = await fetch('https://api.web3forms.com/submit', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          access_key: WEB3FORMS_KEY,
-          to: 'templescounsel@gmail.com',
-          subject: `Gold Retreat Booking — ${form.location}${form.location === 'Virtual' ? ` · ${virtualTierLabel(form.virtualTier)}` : ''}`,
-          from_name: form.name,
-          email: form.email,
-          replyto: form.email,
-          phone: form.phone,
-          partner: form.partner,
-          location: form.location,
-          ...(form.location === 'Virtual' && { virtual_package: virtualTierLabel(form.virtualTier) }),
-          note: form.note || 'Not provided',
-          botcheck: '',
-        }),
-      });
-      const json = await res.json();
-      setStatus(json.success ? 'sent' : 'error');
-      if (json.success) setForm({ name: '', partner: '', email: '', phone: '', location: '', virtualTier: '', note: '', botcheck: '' });
+      // Save to database (required) and send email (best-effort) in parallel.
+      // Success requires DB write to succeed so the enquiry appears in admin.
+      const [dbRes, emailRes] = await Promise.allSettled([
+        fetch(`${BASE_URL}/api/submissions/retreat`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            name: form.name,
+            partner: form.partner,
+            email: form.email,
+            phone: form.phone,
+            location: form.location,
+            virtualTier: form.virtualTier || undefined,
+            note: form.note || undefined,
+          }),
+        }).then(r => ({ ok: r.ok })),
+        fetch('https://api.web3forms.com/submit', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            access_key: WEB3FORMS_KEY,
+            to: 'templescounsel@gmail.com',
+            subject: `Gold Retreat Booking — ${form.location}${form.location === 'Virtual' ? ` · ${virtualTierLabel(form.virtualTier)}` : ''}`,
+            from_name: form.name,
+            email: form.email,
+            replyto: form.email,
+            phone: form.phone,
+            partner: form.partner,
+            location: form.location,
+            ...(form.location === 'Virtual' && { virtual_package: virtualTierLabel(form.virtualTier) }),
+            note: form.note || 'Not provided',
+            botcheck: '',
+          }),
+        }).then(r => r.json()),
+      ]);
+      const dbOk = dbRes.status === 'fulfilled' && (dbRes.value as { ok: boolean }).ok;
+      // Success requires the DB write to succeed so the enquiry is always
+      // visible in the admin dashboard. Email is best-effort notification only.
+      setStatus(dbOk ? 'sent' : 'error');
+      if (dbOk) setForm({ name: '', partner: '', email: '', phone: '', location: '', virtualTier: '', note: '', botcheck: '' });
     } catch { setStatus('error'); }
   };
 
@@ -320,7 +340,7 @@ export default function Retreat() {
           <div>
             <div className="retreat-eyebrow">Limited Cohorts · October 2026</div>
 
-            <h1 style={{ marginTop: 24 }} style={{ fontSize: '3rem', lineHeight: 1.06, color: cream }}>
+            <h1 style={{ marginTop: 24, fontSize: '3rem', lineHeight: 1.06, color: cream }}>
               Three nights to reach<br />
               <span style={{ color: '#e2c15c', fontStyle: 'italic', fontWeight: 450 }}>the Gold stage,</span> together.
             </h1>
