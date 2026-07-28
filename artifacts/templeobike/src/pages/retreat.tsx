@@ -307,6 +307,9 @@ export default function Retreat() {
             ...(form.location === 'Virtual' && { virtual_package: virtualTierLabel(form.virtualTier) }),
             note: form.note || 'Not provided',
             botcheck: '',
+            autoresponse: true,
+            autoresponse_subject: 'Your Gold Retreat enquiry — Temple Obike',
+            autoresponse_message: `Hi ${form.name},\n\nWe have received your enquiry for The Gold Retreat${form.location ? ` — ${form.location}` : ''} and we will be in touch shortly with next steps.\n\nSpaces are limited and reserved on a first-come basis. We are glad you reached out.\n\nIn the meantime, if you have any questions you can simply reply to this email.\n\nWith gratitude,\nTemple Obike\nTemple's Counsel & Mind Academy`,
           }),
         }).then(r => r.json()),
       ]);

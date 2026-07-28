@@ -59,6 +59,9 @@ export default function FerrgBook() {
             phone: data.phone || 'Not provided',
             note: data.note || 'Not provided',
             botcheck: data.botcheck ?? '',
+            autoresponse: true,
+            autoresponse_subject: "You're on the list — Temple Obike",
+            autoresponse_message: `Hi ${data.name},\n\nThank you for reserving your copy. Your name is on the list.\n\nWhen the book is ready, you will be among the first to know — and first to receive it. If companion courses, workshops, or private cohorts open before then, pre-order readers hear first.\n\nThere is nothing you need to do right now. We have your details and we will be in touch.\n\nWith gratitude,\nTemple Obike`,
           }),
         }).then(r => r.json()),
       ]);
