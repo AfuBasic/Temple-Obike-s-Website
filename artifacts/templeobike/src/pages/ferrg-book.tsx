@@ -52,7 +52,7 @@ export default function FerrgBook() {
           body: JSON.stringify({
             access_key: WEB3FORMS_KEY,
             to: 'templescounsel@gmail.com',
-            subject: 'Pre-Order: The FERRG Relationship Model',
+            subject: 'Pre-Order: New Book — Temple Obike',
             from_name: data.name,
             email: data.email,
             replyto: data.email,
@@ -81,7 +81,7 @@ export default function FerrgBook() {
 
       {/* Nav bar */}
       <nav className="border-b border-white/5 px-6 py-4 flex items-center justify-between">
-        <a href="/" className="flex items-center gap-3 group">
+        <a href={BASE_URL || '/'} className="flex items-center gap-3 group">
           <img src={logoSrc} alt="Temple Obike" className="w-9 opacity-90 group-hover:opacity-100 transition" />
           <span className="text-xs tracking-[0.18em] text-muted-foreground uppercase font-medium group-hover:text-primary transition">
             Temple Obike
@@ -402,7 +402,7 @@ export default function FerrgBook() {
             <span>© {new Date().getFullYear()} Temple Obike · Temple's Counsel &amp; Mind Academy Ltd. All rights reserved.</span>
             <span className="text-muted-foreground/35">This work and its methodology are protected intellectual property of Temple Obike. Unauthorised reproduction or use is prohibited.</span>
           </div>
-          <a href="/" className="hover:text-primary transition whitespace-nowrap">← Back to templeobike.com</a>
+          <a href={BASE_URL || '/'} className="hover:text-primary transition whitespace-nowrap">← Back to templeobike.com</a>
         </div>
       </footer>
 

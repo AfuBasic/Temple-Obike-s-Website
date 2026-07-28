@@ -4,6 +4,9 @@ import radioSrc from '@assets/Radio-Nigeria_1785170842313.jpg';
 
 const ntaThumbnail = 'https://img.youtube.com/vi/z3Ofsd6z9z8/hqdefault.jpg';
 
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const resolveLink = (link: string) => link.startsWith('/') ? `${base}${link}` : link;
+
 export function CredibilityStrip() {
   const items = [
     {
@@ -47,7 +50,7 @@ export function CredibilityStrip() {
           {items.map((item, idx) => (
             <a
               key={idx}
-              href={item.link}
+              href={resolveLink(item.link)}
               target={item.link.startsWith('http') ? '_blank' : '_self'}
               rel={item.link.startsWith('http') ? 'noopener noreferrer' : ''}
               data-testid={item.testid}

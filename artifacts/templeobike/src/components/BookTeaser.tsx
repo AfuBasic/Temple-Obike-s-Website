@@ -1,6 +1,8 @@
 import { motion } from 'framer-motion';
 import bookCoverSrc from '@assets/f123ebc6-1cd8-4218-836b-4da5f9aaa958_1785166711807.png';
 
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+
 export function BookTeaser() {
   return (
     <section className="py-24 md:py-32 bg-card border-y border-border relative overflow-hidden">
@@ -62,13 +64,13 @@ export function BookTeaser() {
 
             <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
               <a
-                href="/ferrg-book"
+                href={`${base}/ferrg-book`}
                 className="inline-flex items-center justify-center px-10 py-5 bg-primary text-primary-foreground font-semibold text-sm tracking-wide hover:bg-[#c99a5e] transition active:scale-[0.98] duration-200"
               >
                 Reserve My Copy. Free Pre-Order.
               </a>
               <a
-                href="/ferrg-book"
+                href={`${base}/ferrg-book`}
                 className="text-sm text-muted-foreground hover:text-primary transition font-light"
               >
                 Learn more about the book →

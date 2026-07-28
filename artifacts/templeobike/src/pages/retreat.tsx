@@ -3,6 +3,7 @@ import logoSrc from '@assets/IMG-20260727-WA0003_1785149135010.jpg';
 import bookCoverSrc from '@assets/f123ebc6-1cd8-4218-836b-4da5f9aaa958_1785166711807.png';
 
 const WEB3FORMS_KEY = import.meta.env.VITE_WEB3FORMS_KEY as string;
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const BASE_URL = import.meta.env.BASE_URL?.replace(/\/$/, '') ?? '';
 
 // ─── Types ────────────────────────────────────────────────────────────────────
@@ -316,7 +317,7 @@ export default function Retreat() {
       {/* ── NAV ── */}
       <nav style={{ position: 'sticky', top: 0, zIndex: 50, background: 'rgba(11,11,10,0.88)', backdropFilter: 'blur(10px)', borderBottom: `1px solid ${line}` }}>
         <div className="retreat-nav-inner">
-          <a href="/" style={{ display: 'flex', alignItems: 'center', gap: 12, textDecoration: 'none' }}>
+          <a href={base || '/'} style={{ display: 'flex', alignItems: 'center', gap: 12, textDecoration: 'none' }}>
             <img src={logoSrc} alt="Temple Obike" style={{ width: 34, opacity: 0.9 }} />
             <span style={{ fontFamily: "'Fraunces', Georgia, serif", fontSize: '1.05rem', color: cream }}>
               Temple's Counsel <span style={{ color: gold }}>· Mind Academy</span>
@@ -613,7 +614,7 @@ export default function Retreat() {
           The Gold Retreat is hosted by Temple's Counsel & Mind Academy.
           Questions? <a href="mailto:templescounsel@gmail.com" style={{ color: '#e2c15c', textDecoration: 'none' }}>templescounsel@gmail.com</a>
           &nbsp;·&nbsp;
-          <a href="/" style={{ color: stone, textDecoration: 'none' }}>← Back to templeobike.com</a>
+          <a href={base || '/'} style={{ color: stone, textDecoration: 'none' }}>← Back to templeobike.com</a>
         </p>
         <p style={{ color: stone, fontSize: '0.72rem', marginTop: 8, opacity: 0.5 }}>
           © {new Date().getFullYear()} Temple Obike · Temple's Counsel & Mind Academy Ltd. This event and its associated intellectual property are protected works. All rights reserved.

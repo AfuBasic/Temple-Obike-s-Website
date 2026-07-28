@@ -8,6 +8,8 @@ import authenticSelfCover from '@assets/71rO8W-nZZL._UF1000,1000_QL80_FMwebp__17
 
 const gold = '#B8874A';
 const dark = '#0A0A0A';
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const resolveLink = (link: string) => link.startsWith('/') ? `${base}${link}` : link;
 
 // ─── Data ─────────────────────────────────────────────────────────────────────
 
@@ -317,7 +319,7 @@ export default function MediaKit() {
                   {b.subtitle && <div style={{ fontSize: 10, color: gold, letterSpacing: '0.06em', textTransform: 'uppercase', marginBottom: 10 }}>{b.subtitle}</div>}
                   <div style={{ fontSize: 12, color: '#888', lineHeight: 1.7, marginBottom: 14, flex: 1 }}>{b.desc}</div>
                   <a
-                    href={b.link}
+                    href={resolveLink(b.link)}
                     target={isInternal ? '_self' : '_blank'}
                     rel={isInternal ? '' : 'noopener noreferrer'}
                     style={{ fontSize: 11, color: gold, letterSpacing: '0.08em', textTransform: 'uppercase', textDecoration: 'none' }}
@@ -331,7 +333,7 @@ export default function MediaKit() {
         </div>
         {/* Pre-order CTA for FERRG */}
         <a
-          href="/ferrg-book"
+          href={resolveLink('/ferrg-book')}
           style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', background: '#111', border: `1px solid ${gold}`, padding: '18px 24px', textDecoration: 'none', marginBottom: 0 }}
         >
           <div>
