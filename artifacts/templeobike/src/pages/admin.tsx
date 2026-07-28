@@ -40,6 +40,29 @@ function formatDate(iso: string) {
   });
 }
 
+function escapeCsvCell(value: string | number | null | undefined): string {
+  const str = value == null ? '' : String(value);
+  // Wrap in quotes if the value contains a comma, quote, or newline
+  if (str.includes(',') || str.includes('"') || str.includes('\n') || str.includes('\r')) {
+    return `"${str.replace(/"/g, '""')}"`;
+  }
+  return str;
+}
+
+function downloadCsv(filename: string, headers: string[], rows: (string | number | null | undefined)[][]) {
+  const csvLines = [
+    headers.map(escapeCsvCell).join(','),
+    ...rows.map(row => row.map(escapeCsvCell).join(',')),
+  ];
+  const blob = new Blob([csvLines.join('\r\n')], { type: 'text/csv;charset=utf-8;' });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement('a');
+  link.href = url;
+  link.download = filename;
+  link.click();
+  URL.revokeObjectURL(url);
+}
+
 // ─── Admin Page ───────────────────────────────────────────────────────────────
 
 export default function Admin() {
@@ -208,22 +231,48 @@ export default function Admin() {
         {/* Retreat Bookings Tab */}
         {tab === 'retreats' && (
           <>
-            {/* Location filter */}
-            <div className="flex items-center gap-2 mb-5 flex-wrap">
-              <span className="text-xs text-muted-foreground mr-1">Filter by location:</span>
-              {['', 'Accra', 'Mauritius', 'Virtual'].map(loc => (
+            {/* Location filter + Export */}
+            <div className="flex items-center gap-2 mb-5 flex-wrap justify-between">
+              <div className="flex items-center gap-2 flex-wrap">
+                <span className="text-xs text-muted-foreground mr-1">Filter by location:</span>
+                {['', 'Accra', 'Mauritius', 'Virtual'].map(loc => (
+                  <button
+                    key={loc || 'all'}
+                    onClick={() => handleFilterChange(loc)}
+                    className={`px-3 py-1.5 text-xs font-semibold tracking-wide transition border ${
+                      locationFilter === loc
+                        ? 'bg-primary border-primary text-primary-foreground'
+                        : 'border-border text-muted-foreground hover:border-primary/50 hover:text-foreground'
+                    }`}
+                  >
+                    {loc || 'All locations'}
+                  </button>
+                ))}
+              </div>
+              {retreats.length > 0 && (
                 <button
-                  key={loc || 'all'}
-                  onClick={() => handleFilterChange(loc)}
-                  className={`px-3 py-1.5 text-xs font-semibold tracking-wide transition border ${
-                    locationFilter === loc
-                      ? 'bg-primary border-primary text-primary-foreground'
-                      : 'border-border text-muted-foreground hover:border-primary/50 hover:text-foreground'
-                  }`}
+                  onClick={() => {
+                    const suffix = locationFilter ? `-${locationFilter.toLowerCase()}` : '';
+                    downloadCsv(
+                      `retreat-bookings${suffix}.csv`,
+                      ['Date', 'Name', 'Partner', 'Email', 'Phone', 'Location', 'Package', 'Note'],
+                      retreats.map(r => [
+                        formatDate(r.createdAt),
+                        r.name,
+                        r.partner,
+                        r.email,
+                        r.phone,
+                        r.location,
+                        r.virtualTier ?? '',
+                        r.note ?? '',
+                      ]),
+                    );
+                  }}
+                  className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold tracking-wide border border-border text-muted-foreground hover:border-primary/50 hover:text-foreground transition whitespace-nowrap"
                 >
-                  {loc || 'All locations'}
+                  ↓ Export CSV
                 </button>
-              ))}
+              )}
             </div>
 
             {retreats.length === 0 ? (
@@ -285,6 +334,28 @@ export default function Admin() {
         {/* Pre-orders Tab */}
         {tab === 'preorders' && (
           <>
+            {preorders.length > 0 && (
+              <div className="flex justify-end mb-5">
+                <button
+                  onClick={() => {
+                    downloadCsv(
+                      'book-preorders.csv',
+                      ['Date', 'Name', 'Email', 'Phone', 'Note'],
+                      preorders.map(p => [
+                        formatDate(p.createdAt),
+                        p.name,
+                        p.email,
+                        p.phone ?? '',
+                        p.note ?? '',
+                      ]),
+                    );
+                  }}
+                  className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold tracking-wide border border-border text-muted-foreground hover:border-primary/50 hover:text-foreground transition whitespace-nowrap"
+                >
+                  ↓ Export CSV
+                </button>
+              </div>
+            )}
             {preorders.length === 0 ? (
               <div className="bg-card border border-border p-10 text-center text-muted-foreground text-sm">
                 No book pre-orders yet.
