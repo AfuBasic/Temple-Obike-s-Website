@@ -10,13 +10,14 @@ const BASE_URL = import.meta.env.BASE_URL?.replace(/\/$/, '') ?? '';
 // ─── Types ────────────────────────────────────────────────────────────────────
 
 type Location = 'Accra' | 'Mauritius' | 'Virtual';
-type VirtualTier = 'day3' | '2days' | 'all3';
+type VirtualTier = '1day' | '2days' | '3days';
 type Status = 'idle' | 'sending' | 'sent' | 'error';
 
+// Virtual = watch the Accra sessions live, $100 per day
 const virtualTiers: { id: VirtualTier; label: string; sub: string; price: string }[] = [
-  { id: 'day3',  label: 'Day 3 only',  sub: '1 session',   price: '$200' },
-  { id: '2days', label: '2 days',      sub: '2 sessions',  price: '$350' },
-  { id: 'all3',  label: 'All 3 days',  sub: 'Full retreat', price: '$500' },
+  { id: '1day',  label: '1 day',     sub: 'Choose any one session day',  price: '$100' },
+  { id: '2days', label: '2 days',    sub: 'Choose any two session days', price: '$200' },
+  { id: '3days', label: 'All 3 days',sub: 'Full virtual retreat',        price: '$300' },
 ];
 
 interface FormFields {
@@ -40,6 +41,8 @@ const locations = [
     rest: 'Rest 10–11 Oct · Fly back to Nigeria',
     price: '$1,990',
     priceNote: 'per couple · 3 nights',
+    maxCouples: 10,
+    virtualStream: true,
     highlights: [
       'Sunrise session on Labadi Beach',
       'Jamestown lighthouse & harbour walk',
@@ -48,24 +51,28 @@ const locations = [
     ],
     gradient: 'linear-gradient(135deg, #2b2110, #4a3116)',
     accent: 'rgba(201,162,39,0.35)',
-    badge: null,
+    badge: null as string | null,
+    premium: false,
   },
   {
     id: 'mauritius' as const,
     city: 'Mauritius',
     dates: '22 – 24 Oct 2026',
     rest: 'Rest 24–25 Oct · Fly back to Nigeria',
-    price: '$3,200',
+    price: '$5,200',
     priceNote: 'per couple · 3 nights',
+    maxCouples: 7,
+    virtualStream: false,
     highlights: [
       'Private catamaran sail along the lagoon',
       'Couple\'s spa evening overlooking the Indian Ocean',
       'Chamarel seven-coloured earth & waterfall walk',
       'Beachfront dinner under the stars',
     ],
-    gradient: 'linear-gradient(135deg, #231421, #3a1f34)',
-    accent: 'rgba(201,162,39,0.3)',
-    badge: '★ Book Launch',
+    gradient: 'linear-gradient(135deg, #0e0a1a, #1c1030)',
+    accent: 'rgba(201,162,39,0.4)',
+    badge: '★ Book Launch' as string | null,
+    premium: true,
   },
 ];
 
@@ -403,17 +410,28 @@ export default function Retreat() {
         <div style={{ maxWidth: 1120, margin: '0 auto', padding: '0 28px' }}>
           <div style={{ maxWidth: 640, marginBottom: 44 }}>
             <div className="retreat-eyebrow">Choose Your Setting</div>
-            <h2 style={{ fontSize: '2rem', color: cream, marginTop: 12 }}>One retreat. Two settings. Your choice.</h2>
+            <h2 style={{ fontSize: '2rem', color: cream, marginTop: 12 }}>Two settings. One in-person, one from home.</h2>
             <p style={{ color: stone, marginTop: 14, lineHeight: 1.7 }}>
-              Each location runs the same 3-night private curriculum — guided sessions each morning, free time to enjoy each other in the afternoon, and an evening ritual built around the day's stage of the model.
+              Both in-person retreats run the same 3-night private curriculum. Virtual seats stream the Accra sessions live — Mauritius is in-person only.
             </p>
           </div>
 
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 22, maxWidth: 820, margin: '0 auto' }}>
             {locations.map(loc => (
-              <div key={loc.id} className="loc-card-hover" style={{ background: panel, border: `1px solid ${line}`, display: 'flex', flexDirection: 'column' as const, position: 'relative' }}>
+              <div key={loc.id} className="loc-card-hover" style={{
+                background: loc.premium ? 'linear-gradient(160deg, #0e0b1a, #14102a)' : panel,
+                border: `1px solid ${loc.premium ? 'rgba(201,162,39,0.45)' : line}`,
+                display: 'flex', flexDirection: 'column' as const, position: 'relative',
+                boxShadow: loc.premium ? '0 0 40px rgba(201,162,39,0.08)' : 'none',
+              }}>
+                {/* Uber Premium ribbon */}
+                {loc.premium && (
+                  <div style={{ background: 'linear-gradient(90deg, #c9a227, #e2c15c)', padding: '6px 0', textAlign: 'center' as const }}>
+                    <span style={{ fontFamily: "'IBM Plex Mono', monospace", fontSize: '0.6rem', letterSpacing: '0.22em', textTransform: 'uppercase' as const, color: '#0e0b1a', fontWeight: 700 }}>◆ Uber Premium</span>
+                  </div>
+                )}
                 {loc.badge && (
-                  <div style={{ position: 'absolute', top: 12, right: 12, background: gold, color: '#151107', fontSize: '0.65rem', fontWeight: 700, letterSpacing: '0.14em', textTransform: 'uppercase' as const, padding: '4px 10px', zIndex: 2 }}>
+                  <div style={{ position: 'absolute', top: loc.premium ? 40 : 12, right: 12, background: gold, color: '#151107', fontSize: '0.65rem', fontWeight: 700, letterSpacing: '0.14em', textTransform: 'uppercase' as const, padding: '4px 10px', zIndex: 2 }}>
                     {loc.badge}
                   </div>
                 )}
@@ -443,9 +461,19 @@ export default function Retreat() {
                   <div style={{ fontFamily: "'IBM Plex Mono', monospace", fontSize: '0.68rem', letterSpacing: '0.06em', color: '#e2c15c', textTransform: 'uppercase' as const }}>
                     + more, revealed on booking
                   </div>
-                  <div style={{ marginTop: 'auto', display: 'flex', alignItems: 'center', justifyContent: 'space-between', paddingTop: 14, borderTop: `1px solid ${line}` }}>
+                  {/* Seat cap + stream note */}
+                  <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' as const }}>
+                    <div style={{ fontSize: '0.7rem', color: stone, padding: '3px 8px', border: `1px solid ${line}` }}>
+                      Max {loc.maxCouples} couples
+                    </div>
+                    {loc.virtualStream
+                      ? <div style={{ fontSize: '0.7rem', color: '#e2c15c', padding: '3px 8px', border: '1px solid rgba(201,162,39,0.3)' }}>🎥 Virtual stream available</div>
+                      : <div style={{ fontSize: '0.7rem', color: stone, padding: '3px 8px', border: `1px solid ${line}`, opacity: 0.7 }}>In-person only</div>
+                    }
+                  </div>
+                  <div style={{ marginTop: 'auto', display: 'flex', alignItems: 'center', justifyContent: 'space-between', paddingTop: 14, borderTop: `1px solid ${loc.premium ? 'rgba(201,162,39,0.25)' : line}` }}>
                     <div>
-                      <div style={{ fontFamily: "'Fraunces', Georgia, serif", fontSize: '1.15rem', color: cream }}>{loc.price}</div>
+                      <div style={{ fontFamily: "'Fraunces', Georgia, serif", fontSize: '1.15rem', color: loc.premium ? '#e2c15c' : cream }}>{loc.price}</div>
                       <div style={{ fontSize: '0.7rem', color: stone }}>{loc.priceNote}</div>
                     </div>
                     <a href="#book" onClick={() => setForm(f => ({ ...f, location: loc.city as Location }))}
@@ -463,17 +491,13 @@ export default function Retreat() {
             <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
               <div style={{ width: 40, height: 40, borderRadius: '50%', border: `1px solid ${gold}`, display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#e2c15c', fontFamily: "'IBM Plex Mono', monospace", fontSize: '0.85rem', flexShrink: 0 }}>V</div>
               <div>
-                <h4 style={{ fontFamily: "'Fraunces', Georgia, serif", fontSize: '1.1rem', color: cream, margin: '0 0 4px' }}>Can't travel? Join virtually.</h4>
-                <p style={{ margin: 0, color: stone, fontSize: '0.87rem', maxWidth: '52ch' }}>The same 3-night curriculum, delivered live over private video sessions, with your workbook shipped ahead of time. Built for couples anywhere in the world.</p>
+                <h4 style={{ fontFamily: "'Fraunces', Georgia, serif", fontSize: '1.1rem', color: cream, margin: '0 0 4px' }}>Can't travel? Watch the Accra retreat live.</h4>
+                <p style={{ margin: 0, color: stone, fontSize: '0.87rem', maxWidth: '52ch' }}>Stream the Accra sessions from anywhere in the world — live, private link, your workbook shipped ahead. Pick how many days you want to join. Flat $100 per day.</p>
               </div>
             </div>
-            <div style={{ display: 'flex', gap: 14, flexWrap: 'wrap' as const }}>
-              {virtualTiers.map(t => (
-                <div key={t.id} style={{ textAlign: 'center' as const, padding: '10px 14px', border: `1px solid ${line}`, minWidth: 80 }}>
-                  <div style={{ fontFamily: "'Fraunces', Georgia, serif", fontSize: '1.1rem', color: '#e2c15c' }}>{t.price}</div>
-                  <div style={{ fontFamily: "'IBM Plex Mono', monospace", fontSize: '0.62rem', letterSpacing: '0.06em', textTransform: 'uppercase' as const, color: stone, marginTop: 3 }}>{t.label}</div>
-                </div>
-              ))}
+            <div style={{ display: 'flex', flexDirection: 'column' as const, alignItems: 'flex-end', gap: 4 }}>
+              <div style={{ fontFamily: "'Fraunces', Georgia, serif", fontSize: '1.5rem', color: '#e2c15c' }}>$100</div>
+              <div style={{ fontFamily: "'IBM Plex Mono', monospace", fontSize: '0.62rem', letterSpacing: '0.1em', textTransform: 'uppercase' as const, color: stone }}>per day · per couple</div>
             </div>
           </div>
         </div>
@@ -514,11 +538,10 @@ export default function Retreat() {
             <h2 style={{ fontSize: '2rem', color: cream, marginTop: 12, marginBottom: 16 }}>Pre-book your spot</h2>
             <p style={{ color: stone, lineHeight: 1.7 }}>Seats are held in the order deposits come in. Fill this in to lock your preferred city — our team will follow up by email and WhatsApp with dates and payment details.</p>
             <div style={{ marginTop: 26, paddingTop: 22, borderTop: `1px solid ${line}`, fontSize: '0.85rem', color: stone, lineHeight: 1.8 }}>
-              <div><strong style={{ color: cream }}>Accra</strong> — $1,990 per couple · 8–10 Oct 2026</div>
-              <div><strong style={{ color: cream }}>Mauritius</strong> — $3,200 per couple · 22–24 Oct 2026 <span style={{ color: '#e2c15c' }}>★ Book launch</span></div>
-              <div><strong style={{ color: cream }}>Virtual</strong> — $200 · $350 · $500 per couple</div>
-              <div style={{ fontSize: '0.76rem', paddingLeft: 8 }}>Day 3 only · 2 days · All 3 days</div>
-              <div style={{ marginTop: 10, fontSize: '0.78rem' }}>Flights, visas & logistics included in all in-person packages.</div>
+              <div><strong style={{ color: cream }}>Accra</strong> — $1,990 per couple · 8–10 Oct 2026 · Max 10 couples</div>
+              <div><strong style={{ color: cream }}>Mauritius</strong> — $5,200 per couple · 22–24 Oct 2026 <span style={{ color: '#e2c15c' }}>◆ Uber Premium · Book Launch</span> · Max 7 couples</div>
+              <div><strong style={{ color: cream }}>Virtual</strong> — $100 per day · watch the Accra sessions live</div>
+              <div style={{ marginTop: 10, fontSize: '0.78rem' }}>Flights, visas & logistics included in all in-person packages. Mauritius is in-person only — no virtual stream.</div>
             </div>
           </div>
 
@@ -561,7 +584,7 @@ export default function Retreat() {
                     <div className="card">
                       {loc}
                       <small style={{ display: 'block', color: stone, fontSize: '0.68rem', marginTop: 3 }}>
-                        {loc === 'Accra' ? '$1,990' : loc === 'Mauritius' ? '$3,200' : 'from $200'}
+                        {loc === 'Accra' ? '$1,990 · 10 couples' : loc === 'Mauritius' ? '$5,200 · 7 couples' : '$100/day'}
                       </small>
                     </div>
                   </label>
