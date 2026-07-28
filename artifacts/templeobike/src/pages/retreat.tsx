@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { SiteNav } from '../components/SiteNav';
 import { RetreatCountdown } from '../components/RetreatCountdown';
 import { COHORTS } from '../data/retreat';
@@ -7,6 +7,11 @@ import bookCoverSrc from '@assets/f123ebc6-1cd8-4218-836b-4da5f9aaa958_178516671
 const WEB3FORMS_KEY = import.meta.env.VITE_WEB3FORMS_KEY as string;
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const BASE_URL = import.meta.env.BASE_URL?.replace(/\/$/, '') ?? '';
+
+// ─── Hardcoded fallbacks (used if the API is unreachable) ─────────────────────
+const DEFAULT_RETREAT_SUBJECT = 'Your Gold Retreat enquiry — Temple Obike';
+const DEFAULT_RETREAT_MESSAGE =
+  `Hi {name},\n\nWe have received your enquiry for The Gold Retreat{location_part} and we will be in touch shortly with next steps.\n\nSpaces are limited and reserved on a first-come basis. We are glad you reached out.\n\nIn the meantime, if you have any questions you can simply reply to this email.\n\nWith gratitude,\nTemple Obike\nTemple's Counsel & Mind Academy`;
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -235,6 +240,20 @@ export default function Retreat() {
   const [form, setForm] = useState<FormFields>({ name: '', partner: '', email: '', phone: '', location: '', virtualTier: '', note: '', botcheck: '' });
   const [status, setStatus] = useState<Status>('idle');
   const [errors, setErrors] = useState<Partial<Record<keyof FormFields, string>>>({});
+  const [emailSubject, setEmailSubject] = useState(DEFAULT_RETREAT_SUBJECT);
+  const [emailMessage, setEmailMessage] = useState(DEFAULT_RETREAT_MESSAGE);
+
+  // Fetch current email template settings on mount (best-effort)
+  useEffect(() => {
+    fetch(`${BASE_URL}/api/settings/email-templates`)
+      .then(r => r.ok ? r.json() : null)
+      .then(cfg => {
+        if (!cfg) return;
+        if (cfg.retreat_autoresponse_subject) setEmailSubject(cfg.retreat_autoresponse_subject);
+        if (cfg.retreat_autoresponse_message) setEmailMessage(cfg.retreat_autoresponse_message);
+      })
+      .catch(() => { /* keep defaults */ });
+  }, []);
 
   const gold = '#c9a227';
   const line = 'rgba(243,236,221,0.12)';
@@ -315,8 +334,10 @@ export default function Retreat() {
             note: form.note || 'Not provided',
             botcheck: '',
             autoresponse: true,
-            autoresponse_subject: 'Your Gold Retreat enquiry — Temple Obike',
-            autoresponse_message: `Hi ${form.name},\n\nWe have received your enquiry for The Gold Retreat${form.location ? ` — ${form.location}` : ''} and we will be in touch shortly with next steps.\n\nSpaces are limited and reserved on a first-come basis. We are glad you reached out.\n\nIn the meantime, if you have any questions you can simply reply to this email.\n\nWith gratitude,\nTemple Obike\nTemple's Counsel & Mind Academy`,
+            autoresponse_subject: emailSubject,
+            autoresponse_message: emailMessage
+              .replace('{name}', form.name)
+              .replace('{location_part}', form.location ? ` — ${form.location}` : ''),
           }),
         }).then(r => r.json()),
       ]);

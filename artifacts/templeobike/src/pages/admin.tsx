@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -73,8 +73,51 @@ export default function Admin() {
   const [data, setData] = useState<SubmissionsData | null>(null);
   const [loading, setLoading] = useState(false);
   const [locationFilter, setLocationFilter] = useState<string>('');
-  const [tab, setTab] = useState<'retreats' | 'preorders'>('retreats');
+  const [tab, setTab] = useState<'retreats' | 'preorders' | 'email-templates'>('retreats');
   const [togglingId, setTogglingId] = useState<string | null>(null);
+
+  // ── Email template state ─────────────────────────────────────────────────
+  const [templates, setTemplates] = useState({
+    preorder_autoresponse_subject: '',
+    preorder_autoresponse_message: '',
+    retreat_autoresponse_subject: '',
+    retreat_autoresponse_message: '',
+  });
+  const [templatesSaveStatus, setTemplatesSaveStatus] = useState<'idle' | 'saving' | 'saved' | 'error'>('idle');
+
+  const fetchTemplates = useCallback(async (pwd: string) => {
+    try {
+      const res = await fetch(`${BASE_URL}/api/admin/settings`, {
+        headers: { Authorization: `Bearer ${pwd}` },
+      });
+      if (!res.ok) return;
+      const json = await res.json() as Record<string, string>;
+      setTemplates({
+        preorder_autoresponse_subject: json.preorder_autoresponse_subject ?? '',
+        preorder_autoresponse_message: json.preorder_autoresponse_message ?? '',
+        retreat_autoresponse_subject:  json.retreat_autoresponse_subject ?? '',
+        retreat_autoresponse_message:  json.retreat_autoresponse_message ?? '',
+      });
+    } catch { /* silent */ }
+  }, []);
+
+  const saveTemplates = async () => {
+    setTemplatesSaveStatus('saving');
+    try {
+      const res = await fetch(`${BASE_URL}/api/admin/settings`, {
+        method: 'PUT',
+        headers: {
+          Authorization: `Bearer ${password}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(templates),
+      });
+      setTemplatesSaveStatus(res.ok ? 'saved' : 'error');
+      if (res.ok) setTimeout(() => setTemplatesSaveStatus('idle'), 3000);
+    } catch {
+      setTemplatesSaveStatus('error');
+    }
+  };
 
   const fetchData = useCallback(async (pwd: string, loc?: string) => {
     setLoading(true);
@@ -102,6 +145,11 @@ export default function Admin() {
       setLoading(false);
     }
   }, []);
+
+  // Fetch templates once we have a valid password (after successful login)
+  useEffect(() => {
+    if (authed && password) fetchTemplates(password);
+  }, [authed, password, fetchTemplates]);
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -270,22 +318,25 @@ export default function Admin() {
         </div>
 
         {/* Tabs */}
-        <div className="flex gap-1 mb-6 border-b border-white/5">
-          {(['retreats', 'preorders'] as const).map(t => (
-            <button
-              key={t}
-              onClick={() => setTab(t)}
-              className={`px-5 py-2.5 text-xs font-semibold tracking-wide uppercase transition border-b-2 -mb-px ${
-                tab === t
-                  ? 'border-primary text-primary'
-                  : 'border-transparent text-muted-foreground hover:text-foreground'
-              }`}
-            >
-              {t === 'retreats'
-                ? `Retreat Bookings (${retreats.length})${retreatsPending > 0 ? ` · ${retreatsPending} pending` : ''}`
-                : `Book Pre-orders (${preorders.length})${preordersPending > 0 ? ` · ${preordersPending} pending` : ''}`}
-            </button>
-          ))}
+        <div className="flex gap-1 mb-6 border-b border-white/5 flex-wrap">
+          <button
+            onClick={() => setTab('retreats')}
+            className={`px-5 py-2.5 text-xs font-semibold tracking-wide uppercase transition border-b-2 -mb-px ${tab === 'retreats' ? 'border-primary text-primary' : 'border-transparent text-muted-foreground hover:text-foreground'}`}
+          >
+            Retreat Bookings ({retreats.length}){retreatsPending > 0 ? ` · ${retreatsPending} pending` : ''}
+          </button>
+          <button
+            onClick={() => setTab('preorders')}
+            className={`px-5 py-2.5 text-xs font-semibold tracking-wide uppercase transition border-b-2 -mb-px ${tab === 'preorders' ? 'border-primary text-primary' : 'border-transparent text-muted-foreground hover:text-foreground'}`}
+          >
+            Book Pre-orders ({preorders.length}){preordersPending > 0 ? ` · ${preordersPending} pending` : ''}
+          </button>
+          <button
+            onClick={() => setTab('email-templates')}
+            className={`px-5 py-2.5 text-xs font-semibold tracking-wide uppercase transition border-b-2 -mb-px ${tab === 'email-templates' ? 'border-primary text-primary' : 'border-transparent text-muted-foreground hover:text-foreground'}`}
+          >
+            Email Templates
+          </button>
         </div>
 
         {/* Retreat Bookings Tab */}
@@ -517,6 +568,77 @@ export default function Admin() {
               </div>
             )}
           </>
+        )}
+
+        {/* Email Templates Tab */}
+        {tab === 'email-templates' && (
+          <div className="max-w-2xl space-y-8">
+            <p className="text-sm text-muted-foreground leading-relaxed">
+              Edit the subject and body of the confirmation emails sent automatically when someone submits a form. Use <code className="bg-card px-1 py-0.5 text-xs text-primary">{'{name}'}</code> anywhere in the message and it will be replaced with the person's name. For the retreat email, <code className="bg-card px-1 py-0.5 text-xs text-primary">{'{location_part}'}</code> is replaced with <em>— Accra</em>, <em>— Mauritius</em>, or <em>— Virtual</em>.
+            </p>
+
+            {/* Pre-order email */}
+            <div className="bg-card border border-border p-6 space-y-5">
+              <div className="text-xs font-bold tracking-[0.15em] uppercase text-primary">Book Pre-order Confirmation</div>
+              <div>
+                <label className="block text-xs font-semibold tracking-[0.12em] uppercase text-muted-foreground mb-2">Subject</label>
+                <input
+                  type="text"
+                  value={templates.preorder_autoresponse_subject}
+                  onChange={e => setTemplates(t => ({ ...t, preorder_autoresponse_subject: e.target.value }))}
+                  className="w-full bg-background border border-border px-4 py-3 text-sm text-foreground focus:outline-none focus:border-primary transition"
+                />
+              </div>
+              <div>
+                <label className="block text-xs font-semibold tracking-[0.12em] uppercase text-muted-foreground mb-2">Message</label>
+                <textarea
+                  rows={8}
+                  value={templates.preorder_autoresponse_message}
+                  onChange={e => setTemplates(t => ({ ...t, preorder_autoresponse_message: e.target.value }))}
+                  className="w-full bg-background border border-border px-4 py-3 text-sm text-foreground focus:outline-none focus:border-primary transition resize-y font-mono leading-relaxed"
+                />
+              </div>
+            </div>
+
+            {/* Retreat email */}
+            <div className="bg-card border border-border p-6 space-y-5">
+              <div className="text-xs font-bold tracking-[0.15em] uppercase text-primary">Retreat Enquiry Confirmation</div>
+              <div>
+                <label className="block text-xs font-semibold tracking-[0.12em] uppercase text-muted-foreground mb-2">Subject</label>
+                <input
+                  type="text"
+                  value={templates.retreat_autoresponse_subject}
+                  onChange={e => setTemplates(t => ({ ...t, retreat_autoresponse_subject: e.target.value }))}
+                  className="w-full bg-background border border-border px-4 py-3 text-sm text-foreground focus:outline-none focus:border-primary transition"
+                />
+              </div>
+              <div>
+                <label className="block text-xs font-semibold tracking-[0.12em] uppercase text-muted-foreground mb-2">Message</label>
+                <textarea
+                  rows={8}
+                  value={templates.retreat_autoresponse_message}
+                  onChange={e => setTemplates(t => ({ ...t, retreat_autoresponse_message: e.target.value }))}
+                  className="w-full bg-background border border-border px-4 py-3 text-sm text-foreground focus:outline-none focus:border-primary transition resize-y font-mono leading-relaxed"
+                />
+              </div>
+            </div>
+
+            <div className="flex items-center gap-4">
+              <button
+                onClick={saveTemplates}
+                disabled={templatesSaveStatus === 'saving'}
+                className="px-8 py-3 bg-primary text-primary-foreground font-semibold text-sm tracking-wide hover:bg-[#c99a5e] transition disabled:opacity-60"
+              >
+                {templatesSaveStatus === 'saving' ? 'Saving…' : 'Save Templates'}
+              </button>
+              {templatesSaveStatus === 'saved' && (
+                <span className="text-sm text-emerald-400">✓ Saved — changes will take effect on the next form submission.</span>
+              )}
+              {templatesSaveStatus === 'error' && (
+                <span className="text-sm text-red-400">Failed to save. Please try again.</span>
+              )}
+            </div>
+          </div>
         )}
 
         {loading && (

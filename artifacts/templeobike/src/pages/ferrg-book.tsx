@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { SiteNav } from '../components/SiteNav';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -18,8 +18,26 @@ type FormData = z.infer<typeof schema>;
 const WEB3FORMS_KEY = import.meta.env.VITE_WEB3FORMS_KEY as string;
 const BASE_URL = import.meta.env.BASE_URL?.replace(/\/$/, '') ?? '';
 
+// ─── Hardcoded fallbacks (used if the API is unreachable) ─────────────────────
+const DEFAULT_SUBJECT = "You're on the list — Temple Obike";
+const DEFAULT_MESSAGE = `Hi {name},\n\nThank you for reserving your copy. Your name is on the list.\n\nWhen the book is ready, you will be among the first to know — and first to receive it. If companion courses, workshops, or private cohorts open before then, pre-order readers hear first.\n\nThere is nothing you need to do right now. We have your details and we will be in touch.\n\nWith gratitude,\nTemple Obike`;
+
 export default function FerrgBook() {
   const [status, setStatus] = useState<'idle' | 'sending' | 'sent' | 'error'>('idle');
+  const [emailSubject, setEmailSubject] = useState(DEFAULT_SUBJECT);
+  const [emailMessage, setEmailMessage] = useState(DEFAULT_MESSAGE);
+
+  // Fetch current email template settings on mount (best-effort)
+  useEffect(() => {
+    fetch(`${BASE_URL}/api/settings/email-templates`)
+      .then(r => r.ok ? r.json() : null)
+      .then(cfg => {
+        if (!cfg) return;
+        if (cfg.preorder_autoresponse_subject) setEmailSubject(cfg.preorder_autoresponse_subject);
+        if (cfg.preorder_autoresponse_message) setEmailMessage(cfg.preorder_autoresponse_message);
+      })
+      .catch(() => { /* keep defaults */ });
+  }, []);
 
   const { register, handleSubmit, formState: { errors }, reset } = useForm<FormData>({
     resolver: zodResolver(schema),
@@ -61,8 +79,8 @@ export default function FerrgBook() {
             note: data.note || 'Not provided',
             botcheck: data.botcheck ?? '',
             autoresponse: true,
-            autoresponse_subject: "You're on the list — Temple Obike",
-            autoresponse_message: `Hi ${data.name},\n\nThank you for reserving your copy. Your name is on the list.\n\nWhen the book is ready, you will be among the first to know — and first to receive it. If companion courses, workshops, or private cohorts open before then, pre-order readers hear first.\n\nThere is nothing you need to do right now. We have your details and we will be in touch.\n\nWith gratitude,\nTemple Obike`,
+            autoresponse_subject: emailSubject,
+            autoresponse_message: emailMessage.replace('{name}', data.name),
           }),
         }).then(r => r.json()),
       ]);
