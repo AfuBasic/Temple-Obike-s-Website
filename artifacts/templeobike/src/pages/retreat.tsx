@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { RetreatCountdown } from '../components/RetreatCountdown';
+import { COHORTS } from '../data/retreat';
 import logoSrc from '@assets/IMG-20260727-WA0003_1785149135010.jpg';
 import bookCoverSrc from '@assets/f123ebc6-1cd8-4218-836b-4da5f9aaa958_1785166711807.png';
 
@@ -375,11 +376,11 @@ export default function Retreat() {
 
             <div style={{ marginTop: 28, display: 'flex', flexWrap: 'wrap' as const, gap: 28 }}>
               <RetreatCountdown variant="dark"
-                cohortDate={new Date('2026-10-07T23:00:00Z')}
-                cohortLabel="Accra cohort" />
+                cohortDate={COHORTS[0].date}
+                cohortLabel={COHORTS[0].label} />
               <RetreatCountdown variant="dark"
-                cohortDate={new Date('2026-10-21T23:00:00Z')}
-                cohortLabel="Mauritius cohort" />
+                cohortDate={COHORTS[1].date}
+                cohortLabel={COHORTS[1].label} />
             </div>
 
             <div style={{ display: 'flex', gap: 14, marginTop: 24, flexWrap: 'wrap' as const }}>

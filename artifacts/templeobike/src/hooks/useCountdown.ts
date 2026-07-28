@@ -1,4 +1,7 @@
 import { useEffect, useState } from 'react';
+import { COHORTS } from '../data/retreat';
+
+export { COHORTS };
 
 export interface CountdownResult {
   /** Label for the upcoming cohort, e.g. "Accra cohort" */
@@ -10,13 +13,6 @@ export interface CountdownResult {
   /** true while at least one cohort is still in the future */
   active: boolean;
 }
-
-// Cohort dates — midnight WAT (UTC+1) = 23:00 UTC the previous day.
-// We target the opening day of each cohort.
-export const COHORTS: { label: string; date: Date }[] = [
-  { label: 'Accra cohort',     date: new Date('2026-10-07T23:00:00Z') }, // 8 Oct 00:00 WAT
-  { label: 'Mauritius cohort', date: new Date('2026-10-21T23:00:00Z') }, // 22 Oct 00:00 WAT (+4)
-];
 
 function computeFor(targetDate: Date, targetLabel: string): CountdownResult {
   const now = Date.now();
