@@ -246,7 +246,7 @@ export default function MediaKit() {
           <img src={logoSrc} alt="Temple Obike logo" style={{ width: 88, flexShrink: 0 }} />
           <div>
             <div style={{ fontSize: 10, letterSpacing: '0.22em', textTransform: 'uppercase', color: gold, marginBottom: 8 }}>
-              Official Media Kit · 2025
+              Official Media Kit · {new Date().getFullYear()}
             </div>
             <h1 style={{ fontSize: 42, fontFamily: "'Playfair Display', Georgia, serif", fontWeight: 600, color: '#fff', lineHeight: 1.1, margin: 0 }}>
               Temple Obike
