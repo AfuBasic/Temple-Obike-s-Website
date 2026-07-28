@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { RetreatCountdown } from '../components/RetreatCountdown';
 import logoSrc from '@assets/IMG-20260727-WA0003_1785149135010.jpg';
 import bookCoverSrc from '@assets/f123ebc6-1cd8-4218-836b-4da5f9aaa958_1785166711807.png';
 
@@ -356,7 +357,11 @@ export default function Retreat() {
               <span style={{ color: '#e2c15c' }}>◆</span> The same season, our friend DJ Irons plays the first-ever DJ set at the summit of Kilimanjaro. Different trip, same milestone season.
             </div>
 
-            <div style={{ display: 'flex', gap: 14, marginTop: 28, flexWrap: 'wrap' as const }}>
+            <div style={{ marginTop: 28 }}>
+              <RetreatCountdown variant="dark" />
+            </div>
+
+            <div style={{ display: 'flex', gap: 14, marginTop: 24, flexWrap: 'wrap' as const }}>
               <a href="#book" className="retreat-btn">Pre-Book Your Retreat</a>
               <a href="#locations" className="retreat-btn retreat-btn-ghost">See the Locations</a>
             </div>

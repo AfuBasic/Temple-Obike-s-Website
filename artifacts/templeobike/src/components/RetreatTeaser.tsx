@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion';
+import { RetreatCountdown } from './RetreatCountdown';
 
 export function RetreatTeaser() {
   return (
@@ -28,6 +29,10 @@ export function RetreatTeaser() {
             <p className="text-base text-muted-foreground font-light leading-relaxed mb-8 max-w-lg">
               Fully managed, start to finish. Book once and we handle flights, visas, and logistics. You just arrive at the airport with your bags.
             </p>
+            <div className="mb-8">
+              <RetreatCountdown variant="light" />
+            </div>
+
             <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
               <a
                 href="/retreat"
