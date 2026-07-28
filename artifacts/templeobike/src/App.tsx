@@ -19,6 +19,7 @@ import Admin from './pages/admin';
 import { BookTeaser } from './components/BookTeaser';
 import { RetreatTeaser } from './components/RetreatTeaser';
 import { MobileNav } from './components/MobileNav';
+import { PracticeBanner } from './components/PracticeBanner';
 
 const queryClient = new QueryClient();
 
@@ -32,6 +33,7 @@ function SpeakerSite() {
       <About />
       <Talks />
       <SpeakingHistory />
+      <PracticeBanner />
       <BookTeaser />
       <RetreatTeaser />
       <Contact />

@@ -11,7 +11,7 @@ const BASE_URL = import.meta.env.BASE_URL?.replace(/\/$/, '') ?? '';
 
 type Location = 'Accra' | 'Mauritius' | 'Virtual';
 type VirtualTier = '1day' | '2days' | '3days';
-type Status = 'idle' | 'sending' | 'sent' | 'error';
+type Status = 'idle' | 'sending' | 'sent' | 'error' | 'full';
 
 // Virtual = watch the Accra sessions live, $100 per day
 const virtualTiers: { id: VirtualTier; label: string; sub: string; price: string }[] = [
@@ -290,7 +290,13 @@ export default function Retreat() {
             virtualTier: form.virtualTier || undefined,
             note: form.note || undefined,
           }),
-        }).then(r => ({ ok: r.ok })),
+        }).then(async r => {
+          if (r.status === 409) {
+            const body = await r.json().catch(() => ({}));
+            if (body?.error === 'LOCATION_FULL') throw new Error('LOCATION_FULL');
+          }
+          return { ok: r.ok };
+        }),
         fetch('https://api.web3forms.com/submit', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -313,6 +319,10 @@ export default function Retreat() {
           }),
         }).then(r => r.json()),
       ]);
+      if (dbRes.status === 'rejected' && (dbRes.reason as Error)?.message === 'LOCATION_FULL') {
+        setStatus('full');
+        return;
+      }
       const dbOk = dbRes.status === 'fulfilled' && (dbRes.value as { ok: boolean }).ok;
       // Success requires the DB write to succeed so the enquiry is always
       // visible in the admin dashboard. Email is best-effort notification only.
@@ -626,6 +636,18 @@ export default function Retreat() {
             {status === 'sent' ? (
               <div style={{ padding: '16px 18px', border: '1px solid rgba(201,162,39,0.4)', background: 'rgba(201,162,39,0.06)', color: '#e2c15c', fontSize: '0.9rem' }}>
                 Thank you — your spot request for {form.location || 'the retreat'} has been noted. We'll follow up by email and WhatsApp shortly.
+              </div>
+            ) : status === 'full' ? (
+              <div style={{ padding: '18px 20px', border: '1px solid rgba(243,236,221,0.18)', background: 'rgba(243,236,221,0.04)', fontSize: '0.9rem' }}>
+                <div style={{ color: cream, fontWeight: 600, marginBottom: 6 }}>
+                  {form.location} cohort — Bookings now closed.
+                </div>
+                <div style={{ color: stone, fontSize: '0.85rem', lineHeight: 1.65, marginBottom: 14 }}>
+                  We've reached capacity for {form.location}. To be added to the waitlist in case a spot opens, email us directly.
+                </div>
+                <a href="mailto:templescounsel@gmail.com" style={{ color: '#e2c15c', fontSize: '0.82rem', textDecoration: 'none', borderBottom: '1px solid rgba(201,162,39,0.4)', paddingBottom: 2 }}>
+                  templescounsel@gmail.com →
+                </a>
               </div>
             ) : (
               <>

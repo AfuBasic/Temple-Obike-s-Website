@@ -52,9 +52,9 @@ export function RetreatTeaser() {
           {/* Right — detail cards */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             {[
-              { city: 'Accra', dates: '8 – 10 Oct 2026', price: '$1,990', note: 'per couple · 3 nights' },
-              { city: 'Mauritius', dates: '22 – 24 Oct 2026', price: '$3,200', note: 'per couple · 3 nights · ★ Book launch' },
-              { city: 'Virtual', dates: 'Both weekends', price: '$1,500', note: 'per couple · live sessions' },
+              { city: 'Accra', dates: '8 – 10 Oct 2026', price: '$1,990', note: 'per couple · 3 nights · 10 couples' },
+              { city: 'Mauritius ◆', dates: '22 – 24 Oct 2026', price: '$5,200', note: 'Uber Premium · Book launch · 7 couples' },
+              { city: 'Virtual', dates: 'Accra sessions', price: '$100/day', note: 'watch live from anywhere' },
             ].map((loc) => (
               <a
                 key={loc.city}
