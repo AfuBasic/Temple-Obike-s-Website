@@ -3,6 +3,14 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { X, Radio, Tv, Video, Users, MessageSquare, Mic, Building2, Star, Globe } from 'lucide-react';
 import stageSrc from '@assets/Screenshot_20260727_101338_Gallery_1785143683280.jpg';
 import logoSrc from '@assets/IMG-20260727-WA0003_1785149135010.jpg';
+import bossFmSrc from '@assets/Screenshot_20260729-095646_1785315620492.jpg';
+import relationshipTalkSrc from '@assets/Screenshot_20260729-095738_1785315620519.jpg';
+import maritalAbuseSrc from '@assets/Screenshot_20260729-095635_1785315620544.jpg';
+import recoverSrc from '@assets/Screenshot_20260729-095627_1785315620572.jpg';
+import ycpFeb2023Src from '@assets/Screenshot_20260729-095616_1785315620606.jpg';
+import sunsetSoulmateSrc from '@assets/Screenshot_20260729-095545_1785315620637.jpg';
+import ycpFeb2024Src from '@assets/Screenshot_20260729-095508_1785315620673.jpg';
+import rotarySrc from '@assets/Screenshot_20260729-095451_1785315620712.jpg';
 
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
@@ -16,6 +24,7 @@ interface Engagement {
   format: string;
   formatIcon: FormatIcon;
   hasPhoto: boolean;
+  photoSrc?: string;  // per-card photo; falls back to stageSrc if absent
   description: string;
   highlight?: string; // optional badge label
   ctaLabel?: string;  // optional CTA shown after description in modal
@@ -49,35 +58,26 @@ const engagements: Engagement[] = [
       "Temple was invited to deliver the keynote address at a landmark two-day national summit spanning Abuja and Nasarawa State, two events held a day apart, culminating on November 19th, 2025. The principal gathering drew the highest levels of Nigerian government and community leadership: the President of the Federal Republic of Nigeria was represented at the summit, the Minister of Mines sent a formal delegation, and the Governor of Nasarawa State attended alongside Honourable Commissioners, Local Government Area Chairmen, and the founding fathers of multiple communities across the state. To stand before political, civic, and traditional leadership in the same room and hold their attention is a testament to the national weight of Temple's voice and the reach of his work beyond the therapeutic and corporate spaces where he is already well known.",
   },
   {
-    id: 10,
-    venue: "Summit Keynote — Addo-Ekiti",
-    topic: "Lead Keynote Address",
-    date: "Date TBC",
-    format: "In-Person Keynote · Addo-Ekiti",
-    formatIcon: "keynote",
-    hasPhoto: false,
-    description:
-      "Temple travelled to Addo-Ekiti to deliver the lead keynote address at a local summit. He was the principal speaker for the gathering, offering a clinically grounded perspective to an audience drawn from the community and surrounding region.",
-  },
-  {
     id: 3,
     venue: "Rotary District 9127 — Mental Health Awareness Day",
     topic: "Prioritizing Mental Health in Workplaces",
     date: "October 2024",
     format: "In-Person Symposium · Rotary Center, Jabi, Abuja",
     formatIcon: "symposium",
-    hasPhoto: false,
+    hasPhoto: true,
+    photoSrc: rotarySrc,
     description:
       "As a facilitator at Rotary District 9127's Mental Health Awareness Day in Abuja, Temple contributed to a symposium of mental health and addiction specialists focused on normalising these conversations in Nigerian workplaces. He addressed burnout, emotional suppression, and the organisational cost of unaddressed psychological strain. He made the case for Employee Assistance Programmes as a core business investment, not a soft benefit.",
   },
   {
     id: 4,
-    venue: "Young Catholic Professionals",
+    venue: "Young Catholic Professionals — SS Philip & James Parish",
     topic: "Sustaining Relationship Health Amidst Demanding Careers",
     date: "February 2024",
-    format: "In-Person Keynote · YCP Resource Center, SS Philip & James Parish, Lekki",
+    format: "In-Person Keynote · YCP Resource Center, Idado Lekki",
     formatIcon: "keynote",
-    hasPhoto: false,
+    hasPhoto: true,
+    photoSrc: ycpFeb2024Src,
     description:
       "Invited as keynote speaker for the Young Catholic Professionals at the YCP Resource Center in Lekki, Temple addressed the compounding pressure at the intersection of professional ambition and relationship health. He delivered practical strategies for couples navigating demanding careers without losing emotional intimacy. The content was clinically grounded, practically structured, and calibrated precisely to who was sitting in the room.",
   },
@@ -88,7 +88,8 @@ const engagements: Engagement[] = [
     date: "November 2023",
     format: "Live Instagram Panel · Hosted by Nike Adekunle",
     formatIcon: "panel",
-    hasPhoto: false,
+    hasPhoto: true,
+    photoSrc: relationshipTalkSrc,
     description:
       "Temple joined host Nike Adekunle on The Marriage Haven's Instagram Live for an honest conversation about one of the most underexplored tensions in relationship support: the challenge of receiving guidance from knowledge dispensers — coaches, therapists, and mentors. He examined why the messenger shapes whether the message lands, and how couples can discern which counsel to trust when every voice online claims authority.",
   },
@@ -99,11 +100,24 @@ const engagements: Engagement[] = [
     date: "June 2023",
     format: "In-Person Hosted Event · Lekki Leisure, Oniru, Lekki",
     formatIcon: "event",
-    hasPhoto: false,
+    hasPhoto: true,
+    photoSrc: sunsetSoulmateSrc,
     description:
       "This was Temple's first attempt at gathering people for an event he personally led as the speaker and host — a couples' date night bringing together 40 couples (80 individuals) for an evening of connection, karaoke, dinner, and guided conversation. Hosted at Lekki Leisure in Oniru, it drew couples from across Lagos and was received for the rare combination of warmth, laughter, and clinical depth it held in the same room. It planted the seed for what has since grown into The Gold Retreat — Temple's fully-managed international couples retreat. If Sunset & Soulmate showed what a room full of intentional couples could feel like for one evening, The Gold Retreat is that same idea taken further: a multi-day, fully managed experience for couples ready to go deeper.",
     ctaLabel: "See The Gold Retreat →",
     ctaHref: "/retreat",
+  },
+  {
+    id: 11,
+    venue: "YCP Speaker Series — Catholic Church of Divine Mercy",
+    topic: "Relationship Challenges, Purpose & Management",
+    date: "February 2023",
+    format: "In-Person Dialogue · CCDM Parish Office Complex, Lagos",
+    formatIcon: "keynote",
+    hasPhoto: true,
+    photoSrc: ycpFeb2023Src,
+    description:
+      "Temple joined the Young Catholic Professionals Speaker Series at the Catholic Church of Divine Mercy for an interactive dialogue on relationship challenges, purpose, and management. Speaking to an audience of YCP couples, religious, professionals, and new members, he examined the psychological and relational pressures that surface when faith, ambition, and partnership intersect — and offered a practical framework for navigating them without losing connection.",
   },
   {
     id: 7,
@@ -112,7 +126,8 @@ const engagements: Engagement[] = [
     date: "December 2022",
     format: "Ticketed Virtual Webinar · Temple's Counsel & Mind Academy",
     formatIcon: "webinar",
-    hasPhoto: false,
+    hasPhoto: true,
+    photoSrc: recoverSrc,
     description:
       "A landmark two-day virtual experience presented by Temple's Counsel and Mind Academy, #RECOVER brought couples at different stages of relational strain through a structured journey of conflict resolution, emotional reconnection, and deliberate repair. Temple led every session as primary facilitator, combining clinical rigour with practical tools couples could apply immediately after each session, without waiting for a next appointment.",
   },
@@ -128,15 +143,39 @@ const engagements: Engagement[] = [
       "Joining Hot FM Lagos's Parent Connect Helpline alongside guidance counsellor Olutunde Edem, Temple addressed one of the most pressing blind spots in Nigerian family life: the father who is physically present but emotionally unavailable. The live panel, hosted by Sharon, explored the lasting psychological effects of emotional absence on children and what meaningful paternal repair actually looks like in practice.",
   },
   {
+    id: 12,
+    venue: "The Psychology of Marital Abuse & Infidelity",
+    topic: "Understanding Abuse Patterns & Pathways to Recovery",
+    date: "November 2022",
+    format: "Online Zoom Webinar · Hosted by Amoke Olaniyan",
+    formatIcon: "webinar",
+    hasPhoto: true,
+    photoSrc: maritalAbuseSrc,
+    description:
+      "Temple appeared as guest speaker on a Zoom webinar hosted by Amoke Olaniyan (@TheMarriageMinder) exploring the psychology of marital abuse and infidelity. He brought a clinical lens to a topic that is often navigated through emotion alone — examining the behaviour patterns that define abusive dynamics, the psychological profile of infidelity, and the structured pathways couples and individuals can take toward genuine recovery. The session was open to the public and drew an engaged audience seeking both understanding and tools.",
+  },
+  {
     id: 9,
     venue: "Boss FM 95.5, Abuja",
     topic: "Signs of a Trauma-Based Relationship",
     date: "August 2022",
     format: "Live Radio Interview · Abuja",
     formatIcon: "radio",
-    hasPhoto: false,
+    hasPhoto: true,
+    photoSrc: bossFmSrc,
     description:
       "Temple joined Boss FM 95.5 Abuja for a candid radio conversation exploring one of the most misunderstood patterns in modern relationships: the trauma bond. He walked listeners through the psychological markers of relationships built on trauma, why they form, what compels people to remain in them, and the first concrete steps toward breaking the cycle. The interview reached a wide national audience and generated significant listener response.",
+  },
+  {
+    id: 10,
+    venue: "CABLISSM Valentine Talk — Addo-Ekiti",
+    topic: "Lead Keynote Address",
+    date: "February (Year TBC)",
+    format: "In-Person Keynote · Addo-Ekiti",
+    formatIcon: "keynote",
+    hasPhoto: false,
+    description:
+      "Temple was invited to deliver the lead keynote address at the CABLISSM Valentine Talk in Addo-Ekiti, travelling to the venue as the principal speaker. He brought a clinically grounded and practically focused perspective to an audience gathered for the event, drawing on his experience across therapy, relationship intervention, and live facilitation.",
   },
 ];
 
@@ -175,8 +214,8 @@ function EventPoster({ engagement }: { engagement: Engagement }) {
       {engagement.hasPhoto ? (
         <div className="relative">
           <img
-            src={stageSrc}
-            alt="Temple Obike delivering a keynote address at the national summit"
+            src={engagement.photoSrc ?? stageSrc}
+            alt={`${engagement.venue} — event photo`}
             className="w-full object-cover"
             style={{ maxHeight: 340, objectPosition: 'top', filter: 'brightness(0.75) contrast(1.1)' }}
           />
