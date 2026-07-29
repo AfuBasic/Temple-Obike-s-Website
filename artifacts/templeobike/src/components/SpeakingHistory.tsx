@@ -147,12 +147,14 @@ const engagements: Engagement[] = [
     venue: "The Psychology of Marital Abuse & Infidelity",
     topic: "Understanding Abuse Patterns & Pathways to Recovery",
     date: "November 2022",
-    format: "Online Zoom Webinar · Hosted by Amoke Olaniyan",
+    format: "Online Zoom Webinar",
     formatIcon: "webinar",
     hasPhoto: true,
     photoSrc: maritalAbuseSrc,
     description:
-      "Presented under the Temple's Counsel & Mind Academy banner and hosted by Amoke Olaniyan (@TheMarriageMinder), this Zoom webinar was one of Temple's most clinically structured public sessions. He opened by defining intimate partner abuse as a pattern of behaviour used to gain power and control — walking attendees through a 13-point behavioural checklist — before mapping the four-stage Abuse Cycle (Tension Builds → Abusive Incident → Honeymoon Phase → Calm) and the seven sequential steps through which a Trauma Bond forms: Love Bombing, Trust & Dependency, Criticism, Manipulation & Gaslighting, Resignation & Giving Up, Loss of Self, and Addiction to the Emotional Cycle.\n\nThe second half shifted to infidelity. Temple drew on TCMA's own original research — a 6-question anonymous survey sent to 1,500 individuals in 2018, with 214 responses — to ground the conversation in real data rather than assumption. He presented eight recognised infidelity types (Physical, Object, Financial, Micro, Cyber, Combined, Revenge, and Emotional), introduced the concept of Post-Infidelity Stress Disorder (PISD), and closed with structured recovery guidance across four dimensions: The Marriage, Emotions Trust & Intimacy, Willingness to Dig Deeper, and Future Outlook.",
+      "Temple appeared as guest speaker on a Zoom webinar exploring the psychology of marital abuse and infidelity. He brought a clinical lens to a topic that is often navigated through emotion alone — examining the behaviour patterns that define abusive dynamics, the psychological profile of infidelity, and the structured pathways couples and individuals can take toward genuine recovery. The session was open to the public and drew an engaged audience seeking both understanding and tools.",
+    ctaLabel: "View Presentation →",
+    ctaHref: "/marital-abuse-infidelity-presentation.pdf",
   },
   {
     id: 9,
