@@ -36,7 +36,7 @@ export function CredibilityStrip() {
     {
       image: soulBodegaCover,
       label: 'Soul Bodega',
-      sub: 'Three-Time Published Author — New Book Coming',
+      sub: 'Three-Time Published Author — Available on Amazon',
       link: '/ferrg-book',
       testid: 'link-credibility-author',
       objectPosition: 'center center',

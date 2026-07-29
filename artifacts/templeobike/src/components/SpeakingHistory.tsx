@@ -4,6 +4,8 @@ import { X, Radio, Tv, Video, Users, MessageSquare, Mic, Building2, Star, Globe 
 import stageSrc from '@assets/Screenshot_20260727_101338_Gallery_1785143683280.jpg';
 import logoSrc from '@assets/IMG-20260727-WA0003_1785149135010.jpg';
 
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+
 type FormatIcon = 'radio' | 'tv' | 'webinar' | 'webinar2' | 'event' | 'panel' | 'keynote' | 'symposium' | 'stage';
 
 interface Engagement {
@@ -16,6 +18,8 @@ interface Engagement {
   hasPhoto: boolean;
   description: string;
   highlight?: string; // optional badge label
+  ctaLabel?: string;  // optional CTA shown after description in modal
+  ctaHref?: string;   // internal or external URL
 }
 
 // Sorted most-recent first
@@ -43,6 +47,17 @@ const engagements: Engagement[] = [
     highlight: "Presidential Representative in Attendance",
     description:
       "Temple was invited to deliver the keynote address at a landmark two-day national summit spanning Abuja and Nasarawa State, two events held a day apart, culminating on November 19th, 2025. The principal gathering drew the highest levels of Nigerian government and community leadership: the President of the Federal Republic of Nigeria was represented at the summit, the Minister of Mines sent a formal delegation, and the Governor of Nasarawa State attended alongside Honourable Commissioners, Local Government Area Chairmen, and the founding fathers of multiple communities across the state. To stand before political, civic, and traditional leadership in the same room and hold their attention is a testament to the national weight of Temple's voice and the reach of his work beyond the therapeutic and corporate spaces where he is already well known.",
+  },
+  {
+    id: 10,
+    venue: "Summit Keynote — Addo-Ekiti",
+    topic: "Lead Keynote Address",
+    date: "Date TBC",
+    format: "In-Person Keynote · Addo-Ekiti",
+    formatIcon: "keynote",
+    hasPhoto: false,
+    description:
+      "Temple travelled to Addo-Ekiti to deliver the lead keynote address at a local summit. He was the principal speaker for the gathering, offering a clinically grounded perspective to an audience drawn from the community and surrounding region.",
   },
   {
     id: 3,
@@ -86,7 +101,9 @@ const engagements: Engagement[] = [
     formatIcon: "event",
     hasPhoto: false,
     description:
-      "Hosted by Temple himself at Lekki Leisure in Oniru, Sunset & Soulmate was an evening designed to rebuild intimacy through shared experience rather than instruction — karaoke, a candlelit dinner, and a guided couples Q&A that opened conversations most couples never have in ordinary life. The event drew 40 couples — 80 individuals — from across Lagos, and was received for the rare combination of warmth, laughter, and clinical depth that it held in the same room.",
+      "This was Temple's first attempt at gathering people for an event he personally led as the speaker and host — a couples' date night bringing together 40 couples (80 individuals) for an evening of connection, karaoke, dinner, and guided conversation. Hosted at Lekki Leisure in Oniru, it drew couples from across Lagos and was received for the rare combination of warmth, laughter, and clinical depth it held in the same room. It planted the seed for what has since grown into The Gold Retreat — Temple's fully-managed international couples retreat. If Sunset & Soulmate showed what a room full of intentional couples could feel like for one evening, The Gold Retreat is that same idea taken further: a multi-day, fully managed experience for couples ready to go deeper.",
+    ctaLabel: "See The Gold Retreat →",
+    ctaHref: "/retreat",
   },
   {
     id: 7,
@@ -258,6 +275,16 @@ function EventModal({
             <p className="text-base text-muted-foreground font-light leading-[1.85]">
               {engagement.description}
             </p>
+            {engagement.ctaHref && (
+              <div className="mt-6 pt-6 border-t border-border">
+                <a
+                  href={engagement.ctaHref.startsWith('/') ? `${base}${engagement.ctaHref}` : engagement.ctaHref}
+                  className="inline-flex items-center gap-2 text-sm font-semibold text-primary hover:text-primary/80 transition-colors tracking-wide"
+                >
+                  {engagement.ctaLabel ?? 'Learn more →'}
+                </a>
+              </div>
+            )}
           </div>
 
           <div className="h-[2px] bg-gradient-to-r from-primary/60 via-primary/20 to-transparent" />

@@ -27,9 +27,6 @@ export function About() {
               <p>
                 Beyond the consulting room, Temple has built a growing content and education business: three published books on Amazon, a forthcoming couples course, live workshop programmes, and a corporate Employee Assistance Programme (EAP) arm serving organisations across Nigeria and Africa. He holds a John Maxwell Leadership Programme certification and a professional counselling certificate from the Institute of Counseling Nigeria.
               </p>
-              <p>
-                He is married to his primary school sweetheart, and they are raising four children together. That personal foundation gives his work on marriage a credibility no qualification alone can confer.
-              </p>
             </div>
           </motion.div>
 

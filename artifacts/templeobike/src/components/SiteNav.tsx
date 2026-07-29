@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import logoSrc from '@assets/IMG-20260727-WA0003_1785149135010.jpg';
 
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
@@ -28,18 +29,18 @@ export function SiteNav() {
     >
       <div className="flex items-center justify-between px-5 h-16 max-w-[1200px] mx-auto">
 
-        {/* Wordmark / identity */}
+        {/* Logo / identity */}
         <a
           href={base || '/'}
-          className="flex-shrink-0 text-foreground no-underline hover:opacity-80 transition-opacity duration-200"
+          className="flex-shrink-0 hover:opacity-80 transition-opacity duration-200"
           aria-label="Temple Obike — home"
         >
-          <span className="font-serif text-base font-semibold tracking-tight leading-none">
-            Temple<br />
-            <span className="text-primary text-xs font-sans font-semibold tracking-widest uppercase">
-              Obike
-            </span>
-          </span>
+          <img
+            src={logoSrc}
+            alt="Temple Obike"
+            className="h-10 w-auto select-none"
+            draggable={false}
+          />
         </a>
 
         {/* Desktop centre links */}

@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import logoSrc from '@assets/IMG-20260727-WA0003_1785149135010.jpg';
 
 /**
  * Sticky mobile-only nav bar.
@@ -26,13 +27,13 @@ export function MobileNav() {
       ].join(' ')}
     >
       <div className="flex items-center justify-between px-5 h-16">
-        {/* Wordmark / identity */}
-        <span className="font-serif text-base font-semibold tracking-tight text-foreground leading-none">
-          Temple<br />
-          <span className="text-primary text-xs font-sans font-semibold tracking-widest uppercase">
-            Obike
-          </span>
-        </span>
+        {/* Logo / identity */}
+        <img
+          src={logoSrc}
+          alt="Temple Obike"
+          className="h-10 w-auto select-none"
+          draggable={false}
+        />
 
         {/* Primary actions */}
         <nav className="flex items-center gap-2" aria-label="Mobile quick links">
