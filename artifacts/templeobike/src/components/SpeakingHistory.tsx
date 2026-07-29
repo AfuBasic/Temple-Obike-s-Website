@@ -86,7 +86,7 @@ const engagements: Engagement[] = [
     formatIcon: "event",
     hasPhoto: false,
     description:
-      "Hosted by Temple himself at Lekki Leisure in Oniru, Sunset & Soulmate was an evening designed to rebuild intimacy through shared experience rather than instruction — karaoke, a candlelit dinner, and a guided couples Q&A that opened conversations most couples never have in ordinary life. The event drew couples from across Lagos and was received for the rare combination of warmth, laughter, and clinical depth that it held in the same room.",
+      "Hosted by Temple himself at Lekki Leisure in Oniru, Sunset & Soulmate was an evening designed to rebuild intimacy through shared experience rather than instruction — karaoke, a candlelit dinner, and a guided couples Q&A that opened conversations most couples never have in ordinary life. The event drew 40 couples — 80 individuals — from across Lagos, and was received for the rare combination of warmth, laughter, and clinical depth that it held in the same room.",
   },
   {
     id: 7,
