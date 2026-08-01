@@ -26,4 +26,4 @@ VITE_WEB3FORMS_KEY = "535bf1ac-b0df-4832-b250-3e64eb3dad05"
 
 [nix]
 channel = "stable-25_05"
-packages = ["freetype", "gumbo", "harfbuzz", "jbig2dec", "libjpeg_turbo", "mupdf", "openjpeg", "swig", "xcbuild"]
+packages = ["freetype", "gumbo", "harfbuzz", "jbig2dec", "lcms2", "libimagequant", "libjpeg", "libjpeg_turbo", "libtiff", "libwebp", "libxcrypt", "mupdf", "openjpeg", "pkg-config", "swig", "tcl", "tk", "xcbuild", "xsimd", "zlib"]
