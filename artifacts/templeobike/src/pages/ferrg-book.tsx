@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import bookCoverSrc from '@assets/f123ebc6-1cd8-4218-836b-4da5f9aaa958_1785166711807.png';
-import logoSrc from '@assets/IMG-20260727-WA0003_1785149135010.jpg';
+import logoSrc from '@assets/logo-stacked.png';
 
 const schema = z.object({
   name:     z.string().min(2, 'Please enter your name'),

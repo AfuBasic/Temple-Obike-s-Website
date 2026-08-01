@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, Radio, Tv, Video, Users, MessageSquare, Mic, Building2, Star, Globe } from 'lucide-react';
 import stageSrc from '@assets/Screenshot_20260727_101338_Gallery_1785143683280.jpg';
-import logoSrc from '@assets/IMG-20260727-WA0003_1785149135010.jpg';
+import logoSrc from '@assets/logo-monogram.png';
 import bossFmSrc from '@assets/Screenshot_20260729-095646_1785315620492.jpg';
 import relationshipTalkSrc from '@assets/Screenshot_20260729-095738_1785315620519.jpg';
 import maritalAbuseSrc from '@assets/Screenshot_20260729-095635_1785315620544.jpg';
