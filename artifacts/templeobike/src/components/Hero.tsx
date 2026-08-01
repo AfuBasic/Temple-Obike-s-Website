@@ -39,7 +39,7 @@ export function Hero() {
             transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
           >
             <span className="inline-block text-xs sm:text-sm font-semibold tracking-[0.2em] text-primary uppercase mb-6 sm:mb-8">
-              Speaker · Therapist · Author
+              Speaker · Therapist · Coach · Author
             </span>
             <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-[5.5rem] font-serif font-semibold leading-[1.05] tracking-tight mb-8 text-foreground">
               The Voice Behind the Room's Hardest Conversations
@@ -51,10 +51,6 @@ export function Hero() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
           >
-            <p className="text-lg sm:text-xl md:text-2xl text-muted-foreground font-light mb-12 max-w-2xl leading-relaxed">
-              Psychotherapist. Relationship Strategist. Speaker. Author.
-            </p>
-
             <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-6">
               <a
                 href="#contact"
