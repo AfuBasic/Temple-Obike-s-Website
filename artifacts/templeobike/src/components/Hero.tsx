@@ -39,7 +39,7 @@ export function Hero() {
             transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
           >
             <span className="inline-block text-xs sm:text-sm font-semibold tracking-[0.2em] text-primary uppercase mb-6 sm:mb-8">
-              Speaker · Strategist · Author
+              Speaker · Therapist · Author
             </span>
             <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-[5.5rem] font-serif font-semibold leading-[1.05] tracking-tight mb-8 text-foreground">
               The Voice Behind the Room's Hardest Conversations
