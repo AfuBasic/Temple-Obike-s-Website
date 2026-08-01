@@ -8,7 +8,7 @@ export function About() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-12 items-center">
           
           <motion.div
-            className="lg:col-span-7"
+            className="lg:col-span-5"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-100px" }}
@@ -31,7 +31,7 @@ export function About() {
           </motion.div>
 
           <motion.div
-            className="lg:col-span-5 flex justify-center lg:justify-end"
+            className="lg:col-span-7 flex justify-center lg:justify-end"
             initial={{ opacity: 0, scale: 0.95 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
@@ -45,7 +45,7 @@ export function About() {
               <img
                 src={logoSrc}
                 alt="Temple Obike — TO monogram"
-                className="w-64 md:w-80 select-none"
+                className="w-[35rem] md:w-[44rem] select-none"
                 draggable={false}
               />
             </div>
