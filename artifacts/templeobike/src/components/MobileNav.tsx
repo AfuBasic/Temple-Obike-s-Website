@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import logoSrc from '@assets/IMG-20260727-WA0003_1785149135010.jpg';
+import logoSrc from '@assets/logo-monogram.png';
 
 /**
  * Sticky mobile-only nav bar.

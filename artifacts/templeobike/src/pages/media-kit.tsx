@@ -1,5 +1,5 @@
 import { SiteNav } from '../components/SiteNav';
-import logoSrc from '@assets/IMG-20260727-WA0003_1785149135010.jpg';
+import logoSrc from '@assets/logo-stacked.png';
 import stageSrc from '@assets/Screenshot_20260727_110019_Gallery_1785147430425.jpg';
 import searchConsoleSrc from '@assets/Screenshot_20260727-130611_1785154220443.jpg';
 import businessElitesCover from '@assets/images_(9)_1785168480508.jpeg';

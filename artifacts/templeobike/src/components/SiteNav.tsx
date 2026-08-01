@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import logoSrc from '@assets/IMG-20260727-WA0003_1785149135010.jpg';
+import logoSrc from '@assets/logo-horizontal.png';
 
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
