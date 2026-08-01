@@ -1,4 +1,4 @@
-import logoSrc from '@assets/logo-stacked.png';
+import logoSrc from '@assets/TO_LOGO_HR_1785587759859.png';
 
 export function Footer() {
   return (
