@@ -2,6 +2,7 @@ import { Router, type IRouter } from "express";
 import { eq, sql } from "drizzle-orm";
 import { z } from "zod";
 import { db, preorderSubmissions, retreatBookings, speakingEnquiries } from "@workspace/db";
+import { sendEnquiryNotification } from "../lib/email.js";
 
 const router: IRouter = Router();
 
@@ -160,7 +161,22 @@ router.post("/submissions/enquiry", async (req, res) => {
         message:      parsed.data.message,
       })
       .returning({ id: speakingEnquiries.id });
+
+    // Respond immediately — email is best-effort, never blocks the 201
     res.status(201).json({ ok: true, id: row?.id });
+
+    // Fire notification to templescounsel@gmail.com (non-blocking)
+    sendEnquiryNotification({
+      name:         parsed.data.name,
+      email:        parsed.data.email,
+      organization: parsed.data.organization,
+      eventDate:    parsed.data.eventDate,
+      audienceSize: parsed.data.audienceSize,
+      topic:        parsed.data.topic,
+      budget:       parsed.data.budget,
+      message:      parsed.data.message,
+    }).catch((err: unknown) => req.log.error({ err }, "Enquiry notification email failed"));
+
   } catch (err) {
     req.log.error({ err }, "Failed to save speaking enquiry");
     res.status(500).json({ error: "Failed to save enquiry" });
