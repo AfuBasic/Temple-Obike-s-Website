@@ -19,8 +19,8 @@ const WEB3FORMS_KEY = import.meta.env.VITE_WEB3FORMS_KEY as string;
 const BASE_URL = import.meta.env.BASE_URL?.replace(/\/$/, '') ?? '';
 
 // ─── Hardcoded fallbacks (used if the API is unreachable) ─────────────────────
-const DEFAULT_SUBJECT = "You're on the list — Temple Obike";
-const DEFAULT_MESSAGE = `Hi {name},\n\nThank you for reserving your copy. Your name is on the list.\n\nWhen the book is ready, you will be among the first to know — and first to receive it. If companion courses, workshops, or private cohorts open before then, pre-order readers hear first.\n\nThere is nothing you need to do right now. We have your details and we will be in touch.\n\nWith gratitude,\nTemple Obike`;
+const DEFAULT_SUBJECT = "Your name is on the list";
+const DEFAULT_MESSAGE = `Hi {name},\n\nThank you for reserving your copy. Your name is on the list.\n\nWhen the book is ready, you will be among the first to know and the first to receive it. If companion courses, workshops, or private cohorts open before then, pre-order readers hear about them first.\n\nThere is nothing you need to do right now. We have your details and we will be in touch.\n\nWith gratitude,\nThe Temple Obike Team`;
 
 export default function FerrgBook() {
   const [status, setStatus] = useState<'idle' | 'sending' | 'sent' | 'error'>('idle');
