@@ -147,7 +147,7 @@ export function Contact() {
               </div>
               <h3 className="text-2xl font-serif text-foreground mb-3">Request Sent</h3>
               <p className="text-muted-foreground font-light max-w-md mx-auto">
-                Thanks — your request has been sent. Temple will follow up shortly.
+                Thanks — your request has been received. We'll be in touch shortly.
               </p>
             </motion.div>
           ) : (
@@ -312,7 +312,7 @@ export function Contact() {
               WhatsApp: +234 810 905 5475
             </a>
             <span className="text-xs text-muted-foreground/50 font-light">
-              Goes directly to Temple's team — expect a quick response.
+              Monitored by Temple's team — expect a quick response.
             </span>
           </div>
         </div>
