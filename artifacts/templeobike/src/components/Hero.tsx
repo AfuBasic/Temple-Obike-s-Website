@@ -42,7 +42,7 @@ export function Hero() {
               Speaker · Therapist · Coach · Author
             </span>
             <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-[5.5rem] font-serif font-semibold leading-[1.05] tracking-tight mb-8 text-foreground">
-              The Voice Behind the Room's Hardest Conversations
+              One session heals one couple. One stage reaches thousands.
             </h1>
           </motion.div>
 
