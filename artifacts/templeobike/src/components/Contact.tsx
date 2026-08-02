@@ -7,6 +7,7 @@ import { Loader2 } from 'lucide-react';
 
 const formSchema = z.object({
   name: z.string().min(2, "Name is required"),
+  email: z.string().email("A valid email is required"),
   organization: z.string().min(2, "Organization is required"),
   date: z.string().min(1, "Date is required"),
   audience: z.string().min(1, "Audience size is required"),
@@ -17,9 +18,10 @@ const formSchema = z.object({
 
 type FormValues = z.infer<typeof formSchema>;
 
-// Web3Forms access key — set VITE_WEB3FORMS_KEY in your Replit Secrets.
-// Get a free key at https://web3forms.com (enter templescounsel@gmail.com as the destination).
+// Web3Forms access key — used as a best-effort email ping only.
+// The form always saves to the database first so no submission is ever lost.
 const WEB3FORMS_KEY = import.meta.env.VITE_WEB3FORMS_KEY as string | undefined;
+const BASE_URL = import.meta.env.BASE_URL?.replace(/\/$/, '') ?? '';
 
 export function Contact() {
   const [submitted, setSubmitted] = useState(false);
@@ -34,63 +36,75 @@ export function Contact() {
     setSubmitting(true);
     setSubmitError(null);
 
-    const submissionDate = new Date().toLocaleString('en-GB', {
-      dateStyle: 'full',
-      timeStyle: 'short',
-      timeZone: 'Africa/Lagos',
-    });
-
-    const messageBody = [
-      `Name: ${data.name}`,
-      `Organization: ${data.organization}`,
-      `Event Date: ${data.date}`,
-      `Audience Size: ${data.audience}`,
-      `Topic of Interest: ${data.topic}`,
-      `Budget Range: ${data.budget || 'Not specified'}`,
-      ``,
-      `Message:`,
-      data.message,
-      ``,
-      `---`,
-      `Submitted: ${submissionDate} (WAT)`,
-    ].join('\n');
-
-    if (WEB3FORMS_KEY) {
-      // Live delivery via Web3Forms → templescounsel@gmail.com
-      try {
-        const res = await fetch('https://api.web3forms.com/submit', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-          body: JSON.stringify({
-            access_key: WEB3FORMS_KEY,
-            subject: `Speaking Inquiry: ${data.organization} — ${data.date}`,
-            from_name: data.name,
-            name: data.name,
-            organization: data.organization,
-            event_date: data.date,
-            audience_size: data.audience,
-            topic: data.topic,
-            budget: data.budget || 'Not specified',
-            message: messageBody,
-          }),
-        });
-
-        const json = await res.json();
-        if (!json.success) throw new Error(json.message || 'Submission failed');
-
-        setSubmitted(true);
-        reset();
-      } catch (err) {
-        setSubmitError('Something went wrong sending your request. Please email directly: templescounsel@gmail.com');
+    // ── Step 1: Save to database (always — this is the reliable path) ──────────
+    try {
+      const res = await fetch(`${BASE_URL}/api/submissions/enquiry`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name:         data.name,
+          organization: data.organization,
+          email:        data.email,
+          eventDate:    data.date,
+          audienceSize: data.audience,
+          topic:        data.topic,
+          budget:       data.budget || undefined,
+          message:      data.message,
+        }),
+      });
+      if (!res.ok) {
+        const err = await res.json().catch(() => ({}));
+        throw new Error((err as { error?: string }).error || 'Save failed');
       }
-    } else {
-      // Fallback: open mailto if VITE_WEB3FORMS_KEY is not configured
-      const subject = `Speaking Inquiry: ${data.organization} — ${data.date}`;
-      window.location.href = `mailto:templescounsel@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(messageBody)}`;
-      setSubmitted(true);
-      reset();
+    } catch (err) {
+      setSubmitError('Something went wrong sending your request. Please email directly: templescounsel@gmail.com');
+      setSubmitting(false);
+      return;
     }
 
+    // ── Step 2: Best-effort email ping via Web3Forms ────────────────────────────
+    if (WEB3FORMS_KEY) {
+      const submissionDate = new Date().toLocaleString('en-GB', {
+        dateStyle: 'full', timeStyle: 'short', timeZone: 'Africa/Lagos',
+      });
+      const messageBody = [
+        `Name: ${data.name}`,
+        `Organization: ${data.organization}`,
+        `Email: ${data.email}`,
+        `Event Date: ${data.date}`,
+        `Audience Size: ${data.audience}`,
+        `Topic of Interest: ${data.topic}`,
+        `Budget Range: ${data.budget || 'Not specified'}`,
+        ``,
+        `Message:`,
+        data.message,
+        ``,
+        `---`,
+        `Submitted: ${submissionDate} (WAT)`,
+      ].join('\n');
+
+      // Fire and forget — DB save above already succeeded, so we don't block on this
+      fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify({
+          access_key: WEB3FORMS_KEY,
+          subject: `Speaking Inquiry: ${data.organization} — ${data.date}`,
+          from_name: data.name,
+          name: data.name,
+          email: data.email,
+          organization: data.organization,
+          event_date: data.date,
+          audience_size: data.audience,
+          topic: data.topic,
+          budget: data.budget || 'Not specified',
+          message: messageBody,
+        }),
+      }).catch(() => { /* silent — DB save already succeeded */ });
+    }
+
+    setSubmitted(true);
+    reset();
     setSubmitting(false);
   };
 
@@ -150,15 +164,27 @@ export function Contact() {
                   {errors.name && <p className="text-red-500 text-xs">{errors.name.message}</p>}
                 </div>
                 <div className="space-y-2">
-                  <label className="text-xs text-muted-foreground uppercase tracking-widest font-semibold">Organization</label>
+                  <label className="text-xs text-muted-foreground uppercase tracking-widest font-semibold">Email</label>
                   <input
-                    {...register('organization')}
-                    data-testid="input-organization"
+                    {...register('email')}
+                    type="email"
+                    data-testid="input-email"
                     className="w-full bg-background border border-border focus:border-primary focus:ring-1 focus:ring-primary outline-none px-4 py-3.5 text-foreground transition-all rounded-none placeholder:text-muted-foreground/30 font-light"
-                    placeholder="Acme Corp"
+                    placeholder="you@example.com"
                   />
-                  {errors.organization && <p className="text-red-500 text-xs">{errors.organization.message}</p>}
+                  {errors.email && <p className="text-red-500 text-xs">{errors.email.message}</p>}
                 </div>
+              </div>
+
+              <div className="space-y-2">
+                <label className="text-xs text-muted-foreground uppercase tracking-widest font-semibold">Organization</label>
+                <input
+                  {...register('organization')}
+                  data-testid="input-organization"
+                  className="w-full bg-background border border-border focus:border-primary focus:ring-1 focus:ring-primary outline-none px-4 py-3.5 text-foreground transition-all rounded-none placeholder:text-muted-foreground/30 font-light"
+                  placeholder="Acme Corp"
+                />
+                {errors.organization && <p className="text-red-500 text-xs">{errors.organization.message}</p>}
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">

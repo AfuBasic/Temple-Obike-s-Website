@@ -1,7 +1,7 @@
 import { Router, type IRouter } from "express";
 import { eq, sql } from "drizzle-orm";
 import { z } from "zod";
-import { db, preorderSubmissions, retreatBookings } from "@workspace/db";
+import { db, preorderSubmissions, retreatBookings, speakingEnquiries } from "@workspace/db";
 
 const router: IRouter = Router();
 
@@ -124,6 +124,46 @@ router.post("/submissions/retreat", async (req, res) => {
   } catch (err) {
     req.log.error({ err }, "Failed to save retreat booking");
     res.status(500).json({ error: "Failed to save submission" });
+  }
+});
+
+// ─── POST /api/submissions/enquiry ───────────────────────────────────────────
+
+const enquiryBody = z.object({
+  name:         z.string().min(1),
+  organization: z.string().min(1),
+  email:        z.string().email(),
+  eventDate:    z.string().min(1),
+  audienceSize: z.string().min(1),
+  topic:        z.string().min(1),
+  budget:       z.string().optional(),
+  message:      z.string().min(1),
+});
+
+router.post("/submissions/enquiry", async (req, res) => {
+  const parsed = enquiryBody.safeParse(req.body);
+  if (!parsed.success) {
+    res.status(400).json({ error: "Invalid request", details: parsed.error.issues });
+    return;
+  }
+  try {
+    const [row] = await db
+      .insert(speakingEnquiries)
+      .values({
+        name:         parsed.data.name,
+        organization: parsed.data.organization,
+        email:        parsed.data.email,
+        eventDate:    parsed.data.eventDate,
+        audienceSize: parsed.data.audienceSize,
+        topic:        parsed.data.topic,
+        budget:       parsed.data.budget ?? null,
+        message:      parsed.data.message,
+      })
+      .returning({ id: speakingEnquiries.id });
+    res.status(201).json({ ok: true, id: row?.id });
+  } catch (err) {
+    req.log.error({ err }, "Failed to save speaking enquiry");
+    res.status(500).json({ error: "Failed to save enquiry" });
   }
 });
 

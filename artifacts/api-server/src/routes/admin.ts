@@ -1,5 +1,5 @@
 import { Router, type IRouter } from "express";
-import { db, preorderSubmissions, retreatBookings, settings, SETTING_KEYS, SETTING_DEFAULTS, type SettingKey } from "@workspace/db";
+import { db, preorderSubmissions, retreatBookings, speakingEnquiries, settings, SETTING_KEYS, SETTING_DEFAULTS, type SettingKey } from "@workspace/db";
 import { desc, eq } from "drizzle-orm";
 
 const router: IRouter = Router();
@@ -53,7 +53,13 @@ router.get("/admin/submissions", async (req, res) => {
             .orderBy(desc(retreatBookings.createdAt))
         : await retreatsQuery;
 
-    res.json({ preorders, retreats });
+    // Fetch speaking enquiries
+    const enquiries = await db
+      .select()
+      .from(speakingEnquiries)
+      .orderBy(desc(speakingEnquiries.createdAt));
+
+    res.json({ preorders, retreats, enquiries });
   } catch (err) {
     req.log.error({ err }, "Failed to fetch admin submissions");
     res.status(500).json({ error: "Failed to fetch submissions" });
@@ -96,8 +102,13 @@ router.patch("/admin/submissions/:type/:id/followed-up", async (req, res) => {
         .update(preorderSubmissions)
         .set({ followedUp })
         .where(eq(preorderSubmissions.id, rowId));
+    } else if (type === "enquiry") {
+      await db
+        .update(speakingEnquiries)
+        .set({ followedUp })
+        .where(eq(speakingEnquiries.id, rowId));
     } else {
-      res.status(400).json({ error: "type must be retreat or preorder" });
+      res.status(400).json({ error: "type must be retreat, preorder, or enquiry" });
       return;
     }
 

@@ -40,3 +40,25 @@ export const insertRetreatSchema = createInsertSchema(retreatBookings).omit(
 );
 export type InsertRetreat = z.infer<typeof insertRetreatSchema>;
 export type RetreatBooking = typeof retreatBookings.$inferSelect;
+
+// ─── Speaking enquiries (booking form on homepage) ────────────────────────────
+
+export const speakingEnquiries = pgTable("speaking_enquiries", {
+  id:           serial("id").primaryKey(),
+  name:         text("name").notNull(),
+  organization: text("organization").notNull(),
+  email:        text("email").notNull(),
+  eventDate:    text("event_date").notNull(),
+  audienceSize: text("audience_size").notNull(),
+  topic:        text("topic").notNull(),
+  budget:       text("budget"),
+  message:      text("message").notNull(),
+  followedUp:   boolean("followed_up").default(false).notNull(),
+  createdAt:    timestamp("created_at").defaultNow().notNull(),
+});
+
+export const insertSpeakingEnquirySchema = createInsertSchema(speakingEnquiries).omit(
+  { id: true, createdAt: true },
+);
+export type InsertSpeakingEnquiry = z.infer<typeof insertSpeakingEnquirySchema>;
+export type SpeakingEnquiry = typeof speakingEnquiries.$inferSelect;

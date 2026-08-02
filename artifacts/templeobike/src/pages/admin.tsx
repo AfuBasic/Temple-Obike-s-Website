@@ -25,9 +25,24 @@ interface RetreatBooking {
   createdAt: string;
 }
 
+interface SpeakingEnquiry {
+  id: number;
+  name: string;
+  email: string;
+  organization: string;
+  eventDate: string;
+  audienceSize: string;
+  topic: string;
+  budget: string | null;
+  message: string;
+  followedUp: boolean;
+  createdAt: string;
+}
+
 interface SubmissionsData {
   preorders: Preorder[];
   retreats: RetreatBooking[];
+  enquiries: SpeakingEnquiry[];
 }
 
 const BASE_URL = import.meta.env.BASE_URL?.replace(/\/$/, '') ?? '';
@@ -73,7 +88,7 @@ export default function Admin() {
   const [data, setData] = useState<SubmissionsData | null>(null);
   const [loading, setLoading] = useState(false);
   const [locationFilter, setLocationFilter] = useState<string>('');
-  const [tab, setTab] = useState<'retreats' | 'preorders' | 'email-templates'>('retreats');
+  const [tab, setTab] = useState<'enquiries' | 'retreats' | 'preorders' | 'email-templates'>('enquiries');
   const [togglingId, setTogglingId] = useState<string | null>(null);
 
   // ── Email template state ─────────────────────────────────────────────────
@@ -161,7 +176,7 @@ export default function Admin() {
     fetchData(password, loc || undefined);
   };
 
-  const toggleFollowedUp = async (type: 'retreat' | 'preorder', id: number, current: boolean) => {
+  const toggleFollowedUp = async (type: 'retreat' | 'preorder' | 'enquiry', id: number, current: boolean) => {
     const key = `${type}-${id}`;
     setTogglingId(key);
     try {
@@ -179,19 +194,11 @@ export default function Admin() {
       setData(prev => {
         if (!prev) return prev;
         if (type === 'retreat') {
-          return {
-            ...prev,
-            retreats: prev.retreats.map(r =>
-              r.id === id ? { ...r, followedUp: !current } : r,
-            ),
-          };
+          return { ...prev, retreats: prev.retreats.map(r => r.id === id ? { ...r, followedUp: !current } : r) };
+        } else if (type === 'preorder') {
+          return { ...prev, preorders: prev.preorders.map(p => p.id === id ? { ...p, followedUp: !current } : p) };
         } else {
-          return {
-            ...prev,
-            preorders: prev.preorders.map(p =>
-              p.id === id ? { ...p, followedUp: !current } : p,
-            ),
-          };
+          return { ...prev, enquiries: prev.enquiries.map(e => e.id === id ? { ...e, followedUp: !current } : e) };
         }
       });
     } catch {
@@ -250,9 +257,11 @@ export default function Admin() {
 
   const retreats = data?.retreats ?? [];
   const preorders = data?.preorders ?? [];
+  const enquiries = data?.enquiries ?? [];
 
   const retreatsPending = retreats.filter(r => !r.followedUp).length;
   const preordersPending = preorders.filter(p => !p.followedUp).length;
+  const enquiriesPending = enquiries.filter(e => !e.followedUp).length;
 
   // ── Dashboard ───────────────────────────────────────────────────────────────
   return (
@@ -286,7 +295,7 @@ export default function Admin() {
         {/* Summary stats */}
         <div className="grid grid-cols-2 sm:grid-cols-5 gap-4 mb-8">
           {[
-            { label: 'Total Enquiries', value: retreats.length + preorders.length },
+            { label: 'Speaking Enquiries', value: enquiries.length },
             { label: 'Retreat Bookings', value: retreats.length },
             { label: 'Book Pre-orders', value: preorders.length },
             {
@@ -295,8 +304,8 @@ export default function Admin() {
             },
             {
               label: 'Pending Follow-up',
-              value: retreatsPending + preordersPending,
-              highlight: retreatsPending + preordersPending > 0,
+              value: retreatsPending + preordersPending + enquiriesPending,
+              highlight: retreatsPending + preordersPending + enquiriesPending > 0,
             },
           ].map(stat => (
             <div
@@ -320,6 +329,12 @@ export default function Admin() {
         {/* Tabs */}
         <div className="flex gap-1 mb-6 border-b border-white/5 flex-wrap">
           <button
+            onClick={() => setTab('enquiries')}
+            className={`px-5 py-2.5 text-xs font-semibold tracking-wide uppercase transition border-b-2 -mb-px ${tab === 'enquiries' ? 'border-primary text-primary' : 'border-transparent text-muted-foreground hover:text-foreground'}`}
+          >
+            Speaking Enquiries ({enquiries.length}){enquiriesPending > 0 ? ` · ${enquiriesPending} pending` : ''}
+          </button>
+          <button
             onClick={() => setTab('retreats')}
             className={`px-5 py-2.5 text-xs font-semibold tracking-wide uppercase transition border-b-2 -mb-px ${tab === 'retreats' ? 'border-primary text-primary' : 'border-transparent text-muted-foreground hover:text-foreground'}`}
           >
@@ -338,6 +353,111 @@ export default function Admin() {
             Email Templates
           </button>
         </div>
+
+        {/* Speaking Enquiries Tab */}
+        {tab === 'enquiries' && (
+          <>
+            {enquiries.length > 0 && (
+              <div className="flex justify-end mb-5">
+                <button
+                  onClick={() => {
+                    downloadCsv(
+                      'speaking-enquiries.csv',
+                      ['Date', 'Name', 'Email', 'Organization', 'Event Date', 'Audience', 'Topic', 'Budget', 'Message', 'Followed Up'],
+                      enquiries.map(e => [
+                        formatDate(e.createdAt),
+                        e.name,
+                        e.email,
+                        e.organization,
+                        e.eventDate,
+                        e.audienceSize,
+                        e.topic,
+                        e.budget ?? '',
+                        e.message,
+                        e.followedUp ? 'Yes' : 'No',
+                      ]),
+                    );
+                  }}
+                  className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold tracking-wide border border-border text-muted-foreground hover:border-primary/50 hover:text-foreground transition whitespace-nowrap"
+                >
+                  ↓ Export CSV
+                </button>
+              </div>
+            )}
+            {enquiries.length === 0 ? (
+              <div className="bg-card border border-border p-10 text-center text-muted-foreground text-sm">
+                No speaking enquiries yet.
+              </div>
+            ) : (
+              <div className="overflow-x-auto">
+                <table className="w-full text-sm border-collapse">
+                  <thead>
+                    <tr className="border-b border-white/5">
+                      {['', 'Date', 'Name', 'Email', 'Organization', 'Event Date', 'Audience', 'Topic', 'Budget', 'Message'].map(h => (
+                        <th key={h} className="text-left px-3 py-3 text-xs font-semibold tracking-[0.1em] uppercase text-muted-foreground whitespace-nowrap">
+                          {h}
+                        </th>
+                      ))}
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {enquiries.map((e, i) => (
+                      <tr
+                        key={e.id}
+                        className={`border-b border-white/5 hover:bg-card/50 transition ${
+                          !e.followedUp ? 'bg-amber-950/20' : i % 2 === 0 ? '' : 'bg-white/[0.015]'
+                        }`}
+                      >
+                        <td className="px-3 py-3 whitespace-nowrap">
+                          <button
+                            onClick={() => toggleFollowedUp('enquiry', e.id, e.followedUp)}
+                            disabled={togglingId === `enquiry-${e.id}`}
+                            title={e.followedUp ? 'Mark as not followed up' : 'Mark as followed up'}
+                            className={`w-5 h-5 border-2 rounded-sm flex items-center justify-center transition-all ${
+                              e.followedUp
+                                ? 'bg-emerald-600 border-emerald-600 text-white'
+                                : 'border-amber-500/60 bg-transparent hover:border-amber-400'
+                            } disabled:opacity-40`}
+                          >
+                            {e.followedUp && (
+                              <svg className="w-3 h-3" viewBox="0 0 12 12" fill="none">
+                                <path d="M2 6l3 3 5-5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                              </svg>
+                            )}
+                          </button>
+                        </td>
+                        <td className="px-3 py-3 text-muted-foreground text-xs whitespace-nowrap">{formatDate(e.createdAt)}</td>
+                        <td className="px-3 py-3 font-medium whitespace-nowrap">
+                          <span className={e.followedUp ? 'text-foreground' : 'text-amber-200'}>{e.name}</span>
+                          {!e.followedUp && (
+                            <span className="ml-2 inline-block px-1.5 py-0.5 text-[9px] font-bold tracking-wide uppercase bg-amber-900/50 text-amber-400 rounded-sm">
+                              pending
+                            </span>
+                          )}
+                        </td>
+                        <td className="px-3 py-3">
+                          <a href={`mailto:${e.email}`} className="text-primary hover:underline whitespace-nowrap">{e.email}</a>
+                        </td>
+                        <td className="px-3 py-3 text-foreground whitespace-nowrap">{e.organization}</td>
+                        <td className="px-3 py-3 text-muted-foreground text-xs whitespace-nowrap">{e.eventDate}</td>
+                        <td className="px-3 py-3 text-muted-foreground text-xs whitespace-nowrap">{e.audienceSize}</td>
+                        <td className="px-3 py-3 whitespace-nowrap">
+                          <span className="inline-block px-2 py-0.5 text-[10px] font-bold tracking-wide uppercase bg-card border border-border text-muted-foreground">
+                            {e.topic}
+                          </span>
+                        </td>
+                        <td className="px-3 py-3 text-muted-foreground text-xs whitespace-nowrap">{e.budget || '—'}</td>
+                        <td className="px-3 py-3 text-muted-foreground text-xs max-w-[220px] truncate" title={e.message}>
+                          {e.message}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
+          </>
+        )}
 
         {/* Retreat Bookings Tab */}
         {tab === 'retreats' && (
