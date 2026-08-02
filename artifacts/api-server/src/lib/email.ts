@@ -65,6 +65,82 @@ export async function sendEnquiryNotification(data: EnquiryNotificationData): Pr
   });
 }
 
+// ─── Send a notification for retreat bookings ─────────────────────────────────
+
+export interface RetreatNotificationData {
+  name: string;
+  partner: string;
+  email: string;
+  phone: string;
+  location: string;
+  virtualTier?: string | null;
+  note?: string | null;
+}
+
+export async function sendRetreatNotification(data: RetreatNotificationData): Promise<void> {
+  const transporter = createTransporter();
+  if (!transporter) return;
+
+  const pkg = data.virtualTier ? ` (${data.virtualTier})` : "";
+  const bodyText = [
+    `New retreat booking received on templeobike.com`,
+    ``,
+    `Name:     ${data.name}`,
+    `Partner:  ${data.partner}`,
+    `Email:    ${data.email}`,
+    `Phone:    ${data.phone}`,
+    `Location: ${data.location}${pkg}`,
+    data.note ? `Note:     ${data.note}` : null,
+    ``,
+    `---`,
+    `Reply directly to ${data.email} to follow up.`,
+    `View all bookings: https://templeobike.com/admin`,
+  ].filter(Boolean).join("\n");
+
+  await transporter.sendMail({
+    from: `"Temple Obike Site" <${SMTP_USER}>`,
+    to: SMTP_USER,
+    replyTo: data.email,
+    subject: `Retreat Booking: ${data.name} & ${data.partner} — ${data.location}`,
+    text: bodyText,
+  });
+}
+
+// ─── Send a notification for book pre-orders ──────────────────────────────────
+
+export interface PreorderNotificationData {
+  name: string;
+  email: string;
+  phone?: string | null;
+  note?: string | null;
+}
+
+export async function sendPreorderNotification(data: PreorderNotificationData): Promise<void> {
+  const transporter = createTransporter();
+  if (!transporter) return;
+
+  const bodyText = [
+    `New FERRG book pre-order received on templeobike.com`,
+    ``,
+    `Name:  ${data.name}`,
+    `Email: ${data.email}`,
+    data.phone ? `Phone: ${data.phone}` : null,
+    data.note  ? `Note:  ${data.note}`  : null,
+    ``,
+    `---`,
+    `Reply directly to ${data.email} to follow up.`,
+    `View all pre-orders: https://templeobike.com/admin`,
+  ].filter(Boolean).join("\n");
+
+  await transporter.sendMail({
+    from: `"Temple Obike Site" <${SMTP_USER}>`,
+    to: SMTP_USER,
+    replyTo: data.email,
+    subject: `Book Pre-order: ${data.name}`,
+    text: bodyText,
+  });
+}
+
 // ─── Send an auto-response to the person who submitted ────────────────────────
 
 export interface AutoResponseData {

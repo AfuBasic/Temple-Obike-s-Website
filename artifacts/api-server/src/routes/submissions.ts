@@ -2,7 +2,7 @@ import { Router, type IRouter } from "express";
 import { eq, sql } from "drizzle-orm";
 import { z } from "zod";
 import { db, preorderSubmissions, retreatBookings, speakingEnquiries } from "@workspace/db";
-import { sendEnquiryNotification } from "../lib/email.js";
+import { sendEnquiryNotification, sendRetreatNotification, sendPreorderNotification } from "../lib/email.js";
 
 const router: IRouter = Router();
 
@@ -67,6 +67,14 @@ router.post("/submissions/preorder", async (req, res) => {
       })
       .returning({ id: preorderSubmissions.id });
     res.status(201).json({ ok: true, id: row?.id });
+
+    sendPreorderNotification({
+      name:  parsed.data.name,
+      email: parsed.data.email,
+      phone: parsed.data.phone,
+      note:  parsed.data.note,
+    }).catch((err: unknown) => req.log.error({ err }, "Preorder notification email failed"));
+
   } catch (err) {
     req.log.error({ err }, "Failed to save preorder submission");
     res.status(500).json({ error: "Failed to save submission" });
@@ -122,6 +130,17 @@ router.post("/submissions/retreat", async (req, res) => {
       })
       .returning({ id: retreatBookings.id });
     res.status(201).json({ ok: true, id: row?.id });
+
+    sendRetreatNotification({
+      name:        parsed.data.name,
+      partner:     parsed.data.partner,
+      email:       parsed.data.email,
+      phone:       parsed.data.phone,
+      location:    parsed.data.location,
+      virtualTier: parsed.data.virtualTier,
+      note:        parsed.data.note,
+    }).catch((err: unknown) => req.log.error({ err }, "Retreat notification email failed"));
+
   } catch (err) {
     req.log.error({ err }, "Failed to save retreat booking");
     res.status(500).json({ error: "Failed to save submission" });
