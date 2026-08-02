@@ -41,7 +41,7 @@ export function Hero() {
             <span className="inline-block text-xs sm:text-sm font-semibold tracking-[0.2em] text-primary uppercase mb-6 sm:mb-8">
               Speaker · Therapist · Coach · Author
             </span>
-            <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-[5.5rem] font-serif font-semibold leading-[1.05] tracking-tight mb-8 text-foreground">
+            <h1 className="text-2xl sm:text-3xl md:text-[2rem] lg:text-[2.2rem] font-serif font-semibold leading-[1.05] tracking-tight mb-8 text-foreground">
               Honesty isn't the hard part. It's the doorway.
             </h1>
           </motion.div>
