@@ -42,7 +42,7 @@ export function Hero() {
               Speaker · Therapist · Coach · Author
             </span>
             <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-[5.5rem] font-serif font-semibold leading-[1.05] tracking-tight mb-8 text-foreground">
-              One session heals one couple. One stage reaches thousands.
+              Honesty isn't the hard part. It's the doorway.
             </h1>
           </motion.div>
 
