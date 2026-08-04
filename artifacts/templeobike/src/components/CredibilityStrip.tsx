@@ -3,7 +3,6 @@ import soulBodegaCover    from '@assets/soul-bodega-cover.jpg';
 import radioSrc           from '@assets/Radio-Nigeria_1785170842313.jpg';
 import bossFmSrc          from '@assets/Screenshot_20260729-095646_1785315620492.jpg';
 import stageSrc           from '@assets/Screenshot_20260727_101338_Gallery_1785143683280.jpg';
-import ferrgCover         from '@assets/The_FERRG_1785240723673.png';
 import ycpSrc             from '@assets/Screenshot_20260729-095508_1785315620673.jpg';
 import logoSrc            from '@assets/logo-monogram.png';
 
@@ -59,7 +58,7 @@ const items: StripItem[] = [
   {
     image: stageSrc,
     label: 'National Summit — Abuja',
-    sub: 'Presidential Representative in Attendance',
+    sub: 'Keynote speech delivered before a gathering of dignitaries',
     link: '#',
     objectPosition: 'center top',
   },
@@ -68,13 +67,6 @@ const items: StripItem[] = [
     label: 'Lights On — Global Webinar',
     sub: '242+ Couples · Nigeria & Worldwide',
     link: '#',
-  },
-  {
-    image: ferrgCover,
-    label: 'FERRG · Forthcoming Book',
-    sub: 'Relationships, Repair & Growth',
-    link: resolveLink('/ferrg-book'),
-    objectPosition: 'center center',
   },
   {
     image: ycpSrc,
@@ -139,7 +131,7 @@ function StripCard({ item }: { item: StripItem }) {
 
 export function CredibilityStrip() {
   return (
-    <section className="bg-card py-14 border-y border-border overflow-hidden">
+    <section id="marquee" className="bg-card py-14 border-y border-border overflow-hidden">
       <div className="marquee-container">
         {/* Track — doubled list for seamless infinite loop */}
         <div className="marquee-track flex gap-10 w-max px-10">
