@@ -126,6 +126,22 @@
   --shadow-2xl: 0px 32px 64px rgba(0,0,0,0.9);
 }
 
+/* ── Credibility marquee ─────────────────────────────────────────────────── */
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+.marquee-track {
+  animation: marquee 55s linear infinite;
+}
+.marquee-track:hover {
+  animation-play-state: paused;
+}
+.marquee-container {
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, black 7%, black 93%, transparent 100%);
+  mask-image: linear-gradient(to right, transparent 0%, black 7%, black 93%, transparent 100%);
+}
+
 @layer base {
   * {
     @apply border-border;
