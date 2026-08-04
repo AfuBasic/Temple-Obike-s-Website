@@ -13,7 +13,15 @@ export function Talks() {
     {
       title: "From Fracture to Repair",
       desc: "A practical framework for moving individuals, couples, and teams through breakdown toward something stronger.",
-    }
+    },
+    {
+      title: "Leading with Emotional Authority",
+      desc: "How the most effective leaders regulate themselves first — and why that single discipline shapes everything else in the room.",
+    },
+    {
+      title: "Becoming Your Best Authentic Self",
+      desc: "A guided framework for self-discovery, purpose alignment, and the practical work of becoming the person you were built to be.",
+    },
   ];
 
   return (

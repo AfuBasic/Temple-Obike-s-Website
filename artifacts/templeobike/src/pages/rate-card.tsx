@@ -89,7 +89,7 @@ function Row({ service, local, intl, note, shade }: { service: string; local: st
     <tr style={{ background: shade ? '#fafafa' : '#fff' }}>
       <td style={{ padding: '12px 16px', fontSize: 13, color: '#1a1a1a', borderBottom: '1px solid #f0f0f0', verticalAlign: 'top' }}>
         {service}
-        {note && <div style={{ fontSize: 11, color: '#888', marginTop: 3, fontStyle: 'italic' }}>{note}</div>}
+        {note && <div style={{ fontSize: 11, color: '#888', marginTop: 3 }}>{note}</div>}
       </td>
       <td style={{ padding: '12px 16px', fontSize: 13, fontWeight: 600, color: '#1a1a1a', borderBottom: '1px solid #f0f0f0', verticalAlign: 'top' }}>{local}</td>
       <td style={{ padding: '12px 16px', fontSize: 13, fontWeight: 600, color: '#1a1a1a', borderBottom: '1px solid #f0f0f0', verticalAlign: 'top' }}>{intl}</td>
@@ -128,7 +128,7 @@ export default function RateCard() {
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 32 }}>
           <img src={logoSrc} alt="Temple Obike" style={{ width: 110 }} />
           <div style={{ textAlign: 'right' }}>
-            <div style={{ fontSize: 11, color: '#888', textTransform: 'uppercase', letterSpacing: '0.12em', marginBottom: 4 }}>Confidential — For Enquirers Only</div>
+            <div style={{ fontSize: 11, color: '#888', textTransform: 'uppercase', letterSpacing: '0.12em', marginBottom: 4 }}>Confidential: For Enquirers Only</div>
             <div style={{ fontSize: 11, color: '#aaa' }}>templescounsel@gmail.com · +234 810 905 5475</div>
           </div>
         </div>
@@ -144,12 +144,12 @@ export default function RateCard() {
           <strong>Temple Obike</strong> LMFT · Marriage Coach & Interventionist · Founder, TCMA · Keynote Speaker · Author
         </p>
         <p style={{ fontSize: 12, color: '#888', marginBottom: 32 }}>
-          Serving Nigeria (Lagos & Abuja) · Ghana · UK · South Africa · USA · Canada — In-person and Virtual
+          Serving Nigeria (Lagos & Abuja) · Ghana · UK · South Africa · USA · Canada · In-person and Virtual
         </p>
 
         {/* Intro */}
         <p style={{ fontSize: 13, color: '#444', lineHeight: 1.75, marginBottom: 8 }}>
-          At Temple's Counsel & Mind Academy, services are designed to address the unique needs of clients across corporate, community, faith, and clinical settings — from personalised counselling to large-scale keynote addresses and comprehensive Employee Assistance Programmes.
+          At Temple's Counsel & Mind Academy, services are designed to address the unique needs of clients across corporate, community, faith, and clinical settings, from personalised counselling to large-scale keynote addresses and comprehensive Employee Assistance Programmes.
         </p>
         <p style={{ fontSize: 13, color: '#444', lineHeight: 1.75, marginBottom: 32 }}>
           Fees below reflect current rates effective 2025. All local fees are quoted in Nigerian Naira (₦). International fees are quoted in USD. Travel, accommodation, and logistics are additional unless otherwise stated. VAT applicable where required.
@@ -169,7 +169,7 @@ export default function RateCard() {
             {corporate.map((r, i) => <Row key={r.service} {...r} shade={i % 2 === 1} />)}
 
             {/* Community & Humanitarian */}
-            <SectionHeader color="#4A7C59" title="Community & Humanitarian Engagements — NGOs, Churches, Social Impact" />
+            <SectionHeader color="#4A7C59" title="Community & Humanitarian Engagements: NGOs, Churches, Social Impact" />
             <TableHead />
             {community.map((r, i) => <Row key={r.service} {...r} shade={i % 2 === 1} />)}
           </tbody>

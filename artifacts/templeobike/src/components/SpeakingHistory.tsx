@@ -35,7 +35,7 @@ interface Engagement {
 const engagements: Engagement[] = [
   {
     id: 1,
-    venue: "Lights On — Global Couples Webinar",
+    venue: "Lights On Global Couples Webinar",
     topic: "How Difficult Marriages Are Navigated & Trust Rebuilt",
     date: "June 2026",
     format: "Live Virtual Webinar · 242+ Couples · Nigeria & Worldwide",
@@ -43,11 +43,11 @@ const engagements: Engagement[] = [
     hasPhoto: false,
     highlight: "242+ Couples Worldwide",
     description:
-      "On 20 June 2026, Temple hosted Lights On — a landmark virtual event that drew over 242 couples from Nigeria and across the world into one of the most candid, guided conversations ever held about surviving the hardest seasons of marriage. The webinar walked couples through how difficult marriages are navigated without fracture, how trust is rebuilt methodically after it has been broken, how curiosity and desire are reclaimed, and how forgiveness becomes a sustained daily practice rather than a single emotional moment. For the erring partner, the session provided a clear, actionable framework: how to remain consistent in verification, how to become genuinely affair-proof through radical transparency, and how to build the shared mutual values that close the doors that once stood open. Lights On was not a lecture — it was a room where real couples were given a roadmap.",
+      "On 20 June 2026, Temple hosted Lights On, a landmark virtual event that drew over 242 couples from Nigeria and across the world into one of the most candid, guided conversations ever held about surviving the hardest seasons of marriage. The webinar walked couples through how difficult marriages are navigated without fracture, how trust is rebuilt methodically after it has been broken, how curiosity and desire are reclaimed, and how forgiveness becomes a sustained daily practice rather than a single emotional moment. For the erring partner, the session provided a clear, actionable framework: how to remain consistent in verification, how to become genuinely affair-proof through radical transparency, and how to build the shared mutual values that close the doors that once stood open. Lights On was not a lecture. It was a room where real couples were given a roadmap.",
   },
   {
     id: 2,
-    venue: "National Summit — Abuja & Nasarawa State",
+    venue: "National Summit, Abuja and Nasarawa State",
     topic: "Lead Keynote Address",
     date: "November 2025",
     format: "Two-Day National Summit · Abuja & Nasarawa State",
@@ -59,7 +59,7 @@ const engagements: Engagement[] = [
   },
   {
     id: 3,
-    venue: "Rotary District 9127 — Mental Health Awareness Day",
+    venue: "Rotary District 9127, Mental Health Awareness Day",
     topic: "Prioritizing Mental Health in Workplaces",
     date: "October 2024",
     format: "In-Person Symposium · Rotary Center, Jabi, Abuja",
@@ -71,7 +71,7 @@ const engagements: Engagement[] = [
   },
   {
     id: 4,
-    venue: "Young Catholic Professionals — SS Philip & James Parish",
+    venue: "Young Catholic Professionals, SS Philip & James Parish",
     topic: "Sustaining Relationship Health Amidst Demanding Careers",
     date: "February 2024",
     format: "In-Person Keynote · YCP Resource Center, Idado Lekki",
@@ -83,7 +83,7 @@ const engagements: Engagement[] = [
   },
   {
     id: 5,
-    venue: "RelationSHIP Talk — The Marriage Haven",
+    venue: "RelationSHIP Talk, The Marriage Haven",
     topic: "Common Challenges with Knowledge Dispensers",
     date: "November 2023",
     format: "Live Instagram Panel · Hosted by Nike Adekunle",
@@ -91,7 +91,7 @@ const engagements: Engagement[] = [
     hasPhoto: true,
     photoSrc: relationshipTalkSrc,
     description:
-      "Temple joined host Nike Adekunle on The Marriage Haven's Instagram Live for an honest conversation about one of the most underexplored tensions in relationship support: the challenge of receiving guidance from knowledge dispensers — coaches, therapists, and mentors. He examined why the messenger shapes whether the message lands, and how couples can discern which counsel to trust when every voice online claims authority.",
+      "Temple joined host Nike Adekunle on The Marriage Haven's Instagram Live for an honest conversation about one of the most underexplored tensions in relationship support: the challenge of receiving guidance from knowledge dispensers: coaches, therapists, and mentors. He examined why the messenger shapes whether the message lands, and how couples can discern which counsel to trust when every voice online claims authority.",
   },
   {
     id: 6,
@@ -103,13 +103,13 @@ const engagements: Engagement[] = [
     hasPhoto: true,
     photoSrc: sunsetSoulmateSrc,
     description:
-      "This was Temple's first attempt at gathering people for an event he personally led as the speaker and host — a couples' date night bringing together 40 couples (80 individuals) for an evening of connection, karaoke, dinner, and guided conversation. Hosted at Lekki Leisure in Oniru, it drew couples from across Lagos and was received for the rare combination of warmth, laughter, and clinical depth it held in the same room. It planted the seed for what has since grown into The Gold Retreat — Temple's fully-managed international couples retreat. If Sunset & Soulmate showed what a room full of intentional couples could feel like for one evening, The Gold Retreat is that same idea taken further: a multi-day, fully managed experience for couples ready to go deeper.",
+      "This was Temple's first attempt at gathering people for an event he personally led as the speaker and host, a couples' date night bringing together 40 couples (80 individuals) for an evening of connection, karaoke, dinner, and guided conversation. Hosted at Lekki Leisure in Oniru, it drew couples from across Lagos and was received for the rare combination of warmth, laughter, and clinical depth it held in the same room. It planted the seed for what has since grown into The Gold Retreat, Temple's fully-managed international couples retreat. If Sunset & Soulmate showed what a room full of intentional couples could feel like for one evening, The Gold Retreat is that same idea taken further: a multi-day, fully managed experience for couples ready to go deeper.",
     ctaLabel: "See The Gold Retreat →",
     ctaHref: "/retreat",
   },
   {
     id: 11,
-    venue: "YCP Speaker Series — Catholic Church of Divine Mercy",
+    venue: "YCP Speaker Series, Catholic Church of Divine Mercy",
     topic: "Relationship Challenges, Purpose & Management",
     date: "February 2023",
     format: "In-Person Dialogue · CCDM Parish Office Complex, Lagos",
@@ -117,11 +117,11 @@ const engagements: Engagement[] = [
     hasPhoto: true,
     photoSrc: ycpFeb2023Src,
     description:
-      "Temple joined the Young Catholic Professionals Speaker Series at the Catholic Church of Divine Mercy for an interactive dialogue on relationship challenges, purpose, and management. Speaking to an audience of YCP couples, religious, professionals, and new members, he examined the psychological and relational pressures that surface when faith, ambition, and partnership intersect — and offered a practical framework for navigating them without losing connection.",
+      "Temple joined the Young Catholic Professionals Speaker Series at the Catholic Church of Divine Mercy for an interactive dialogue on relationship challenges, purpose, and management. Speaking to an audience of YCP couples, religious, professionals, and new members, he examined the psychological and relational pressures that surface when faith, ambition, and partnership intersect, and offered a practical framework for navigating them without losing connection.",
   },
   {
     id: 7,
-    venue: "#RECOVER — 2-Day Couples Webinar",
+    venue: "#RECOVER: 2-Day Couples Webinar",
     topic: "A Journey Through Relational Repair",
     date: "December 2022",
     format: "Ticketed Virtual Webinar · Temple's Counsel & Mind Academy",
@@ -133,7 +133,7 @@ const engagements: Engagement[] = [
   },
   {
     id: 8,
-    venue: "Hot FM Lagos — Parent Connect Helpline",
+    venue: "Hot FM Lagos, Parent Connect Helpline",
     topic: "The Present But Absent Father",
     date: "November 2022",
     format: "Live TV/Radio Panel · Lagos",
@@ -152,7 +152,7 @@ const engagements: Engagement[] = [
     hasPhoto: true,
     photoSrc: maritalAbuseSrc,
     description:
-      "Temple appeared as guest speaker on a Zoom webinar exploring the psychology of marital abuse and infidelity. He brought a clinical lens to a topic that is often navigated through emotion alone — examining the behaviour patterns that define abusive dynamics, the psychological profile of infidelity, and the structured pathways couples and individuals can take toward genuine recovery. The session was open to the public and drew an engaged audience seeking both understanding and tools.",
+      "Temple appeared as guest speaker on a Zoom webinar exploring the psychology of marital abuse and infidelity. He brought a clinical lens to a topic that is often navigated through emotion alone, examining the behaviour patterns that define abusive dynamics, the psychological profile of infidelity, and the structured pathways couples and individuals can take toward genuine recovery. The session was open to the public and drew an engaged audience seeking both understanding and tools.",
     ctaLabel: "View Presentation →",
     ctaHref: "/marital-abuse-infidelity-presentation.pdf",
   },
@@ -170,7 +170,7 @@ const engagements: Engagement[] = [
   },
   {
     id: 10,
-    venue: "CABLISSM Valentine Talk — Addo-Ekiti",
+    venue: "CABLISSM Valentine Talk, Addo-Ekiti",
     topic: "Lead Keynote Address",
     date: "February (Year TBC)",
     format: "In-Person Keynote · Addo-Ekiti",
@@ -406,7 +406,7 @@ export function SpeakingHistory() {
   return (
     <section
       className="py-24 md:py-32 bg-background border-y border-border"
-      aria-label="Speaking history — Temple Obike"
+      aria-label="Speaking history, Temple Obike"
       itemScope
       itemType="https://schema.org/ItemList"
     >
@@ -425,7 +425,7 @@ export function SpeakingHistory() {
             Speaking History
           </h2>
           <p className="mt-4 text-muted-foreground font-light max-w-xl leading-relaxed">
-            From national government summits to intimate couples evenings — most recent engagements first.
+            From national government summits to intimate couples evenings, most recent engagements first.
           </p>
         </motion.div>
 

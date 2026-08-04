@@ -71,7 +71,7 @@ export default function FerrgBook() {
           body: JSON.stringify({
             access_key: WEB3FORMS_KEY,
             to: 'templescounsel@gmail.com',
-            subject: 'Pre-Order: New Book — Temple Obike',
+            subject: 'Pre-Order: New Book, Temple Obike',
             from_name: data.name,
             email: data.email,
             replyto: data.email,

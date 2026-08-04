@@ -24,7 +24,7 @@ export function RetreatTeaser() {
               The Gold Retreat
             </h2>
             <p className="text-lg text-muted-foreground font-light leading-relaxed mb-4 max-w-lg">
-              A private, therapist-led couples experience launching in Accra and Mauritius this October. Three nights designed to help you reach the Gold stage — together.
+              A private, therapist-led couples experience launching in Accra and Mauritius this October. Three nights designed to help you reach the Gold stage, together.
             </p>
             <p className="text-base text-muted-foreground font-light leading-relaxed mb-8 max-w-lg">
               Fully managed, start to finish. Book once and we handle flights, visas, and logistics. You just arrive at the airport with your bags.

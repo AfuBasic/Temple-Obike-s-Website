@@ -89,7 +89,7 @@ export function Contact() {
         headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
         body: JSON.stringify({
           access_key: WEB3FORMS_KEY,
-          subject: `Speaking Inquiry: ${data.organization} — ${data.date}`,
+          subject: `Speaking Inquiry: ${data.organization}, ${data.date}`,
           from_name: data.name,
           name: data.name,
           email: data.email,
@@ -147,7 +147,7 @@ export function Contact() {
               </div>
               <h3 className="text-2xl font-serif text-foreground mb-3">Request Sent</h3>
               <p className="text-muted-foreground font-light max-w-md mx-auto">
-                Thanks — your request has been received. We'll be in touch shortly.
+                Thanks, your request has been received. We'll be in touch shortly.
               </p>
             </motion.div>
           ) : (
@@ -223,6 +223,8 @@ export function Contact() {
                       <option value="Trust & Relationships">Trust &amp; Relationships</option>
                       <option value="Emotional Intelligence">Emotional Intelligence</option>
                       <option value="Trauma & Repair">Trauma &amp; Repair</option>
+                      <option value="Leadership">Leadership</option>
+                      <option value="Self Development">Self Development</option>
                       <option value="Custom">Custom</option>
                     </select>
                     <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-muted-foreground">
@@ -300,7 +302,7 @@ export function Contact() {
           >
             templescounsel@gmail.com
           </a>
-          <span className="hidden md:inline text-border">—</span>
+          <span className="hidden md:inline text-border">·</span>
           <div className="flex flex-col items-center md:items-start gap-1">
             <a
               href="https://wa.me/2348109055475?text=Hi%20Temple%2C%20I'd%20like%20to%20enquire%20about%20a%20speaking%20engagement."
@@ -312,7 +314,7 @@ export function Contact() {
               WhatsApp: +234 810 905 5475
             </a>
             <span className="text-xs text-muted-foreground/50 font-light">
-              Monitored by Temple's team — expect a quick response.
+              Monitored by Temple's team. Expect a quick response.
             </span>
           </div>
         </div>

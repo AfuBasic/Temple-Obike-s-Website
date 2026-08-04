@@ -57,14 +57,14 @@ const items: StripItem[] = [
   },
   {
     image: stageSrc,
-    label: 'National Summit — Abuja',
+    label: 'National Summit, Abuja',
     sub: 'Keynote speech delivered before a gathering of dignitaries',
     link: '#',
     objectPosition: 'center top',
   },
   {
     image: null,
-    label: 'Lights On — Global Webinar',
+    label: 'Lights On Global Webinar',
     sub: '242+ Couples · Nigeria & Worldwide',
     link: '#',
   },

@@ -23,7 +23,7 @@ export function PracticeBanner() {
               Temple's Counsel &<br className="hidden sm:block" /> Mind Academy
             </h2>
             <p className="text-base text-muted-foreground font-light leading-relaxed max-w-xl">
-              One of Nigeria's most recognised relationship brands — a private therapy practice and commercial enterprise 
+              One of Nigeria's most recognised relationship brands, a private therapy practice and commercial enterprise 
               offering individual counselling, couples intervention, corporate EAP programmes, and live workshops. 
               Offices in Victoria Island, Lagos and Wuse 2, Abuja. Virtual sessions available worldwide.
             </p>

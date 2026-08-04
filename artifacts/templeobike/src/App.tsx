@@ -1,9 +1,9 @@
+import { useEffect } from 'react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Toaster } from '@/components/ui/toaster';
 import { TooltipProvider } from '@/components/ui/tooltip';
-import { Route, Switch, Router as WouterRouter } from 'wouter';
+import { Route, Switch, Router as WouterRouter, useLocation } from 'wouter';
 import NotFound from '@/pages/not-found';
-
 import { Hero } from './components/Hero';
 import { CredibilityStrip } from './components/CredibilityStrip';
 import { About } from './components/About';
@@ -22,6 +22,21 @@ import { SiteNav } from './components/SiteNav';
 import { PracticeBanner } from './components/PracticeBanner';
 
 const queryClient = new QueryClient();
+
+// Scrolls to the hash element after any route change — fixes cross-page #contact links
+function HashScroller() {
+  const [location] = useLocation();
+  useEffect(() => {
+    const hash = window.location.hash;
+    if (!hash) return;
+    const id = hash.slice(1);
+    const t = setTimeout(() => {
+      document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+    }, 80);
+    return () => clearTimeout(t);
+  }, [location]);
+  return null;
+}
 
 // The single page layout
 function SpeakerSite() {
@@ -44,15 +59,18 @@ function SpeakerSite() {
 
 function Router() {
   return (
-    <Switch>
-      <Route path="/" component={SpeakerSite} />
-      <Route path="/rate-card" component={RateCard} />
-      <Route path="/media-kit" component={MediaKit} />
-      <Route path="/ferrg-book" component={FerrgBook} />
-      <Route path="/retreat" component={Retreat} />
-      <Route path="/admin" component={Admin} />
-      <Route component={NotFound} />
-    </Switch>
+    <>
+      <HashScroller />
+      <Switch>
+        <Route path="/" component={SpeakerSite} />
+        <Route path="/rate-card" component={RateCard} />
+        <Route path="/media-kit" component={MediaKit} />
+        <Route path="/ferrg-book" component={FerrgBook} />
+        <Route path="/retreat" component={Retreat} />
+        <Route path="/admin" component={Admin} />
+        <Route component={NotFound} />
+      </Switch>
+    </>
   );
 }
 

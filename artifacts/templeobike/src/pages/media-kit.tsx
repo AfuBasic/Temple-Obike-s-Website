@@ -34,14 +34,14 @@ const topPages = [
   { path: 'How to Handle Your Partner\'s Sexual Past (Retroactive Jealousy)', clicks: '20,911', impressions: '1,129,242' },
   { path: 'Powerful Ways to Stop the Four Horsemen That Ruins Marriages', clicks: '5,744', impressions: '709,902' },
   { path: 'Book Appointment', clicks: '1,470', impressions: '101,730' },
-  { path: 'Emotional Affairs — How to Get Yourself Back', clicks: '835', impressions: '39,085' },
+  { path: 'Emotional Affairs: How to Get Yourself Back', clicks: '835', impressions: '39,085' },
   { path: 'Hero Syndrome Psychology', clicks: '709', impressions: '94,892' },
 ];
 
 const credentials = [
   'Licensed Marriage and Family Therapist (LMFT)',
   'Marriage Coach and Interventionist',
-  'Professional Counselling Certificate — Institute of Counseling Nigeria',
+  'Professional Counselling Certificate, Institute of Counseling Nigeria',
   'John Maxwell Leadership Programme Certification',
   'Founder & CEO, Temple\'s Counsel & Mind Academy Ltd. (TCMA)',
   'Employee Assistance Practitioner (EAP)',
@@ -50,7 +50,7 @@ const credentials = [
 const talks = [
   {
     title: 'The Architecture of Trust',
-    desc: 'What actually rebuilds trust after betrayal — and why most advice gets the order wrong. Draws on clinical case work and evidence-based methodology to give audiences a replicable roadmap.',
+    desc: 'What actually rebuilds trust after betrayal, and why most advice gets the order wrong. Draws on clinical case work and evidence-based methodology to give audiences a replicable roadmap.',
     audience: 'Corporate · Faith · Community',
   },
   {
@@ -67,7 +67,7 @@ const talks = [
 
 const engagements = [
   { event: 'Lights On Global Webinar', role: 'Lead Speaker', year: 'June 2026', detail: '242+ couples from 14+ countries' },
-  { event: 'National Summit — Abuja & Nasarawa', role: 'Keynote Speaker', year: 'Nov 2025', detail: 'Presidential representative, Cabinet Minister & Governor in attendance' },
+  { event: 'National Summit, Abuja and Nasarawa', role: 'Keynote Speaker', year: 'Nov 2025', detail: 'Presidential representative, Cabinet Minister and Governor in attendance' },
   { event: 'Rotary District 9127 Conference', role: 'Featured Speaker', year: 'Oct 2024', detail: '' },
   { event: 'Young Catholic Professionals Summit', role: 'Keynote Speaker', year: 'Feb 2024', detail: '' },
   { event: 'RelationSHIP Talk', role: 'Lead Speaker', year: 'Nov 2023', detail: '' },
@@ -80,7 +80,7 @@ const engagements = [
 const media = [
   {
     title: 'NTA Interview',
-    description: 'Temple Obike featured on NTA — Nigeria\'s national television network — discussing mental health, relationships, and societal wellbeing.',
+    description: 'Temple Obike featured on NTA, Nigeria\'s national television network, discussing mental health, relationships, and societal wellbeing.',
     outlet: 'NTA (Nigerian Television Authority)',
     type: 'Television Feature',
     url: 'https://youtu.be/z3Ofsd6z9z8?feature=shared',
@@ -89,7 +89,7 @@ const media = [
   },
   {
     title: '"Passion is 80% of the Success Game"',
-    description: 'Business Elites Africa profiles Temple Obike on the psychology of passion, purpose, and professional success — and what separates those who thrive from those who stall. Featured in their Top 30 Branding & PR Elites in Africa edition.',
+    description: 'Business Elites Africa profiles Temple Obike on the psychology of passion, purpose, and professional success, and what separates those who thrive from those who stall. Featured in their Top 30 Branding and PR Elites in Africa edition.',
     outlet: 'Business Elites Africa',
     type: 'Press Feature',
     url: 'https://businesselitesafrica.com/2022/12/11/passion-is-80-of-the-success-game-temple-obike/',
@@ -161,7 +161,7 @@ const media = [
     kind: 'video' as const,
   },
   {
-    title: 'Live Webinar — Prioritising Mental Health',
+    title: 'Live Webinar: Prioritising Mental Health',
     description: 'Temple Obike leads a live audience webinar on relationship dynamics, emotional health, and practical frameworks for personal transformation.',
     outlet: 'YouTube Live Webinar',
     type: 'Webinar Recording',
@@ -182,14 +182,14 @@ const books = [
   {
     title: 'Discover Your Best Authentic Self',
     subtitle: 'A Waste No Time Series Workbook',
-    desc: 'A workbook dedicated to helping readers start the quick journey toward their truest, most purposeful self — practical, direct, and designed for action.',
+    desc: 'A workbook dedicated to helping readers start the quick journey toward their truest, most purposeful self, practical, direct, and designed for action.',
     link: 'https://www.amazon.com/Discover-Your-Best-Authentic-Self-ebook/dp/B0BRHJ4B8T',
     cover: authenticSelfCover,
   },
   {
-    title: 'New Book — Coming Soon',
+    title: 'New Book: Coming Soon',
     subtitle: '© 2026 Temple Obike · All Rights Reserved',
-    desc: 'Coming Soon. A groundbreaking framework for couples who love each other but need more than love to build something lasting. Pre-order is open — free to reserve.',
+    desc: 'Coming Soon. A groundbreaking framework for couples who love each other but need more than love to build something lasting. Pre-order is open and free to reserve.',
     link: '/ferrg-book',
     cover: ferrgCover,
     badge: 'Coming Soon',
@@ -261,7 +261,7 @@ export default function MediaKit() {
         {/* Short bio */}
         <SectionLabel>Short Bio (for event programmes)</SectionLabel>
         <p style={{ fontSize: 15, lineHeight: 1.85, color: '#ccc', background: '#111', border: '1px solid #1e1e1e', padding: '24px 28px', borderLeft: `3px solid ${gold}` }}>
-          Temple Obike (LMFT) is a Lagos-based Licensed Marriage and Family Therapist, marriage coach and interventionist, keynote speaker, entrepreneur, and three-time published author. He is the Founder and CEO of Temple's Counsel & Mind Academy, one of Nigeria's most recognised relationship and mental wellness brands, with offices in Victoria Island, Lagos and Wuse 2, Abuja. He has logged over 2,380 hours of live therapy sessions and reached more than 2,300,000 readers online since 2021. Seventy percent of his clients are drawn from the global diaspora across the UK, US, Canada, and South Africa. He is the author of <em>Soul Bodega</em> and <em>Discover Your Best Authentic Self</em>, both available on Amazon, with a new book coming soon in 2026.
+          Temple Obike (LMFT) is a Lagos-based Licensed Marriage and Family Therapist, marriage coach and interventionist, keynote speaker, entrepreneur, and three-time published author. He is the Founder and CEO of Temple's Counsel & Mind Academy, one of Nigeria's most recognised relationship and mental wellness brands, with offices in Victoria Island, Lagos and Wuse 2, Abuja. He has logged over 2,380 hours of live therapy sessions and reached more than 2,300,000 readers online since 2021. Seventy percent of his clients are drawn from the global diaspora across the UK, US, Canada, and South Africa. He is the author of Soul Bodega and Discover Your Best Authentic Self, both available on Amazon, with a new book coming soon in 2026.
         </p>
 
         <Divider />
@@ -270,7 +270,7 @@ export default function MediaKit() {
         <SectionLabel>Full Bio</SectionLabel>
         <div style={{ fontSize: 14, lineHeight: 1.9, color: '#bbb', display: 'flex', flexDirection: 'column', gap: 16 }}>
           <p>
-            Temple Obike began counselling informally in 2008, advising youth groups in underserved Lagos neighbourhoods under the Grassroots and Shoots initiative. That foundation grew into Temple's Counsel and Mind Academy — a private psychotherapy and counselling practice with offices in Victoria Island, Lagos and Wuse 2, Abuja.
+            Temple Obike began counselling informally in 2008, advising youth groups in underserved Lagos neighbourhoods under the Grassroots and Shoots initiative. That foundation grew into Temple's Counsel and Mind Academy, a private psychotherapy and counselling practice with offices in Victoria Island, Lagos and Wuse 2, Abuja.
           </p>
           <p>
             He holds a Licensed Marriage and Family Therapist (LMFT) designation, a Certified Hypnotherapist (CHT) credential from the Karen Wells Institute in the United States, a professional counselling certificate from the Institute of Counseling Nigeria, and a John Maxwell Leadership Programme Certification. Over the course of his career he has logged more than 2,380 hours of direct client therapy and reached over 2,300,000 readers through online writing since 2021.
@@ -279,7 +279,7 @@ export default function MediaKit() {
             Temple's keynote work spans corporate wellness, marriage and family resilience, emotional intelligence for leaders, and faith-based personal development. He has addressed national summits attended by presidential representatives, Cabinet ministers, and state governors; international webinars drawing couples from over 14 countries; and community forums across Lagos, Abuja, and the diaspora.
           </p>
           <p>
-            He is the author of <em>Soul Bodega</em> and <em>Discover Your Best Authentic Self</em>, both available on Amazon, with a new book forthcoming in 2026. He is married to his primary school sweetheart; they are raising four children together. That personal foundation gives his work on marriage a credibility no qualification alone can confer.
+            He is the author of Soul Bodega and Discover Your Best Authentic Self, both available on Amazon, with a new book forthcoming in 2026. He is married to his primary school sweetheart; they are raising four children together. That personal foundation gives his work on marriage a credibility no qualification alone can confer.
           </p>
         </div>
 
@@ -312,7 +312,7 @@ export default function MediaKit() {
                 )}
                 {/* Text */}
                 <div style={{ padding: '18px 20px 20px', borderTop: `2px solid ${gold}`, flex: 1, display: 'flex', flexDirection: 'column' }}>
-                  <div style={{ fontSize: 15, fontFamily: "'Playfair Display', Georgia, serif", fontStyle: 'italic', color: '#e5e5e5', marginBottom: 6, lineHeight: 1.3 }}>{b.title}</div>
+                  <div style={{ fontSize: 15, fontFamily: "'Playfair Display', Georgia, serif", color: '#e5e5e5', marginBottom: 6, lineHeight: 1.3 }}>{b.title}</div>
                   {b.subtitle && <div style={{ fontSize: 10, color: gold, letterSpacing: '0.06em', textTransform: 'uppercase', marginBottom: 10 }}>{b.subtitle}</div>}
                   <div style={{ fontSize: 12, color: '#888', lineHeight: 1.7, marginBottom: 14, flex: 1 }}>{b.desc}</div>
                   <a
@@ -334,8 +334,8 @@ export default function MediaKit() {
           style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', background: '#111', border: `1px solid ${gold}`, padding: '18px 24px', textDecoration: 'none', marginBottom: 0 }}
         >
           <div>
-            <div style={{ fontSize: 10, color: gold, letterSpacing: '0.18em', textTransform: 'uppercase', fontWeight: 700, marginBottom: 4 }}>New Book — Free Pre-Order Open</div>
-            <div style={{ fontSize: 14, color: '#e5e5e5', fontFamily: "'Playfair Display', Georgia, serif", fontStyle: 'italic' }}>New Book — Reserve your copy before it drops</div>
+            <div style={{ fontSize: 10, color: gold, letterSpacing: '0.18em', textTransform: 'uppercase', fontWeight: 700, marginBottom: 4 }}>New Book: Free Pre-Order Open</div>
+            <div style={{ fontSize: 14, color: '#e5e5e5', fontFamily: "'Playfair Display', Georgia, serif" }}>New Book: Reserve your copy before it drops</div>
           </div>
           <div style={{ color: gold, fontSize: 20, marginLeft: 24, flexShrink: 0 }}>→</div>
         </a>
@@ -356,7 +356,7 @@ export default function MediaKit() {
         <Divider />
 
         {/* Digital reach */}
-        <SectionLabel>Digital Reach — Google Search (16 months, templescounsel.com)</SectionLabel>
+        <SectionLabel>Digital Reach: Google Search (16 months, templescounsel.com)</SectionLabel>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: 16, marginBottom: 24 }}>
           {searchStats.map(s => (
             <div key={s.label} style={{ background: '#111', border: '1px solid #1e1e1e', padding: '22px 24px' }}>
@@ -386,7 +386,7 @@ export default function MediaKit() {
               ))}
             </tbody>
           </table>
-          <div style={{ marginTop: 14, fontSize: 11, color: '#444', fontStyle: 'italic' }}>
+          <div style={{ marginTop: 14, fontSize: 11, color: '#444' }}>
             Source: Google Search Console · Data period: March 2025 – July 2026 · 254+ pages indexed
           </div>
           <details style={{ marginTop: 16 }}>
@@ -410,7 +410,7 @@ export default function MediaKit() {
                 alt="Google Search Console screenshot — templescounsel.com performance data"
                 style={{ maxWidth: '100%', width: 420, display: 'block', border: '1px solid #2a2a2a' }}
               />
-              <div style={{ marginTop: 8, fontSize: 10, color: '#444', fontStyle: 'italic' }}>
+              <div style={{ marginTop: 8, fontSize: 10, color: '#444' }}>
                 Google Search Console · templescounsel.com · Screenshot taken 27 July 2026
               </div>
             </div>
@@ -424,7 +424,7 @@ export default function MediaKit() {
         <ul style={{ margin: 0, padding: 0, listStyle: 'none', display: 'flex', flexDirection: 'column', gap: 10 }}>
           {credentials.map(c => (
             <li key={c} style={{ display: 'flex', alignItems: 'flex-start', gap: 12, fontSize: 13, color: '#bbb', lineHeight: 1.6 }}>
-              <span style={{ color: gold, flexShrink: 0, marginTop: 2 }}>—</span>
+              <span style={{ color: gold, flexShrink: 0, marginTop: 2 }}>·</span>
               {c}
             </li>
           ))}
@@ -471,7 +471,7 @@ export default function MediaKit() {
                 <td style={{ padding: '13px 0 13px 0', fontSize: 13, color: '#ccc' }}>{e.event}</td>
                 <td style={{ padding: '13px 0', fontSize: 12, color: '#888' }}>{e.role}</td>
                 <td style={{ padding: '13px 0', fontSize: 12, color: '#888' }}>{e.year}</td>
-                <td style={{ padding: '13px 0', fontSize: 11, color: '#555', fontStyle: 'italic' }}>{e.detail}</td>
+                <td style={{ padding: '13px 0', fontSize: 11, color: '#555' }}>{e.detail}</td>
               </tr>
             ))}
           </tbody>

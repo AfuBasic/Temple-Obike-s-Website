@@ -221,7 +221,7 @@ export default function Admin() {
               Temple Obike
             </h1>
             <p className="text-muted-foreground text-sm mt-2">
-              Private area — enter your admin password
+              Private area: enter your admin password
             </p>
           </div>
           <form onSubmit={handleLogin} className="space-y-4">
@@ -694,7 +694,7 @@ export default function Admin() {
         {tab === 'email-templates' && (
           <div className="max-w-2xl space-y-8">
             <p className="text-sm text-muted-foreground leading-relaxed">
-              Edit the subject and body of the confirmation emails sent automatically when someone submits a form. Use <code className="bg-card px-1 py-0.5 text-xs text-primary">{'{name}'}</code> anywhere in the message and it will be replaced with the person's name. For the retreat email, <code className="bg-card px-1 py-0.5 text-xs text-primary">{'{location_part}'}</code> is replaced with <em>— Accra</em>, <em>— Mauritius</em>, or <em>— Virtual</em>.
+              Edit the subject and body of the confirmation emails sent automatically when someone submits a form. Use <code className="bg-card px-1 py-0.5 text-xs text-primary">{'{name}'}</code> anywhere in the message and it will be replaced with the person's name. For the retreat email, <code className="bg-card px-1 py-0.5 text-xs text-primary">{'{location_part}'}</code> is replaced with "Accra", "Mauritius", or "Virtual".
             </p>
 
             {/* Pre-order email */}
@@ -752,7 +752,7 @@ export default function Admin() {
                 {templatesSaveStatus === 'saving' ? 'Saving…' : 'Save Templates'}
               </button>
               {templatesSaveStatus === 'saved' && (
-                <span className="text-sm text-emerald-400">✓ Saved — changes will take effect on the next form submission.</span>
+                <span className="text-sm text-emerald-400">✓ Saved. Changes will take effect on the next form submission.</span>
               )}
               {templatesSaveStatus === 'error' && (
                 <span className="text-sm text-red-400">Failed to save. Please try again.</span>

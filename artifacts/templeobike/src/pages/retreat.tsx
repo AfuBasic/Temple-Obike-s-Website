@@ -9,7 +9,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const BASE_URL = import.meta.env.BASE_URL?.replace(/\/$/, '') ?? '';
 
 // ─── Hardcoded fallbacks (used if the API is unreachable) ─────────────────────
-const DEFAULT_RETREAT_SUBJECT = 'Your Gold Retreat enquiry — Temple Obike';
+const DEFAULT_RETREAT_SUBJECT = 'We received your Gold Retreat request';
 const DEFAULT_RETREAT_MESSAGE =
   `Hi {name},\n\nWe have received your enquiry for The Gold Retreat{location_part} and we will be in touch shortly with next steps.\n\nSpaces are limited and reserved on a first-come basis. We are glad you reached out.\n\nIn the meantime, if you have any questions you can simply reply to this email.\n\nWith gratitude,\nTemple Obike\nTemple's Counsel & Mind Academy`;
 
@@ -323,7 +323,7 @@ export default function Retreat() {
           body: JSON.stringify({
             access_key: WEB3FORMS_KEY,
             to: 'templescounsel@gmail.com',
-            subject: `Gold Retreat Booking — ${form.location}${form.location === 'Virtual' ? ` · ${virtualTierLabel(form.virtualTier)}` : ''}`,
+            subject: `Gold Retreat Booking, ${form.location}${form.location === 'Virtual' ? ` · ${virtualTierLabel(form.virtualTier)}` : ''}`,
             from_name: form.name,
             email: form.email,
             replyto: form.email,
@@ -337,7 +337,7 @@ export default function Retreat() {
             autoresponse_subject: emailSubject,
             autoresponse_message: emailMessage
               .replace('{name}', form.name)
-              .replace('{location_part}', form.location ? ` — ${form.location}` : ''),
+              .replace('{location_part}', form.location ? `, ${form.location}` : ''),
           }),
         }).then(r => r.json()),
       ]);
@@ -375,13 +375,13 @@ export default function Retreat() {
 
             <h1 style={{ marginTop: 24, fontSize: '3rem', lineHeight: 1.06, color: cream }}>
               Three nights to reach<br />
-              <span style={{ color: '#e2c15c', fontStyle: 'italic', fontWeight: 450 }}>the Gold stage,</span> together.
+              <span style={{ color: '#e2c15c', fontWeight: 450 }}>the Gold stage,</span> together.
             </h1>
             <p style={{ color: stone, fontSize: '1rem', maxWidth: '46ch', marginTop: 18, lineHeight: 1.65 }}>
-              The Gold Retreat is a private, therapist-led couples experience — launching in Accra and Mauritius, with a virtual seat for couples who can't travel. Mauritius is the book launch weekend.
+              The Gold Retreat is a private, therapist-led couples experience launching in Accra and Mauritius, with a virtual seat for couples who can't travel. Mauritius is the book launch weekend.
             </p>
             <p style={{ color: stone, fontSize: '0.9rem', maxWidth: '46ch', marginTop: 10, lineHeight: 1.65 }}>
-              Fully managed, start to finish. Book once, send us your passport, and we handle flights, visas, and logistics — you just arrive at the airport with your bags. Everyone flies out together and comes home to Nigeria together.
+              Fully managed, start to finish. Book once, send us your passport, and we handle flights, visas, and logistics. You just arrive at the airport with your bags. Everyone flies out together and comes home to Nigeria together.
             </p>
 
             <div style={{ marginTop: 28, display: 'flex', flexWrap: 'wrap' as const, gap: 28 }}>
@@ -406,21 +406,21 @@ export default function Retreat() {
             <div style={{ display: 'flex', alignItems: 'center', gap: 16, marginBottom: 14 }}>
               <img src={bookCoverSrc} alt="New book — coming soon" style={{ width: 70, flexShrink: 0, boxShadow: '0 8px 24px rgba(0,0,0,0.6)', filter: 'blur(4px)' }} draggable={false} />
               <div>
-                <h3 style={{ fontSize: '1.2rem', color: cream, marginBottom: 6 }}>New Book<br /><span style={{ color: '#e2c15c', fontSize: '0.85rem', fontStyle: 'italic' }}>Coming Soon</span></h3>
+                <h3 style={{ fontSize: '1.2rem', color: cream, marginBottom: 6 }}>New Book<br /><span style={{ color: '#e2c15c', fontSize: '0.85rem' }}>Coming Soon</span></h3>
                 <div style={{ fontSize: '0.7rem', color: stone, letterSpacing: '0.06em', textTransform: 'uppercase' as const }}>© 2026 Temple Obike · All rights reserved</div>
               </div>
             </div>
             <p style={{ color: stone, fontSize: '0.88rem', marginBottom: 14, lineHeight: 1.65 }}>
-              Every couple who books The Gold Retreat receives the book on day one — signed in person at the Mauritius launch, or shipped ahead for Accra and virtual attendees.
+              Every couple who books The Gold Retreat receives the book on day one, signed in person at the Mauritius launch, or shipped ahead for Accra and virtual attendees.
             </p>
             <ul style={{ margin: '0 0 20px', padding: 0, listStyle: 'none' }}>
               {[
-                'Written by Temple Obike — psychotherapist & relationship interventionist',
+                'Written by Temple Obike, psychotherapist and relationship interventionist',
                 'The five-stage framework the retreat is built around, taught live',
                 'A guided companion workbook you\'ll actually use during your sessions',
               ].map((item, i) => (
                 <li key={i} style={{ display: 'flex', gap: 10, fontSize: '0.86rem', color: cream, padding: '7px 0', borderTop: i > 0 ? `1px solid ${line}` : 'none' }}>
-                  <span style={{ color: gold, flexShrink: 0 }}>—</span> {item}
+                  <span style={{ color: gold, flexShrink: 0 }}>·</span> {item}
                 </li>
               ))}
             </ul>
@@ -437,7 +437,7 @@ export default function Retreat() {
             <div className="retreat-eyebrow">Choose Your Setting</div>
             <h2 style={{ fontSize: '2rem', color: cream, marginTop: 12 }}>Two settings. One in-person, one from home.</h2>
             <p style={{ color: stone, marginTop: 14, lineHeight: 1.7 }}>
-              Both in-person retreats run the same 3-night private curriculum. Virtual seats stream the Accra sessions live — Mauritius is in-person only.
+              Both in-person retreats run the same 3-night private curriculum. Virtual seats stream the Accra sessions live. Mauritius is in-person only.
             </p>
           </div>
 
@@ -517,7 +517,7 @@ export default function Retreat() {
               <div style={{ width: 40, height: 40, borderRadius: '50%', border: `1px solid ${gold}`, display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#e2c15c', fontFamily: "'IBM Plex Mono', monospace", fontSize: '0.85rem', flexShrink: 0 }}>V</div>
               <div>
                 <h4 style={{ fontFamily: "'Fraunces', Georgia, serif", fontSize: '1.1rem', color: cream, margin: '0 0 4px' }}>Can't travel? Watch the Accra retreat live.</h4>
-                <p style={{ margin: 0, color: stone, fontSize: '0.87rem', maxWidth: '52ch' }}>Stream the Accra sessions from anywhere in the world — live, private link, your workbook shipped ahead. Pick how many days you want to join. Flat $100 per day.</p>
+                <p style={{ margin: 0, color: stone, fontSize: '0.87rem', maxWidth: '52ch' }}>Stream the Accra sessions from anywhere in the world: live, private link, your workbook shipped ahead. Pick how many days you want to join. Flat $100 per day.</p>
               </div>
             </div>
             <div style={{ display: 'flex', flexDirection: 'column' as const, alignItems: 'flex-end', gap: 4 }}>
@@ -534,14 +534,14 @@ export default function Retreat() {
           <div style={{ maxWidth: 640, marginBottom: 44 }}>
             <div className="retreat-eyebrow">How It Works</div>
             <h2 style={{ fontSize: '2rem', color: cream, marginTop: 12 }}>You just have to show up.</h2>
-            <p style={{ color: stone, marginTop: 14, lineHeight: 1.7 }}>This isn't a DIY trip. Book once, and we take care of everything else — you won't touch a booking site or a visa portal again.</p>
+            <p style={{ color: stone, marginTop: 14, lineHeight: 1.7 }}>This isn't a DIY trip. Book once, and we take care of everything else. You won't touch a booking site or a visa portal again.</p>
           </div>
 
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: 22 }}>
             {[
               { step: 'Step 1', title: 'Pay & book', body: 'One payment secures your couple\'s seat and your chosen destination. No instalments, no second payment later.' },
-              { step: 'Step 2', title: 'Send your passport', body: 'We handle flights, visas, and every travel detail on your behalf — you don\'t lift a finger.' },
-              { step: 'Step 3', title: 'Show up with your bags', body: 'We fly out together as a group and fly home to Nigeria together — with real time to relax, connect, and be with each other along the way.' },
+              { step: 'Step 2', title: 'Send your passport', body: 'We handle flights, visas, and every travel detail on your behalf. You don\'t lift a finger.' },
+              { step: 'Step 3', title: 'Show up with your bags', body: 'We fly out together as a group and fly home to Nigeria together, with real time to relax, connect, and be with each other along the way.' },
             ].map(s => (
               <div key={s.step} style={{ background: panel, border: `1px solid ${line}`, padding: 26 }}>
                 <div className="retreat-eyebrow" style={{ marginBottom: 12 }}>{s.step}</div>
@@ -561,12 +561,12 @@ export default function Retreat() {
           <div>
             <div className="retreat-eyebrow">Limited Cohorts Per City</div>
             <h2 style={{ fontSize: '2rem', color: cream, marginTop: 12, marginBottom: 16 }}>Pre-book your spot</h2>
-            <p style={{ color: stone, lineHeight: 1.7 }}>Seats are held in the order deposits come in. Fill this in to lock your preferred city — our team will follow up by email and WhatsApp with dates and payment details.</p>
+            <p style={{ color: stone, lineHeight: 1.7 }}>Seats are held in the order deposits come in. Fill this in to lock your preferred city. Our team will follow up by email and WhatsApp with dates and payment details.</p>
             <div style={{ marginTop: 26, paddingTop: 22, borderTop: `1px solid ${line}`, fontSize: '0.85rem', color: stone, lineHeight: 1.8 }}>
-              <div><strong style={{ color: cream }}>Accra</strong> — $1,990 per couple · 8–10 Oct 2026 · Max 10 couples</div>
-              <div><strong style={{ color: cream }}>Mauritius</strong> — $5,200 per couple · 22–24 Oct 2026 <span style={{ color: '#e2c15c' }}>◆ Uber Premium · Book Launch</span> · Max 7 couples</div>
-              <div><strong style={{ color: cream }}>Virtual</strong> — $100 per day · watch the Accra sessions live</div>
-              <div style={{ marginTop: 10, fontSize: '0.78rem' }}>Flights, visas & logistics included in all in-person packages. Mauritius is in-person only — no virtual stream.</div>
+              <div><strong style={{ color: cream }}>Accra</strong>: $1,990 per couple · 8–10 Oct 2026 · Max 10 couples</div>
+              <div><strong style={{ color: cream }}>Mauritius</strong>: $5,200 per couple · 22–24 Oct 2026 <span style={{ color: '#e2c15c' }}>◆ Uber Premium · Book Launch</span> · Max 7 couples</div>
+              <div><strong style={{ color: cream }}>Virtual</strong>: $100 per day · watch the Accra sessions live</div>
+              <div style={{ marginTop: 10, fontSize: '0.78rem' }}>Flights, visas and logistics included in all in-person packages. Mauritius is in-person only. No virtual stream.</div>
             </div>
           </div>
 
@@ -646,12 +646,12 @@ export default function Retreat() {
 
             {status === 'sent' ? (
               <div style={{ padding: '16px 18px', border: '1px solid rgba(201,162,39,0.4)', background: 'rgba(201,162,39,0.06)', color: '#e2c15c', fontSize: '0.9rem' }}>
-                Thank you — your spot request for {form.location || 'the retreat'} has been noted. We'll follow up by email and WhatsApp shortly.
+                Thank you. Your spot request for {form.location || 'the retreat'} has been noted. We'll follow up by email and WhatsApp shortly.
               </div>
             ) : status === 'full' ? (
               <div style={{ padding: '18px 20px', border: '1px solid rgba(243,236,221,0.18)', background: 'rgba(243,236,221,0.04)', fontSize: '0.9rem' }}>
                 <div style={{ color: cream, fontWeight: 600, marginBottom: 6 }}>
-                  {form.location} cohort — Bookings now closed.
+                  {form.location} cohort. Bookings are now closed.
                 </div>
                 <div style={{ color: stone, fontSize: '0.85rem', lineHeight: 1.65, marginBottom: 14 }}>
                   We've reached capacity for {form.location}. To be added to the waitlist in case a spot opens, email us directly.
@@ -665,8 +665,8 @@ export default function Retreat() {
                 <button type="submit" className="retreat-btn" style={{ alignSelf: 'flex-start', opacity: status === 'sending' ? 0.6 : 1 }} disabled={status === 'sending'}>
                   {status === 'sending' ? 'Sending…' : 'Reserve Our Spot'}
                 </button>
-                {status === 'error' && <div style={{ color: '#e2c15c', fontSize: '0.8rem' }}>Something went wrong — please email us directly at templescounsel@gmail.com</div>}
-                <div style={{ fontSize: '0.76rem', color: stone, lineHeight: 1.6 }}>No payment is taken now — this reserves your seat. Once confirmed, we'll send payment details and request a copy of each partner's passport so we can arrange your flights and visa.</div>
+                {status === 'error' && <div style={{ color: '#e2c15c', fontSize: '0.8rem' }}>Something went wrong. Please email us directly at templescounsel@gmail.com</div>}
+                <div style={{ fontSize: '0.76rem', color: stone, lineHeight: 1.6 }}>No payment is taken now. This reserves your seat. Once confirmed, we'll send payment details and request a copy of each partner's passport so we can arrange your flights and visa.</div>
               </>
             )}
           </form>
