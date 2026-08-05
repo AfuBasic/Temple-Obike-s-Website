@@ -1,0 +1,44 @@
+-- Temple Obike Website MySQL Database Schema for cPanel / Docker
+
+CREATE TABLE IF NOT EXISTS `speaking_enquiries` (
+  `id` INT AUTO_INCREMENT PRIMARY KEY,
+  `name` VARCHAR(255) NOT NULL,
+  `organization` VARCHAR(255) NOT NULL,
+  `email` VARCHAR(255) NOT NULL,
+  `event_date` VARCHAR(100) NOT NULL,
+  `audience_size` VARCHAR(100) NOT NULL,
+  `topic` VARCHAR(255) NOT NULL,
+  `budget` VARCHAR(100) DEFAULT NULL,
+  `message` TEXT NOT NULL,
+  `followed_up` TINYINT(1) NOT NULL DEFAULT 0,
+  `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS `retreat_bookings` (
+  `id` INT AUTO_INCREMENT PRIMARY KEY,
+  `name` VARCHAR(255) NOT NULL,
+  `partner` VARCHAR(255) NOT NULL,
+  `email` VARCHAR(255) NOT NULL,
+  `phone` VARCHAR(100) NOT NULL,
+  `location` ENUM('Accra', 'Mauritius', 'Virtual') NOT NULL,
+  `virtual_tier` VARCHAR(50) DEFAULT NULL,
+  `note` TEXT DEFAULT NULL,
+  `followed_up` TINYINT(1) NOT NULL DEFAULT 0,
+  `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS `preorder_submissions` (
+  `id` INT AUTO_INCREMENT PRIMARY KEY,
+  `name` VARCHAR(255) NOT NULL,
+  `email` VARCHAR(255) NOT NULL,
+  `phone` VARCHAR(100) DEFAULT NULL,
+  `note` TEXT DEFAULT NULL,
+  `followed_up` TINYINT(1) NOT NULL DEFAULT 0,
+  `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS `settings` (
+  `setting_key` VARCHAR(100) PRIMARY KEY,
+  `setting_value` TEXT NOT NULL,
+  `updated_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
