@@ -45,7 +45,7 @@ interface SubmissionsData {
   enquiries: SpeakingEnquiry[];
 }
 
-const BASE_URL = import.meta.env.BASE_URL?.replace(/\/$/, '') ?? '';
+const BASE_URL = import.meta.env.VITE_API_URL ?? import.meta.env.BASE_URL?.replace(/\/$/, '') ?? '';
 
 function formatDate(iso: string) {
   return new Date(iso).toLocaleDateString('en-GB', {

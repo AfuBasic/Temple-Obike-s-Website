@@ -21,7 +21,7 @@ type FormValues = z.infer<typeof formSchema>;
 // Web3Forms access key — used as a best-effort email ping only.
 // The form always saves to the database first so no submission is ever lost.
 const WEB3FORMS_KEY = import.meta.env.VITE_WEB3FORMS_KEY as string | undefined;
-const BASE_URL = import.meta.env.BASE_URL?.replace(/\/$/, '') ?? '';
+const BASE_URL = import.meta.env.VITE_API_URL ?? import.meta.env.BASE_URL?.replace(/\/$/, '') ?? '';
 
 export function Contact() {
   const [submitted, setSubmitted] = useState(false);

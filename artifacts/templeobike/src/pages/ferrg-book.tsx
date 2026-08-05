@@ -16,7 +16,7 @@ const schema = z.object({
 type FormData = z.infer<typeof schema>;
 
 const WEB3FORMS_KEY = import.meta.env.VITE_WEB3FORMS_KEY as string;
-const BASE_URL = import.meta.env.BASE_URL?.replace(/\/$/, '') ?? '';
+const BASE_URL = import.meta.env.VITE_API_URL ?? import.meta.env.BASE_URL?.replace(/\/$/, '') ?? '';
 
 // ─── Hardcoded fallbacks (used if the API is unreachable) ─────────────────────
 const DEFAULT_SUBJECT = "Your name is on the list";

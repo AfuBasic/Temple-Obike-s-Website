@@ -6,7 +6,7 @@ import bookCoverSrc from '@assets/f123ebc6-1cd8-4218-836b-4da5f9aaa958_178516671
 
 const WEB3FORMS_KEY = import.meta.env.VITE_WEB3FORMS_KEY as string;
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
-const BASE_URL = import.meta.env.BASE_URL?.replace(/\/$/, '') ?? '';
+const BASE_URL = import.meta.env.VITE_API_URL ?? import.meta.env.BASE_URL?.replace(/\/$/, '') ?? '';
 
 // ─── Hardcoded fallbacks (used if the API is unreachable) ─────────────────────
 const DEFAULT_RETREAT_SUBJECT = 'We received your Gold Retreat request';
