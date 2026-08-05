@@ -5,6 +5,8 @@ services:
       dockerfile: Dockerfile
     ports:
       - "8000:80"
+    volumes:
+      - .:/var/www/html
     environment:
       DB_HOST: db
       DB_PORT: 3306

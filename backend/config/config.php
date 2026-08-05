@@ -1,7 +1,22 @@
 <?php
-/**
- * Temple Obike Backend Configuration
- */
+// Load .env file if available
+if (file_exists(__DIR__ . '/../.env')) {
+    $lines = file(__DIR__ . '/../.env', FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+    foreach ($lines as $line) {
+        $line = trim($line);
+        if ($line === '' || str_starts_with($line, '#')) continue;
+        $parts = explode('=', $line, 2);
+        if (count($parts) === 2) {
+            $k = trim($parts[0]);
+            $v = trim($parts[1], " \t\n\r\0\x0B\"'");
+            if ($k !== '') {
+                putenv("{$k}={$v}");
+                $_ENV[$k] = $v;
+                $_SERVER[$k] = $v;
+            }
+        }
+    }
+}
 
 return [
     'db' => [
