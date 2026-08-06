@@ -1,6 +1,6 @@
 <?php
 /**
- * Email Service - Rich HTML Email Templates for Temple Obike
+ * Email Service - Direct SMTP Socket Client with Rich HTML Email Templates
  */
 
 class EmailService {
@@ -10,20 +10,96 @@ class EmailService {
         $this->config = $config['email'];
     }
 
+    /**
+     * Send email via direct SMTP socket (STARTTLS authentication)
+     */
     private function send(string $to, string $subject, string $htmlBody, ?string $replyTo = null): bool {
-        $fromEmail = $this->config['from_email'];
-        $fromName  = $this->config['from_name'];
+        $host = $this->config['smtp_host'] ?? 'smtp.zeptomail.com';
+        $port = (int)($this->config['smtp_port'] ?? 587);
+        $user = $this->config['smtp_user'] ?? '';
+        $pass = $this->config['smtp_pass'] ?? '';
+        $fromEmail = $this->config['from_email'] ?? 'noreply@templeobike.com';
+        $fromName  = $this->config['from_name'] ?? 'Temple Obike';
 
-        $headers = [];
-        $headers[] = "MIME-Version: 1.0";
-        $headers[] = "Content-type: text/html; charset=utf-8";
-        $headers[] = "From: {$fromName} <{$fromEmail}>";
-        if ($replyTo) {
-            $headers[] = "Reply-To: {$replyTo}";
+        // Fallback to php mail() if SMTP credentials are missing
+        if (empty($host) || empty($user) || empty($pass)) {
+            $headers = [
+                "MIME-Version: 1.0",
+                "Content-type: text/html; charset=utf-8",
+                "From: {$fromName} <{$fromEmail}>",
+                "X-Mailer: PHP/" . phpversion()
+            ];
+            if ($replyTo) $headers[] = "Reply-To: {$replyTo}";
+            return @mail($to, $subject, $htmlBody, implode("\r\n", $headers));
         }
-        $headers[] = "X-Mailer: PHP/" . phpversion();
 
-        return @mail($to, $subject, $htmlBody, implode("\r\n", $headers));
+        try {
+            $socket = @stream_socket_client("tcp://{$host}:{$port}", $errno, $errstr, 15);
+            if (!$socket) return false;
+
+            $this->readResponse($socket); // 220 banner
+
+            $this->sendCommand($socket, "EHLO " . gethostname(), 250);
+
+            // STARTTLS encryption
+            $this->sendCommand($socket, "STARTTLS", 220);
+            stream_socket_enable_crypto($socket, true, STREAM_CRYPTO_METHOD_TLSv1_2_CLIENT | STREAM_CRYPTO_METHOD_TLSv1_3_CLIENT);
+
+            $this->sendCommand($socket, "EHLO " . gethostname(), 250);
+
+            // AUTH LOGIN
+            $this->sendCommand($socket, "AUTH LOGIN", 334);
+            $this->sendCommand($socket, base64_encode($user), 334);
+            $this->sendCommand($socket, base64_encode($pass), 235);
+
+            // MAIL FROM & RCPT TO
+            $this->sendCommand($socket, "MAIL FROM: <{$fromEmail}>", 250);
+            $this->sendCommand($socket, "RCPT TO: <{$to}>", 250);
+
+            // DATA
+            $this->sendCommand($socket, "DATA", 354);
+
+            $headers = [
+                "MIME-Version: 1.0",
+                "Content-Type: text/html; charset=utf-8",
+                "From: {$fromName} <{$fromEmail}>",
+                "To: <{$to}>",
+                "Subject: " . '=?UTF-8?B?' . base64_encode($subject) . '?=',
+                "Date: " . date(DATE_RFC2822)
+            ];
+            if ($replyTo) {
+                $headers[] = "Reply-To: {$replyTo}";
+            }
+
+            $message = implode("\r\n", $headers) . "\r\n\r\n" . $htmlBody . "\r\n.";
+            $this->sendCommand($socket, $message, 250);
+
+            $this->sendCommand($socket, "QUIT", 221);
+            fclose($socket);
+
+            return true;
+        } catch (Exception $e) {
+            error_log("SMTP Error: " . $e->getMessage());
+            return false;
+        }
+    }
+
+    private function readResponse($socket): string {
+        $response = '';
+        while ($line = fgets($socket, 512)) {
+            $response .= $line;
+            if (substr($line, 3, 1) === ' ') break;
+        }
+        return $response;
+    }
+
+    private function sendCommand($socket, string $command, int $expectedCode): void {
+        fputs($socket, $command . "\r\n");
+        $response = $this->readResponse($socket);
+        $code = (int)substr($response, 0, 3);
+        if ($code !== $expectedCode) {
+            throw new Exception("SMTP Command '{$command}' failed with response: {$response}");
+        }
     }
 
     private function wrapHtmlTemplate(string $title, string $contentHtml): string {
@@ -73,7 +149,6 @@ HTML;
     }
 
     public function sendEnquiryNotification(array $data): void {
-        $smtpUser = $this->config['smtp_user'];
         $budget = !empty($data['budget']) ? htmlspecialchars($data['budget']) : "Not specified";
         $name = htmlspecialchars($data['name']);
         $email = htmlspecialchars($data['email']);
@@ -117,7 +192,6 @@ HTML;
     }
 
     public function sendRetreatNotification(array $data): void {
-        $smtpUser = $this->config['smtp_user'];
         $pkg = !empty($data['virtualTier']) ? " (" . htmlspecialchars($data['virtualTier']) . ")" : "";
         $name = htmlspecialchars($data['name']);
         $partner = htmlspecialchars($data['partner']);
@@ -162,7 +236,6 @@ HTML;
     }
 
     public function sendPreorderNotification(array $data): void {
-        $smtpUser = $this->config['smtp_user'];
         $name = htmlspecialchars($data['name']);
         $email = htmlspecialchars($data['email']);
         $phone = !empty($data['phone']) ? htmlspecialchars($data['phone']) : 'N/A';
