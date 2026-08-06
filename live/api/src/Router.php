@@ -6,18 +6,21 @@
 require_once __DIR__ . '/Database.php';
 require_once __DIR__ . '/EmailService.php';
 
-class Router {
+class Router
+{
     private array $config;
     private PDO $db;
     private EmailService $emailService;
 
-    public function __construct(array $config) {
+    public function __construct(array $config)
+    {
         $this->config = $config;
         $this->db = Database::getConnection($config['db']);
         $this->emailService = new EmailService($config);
     }
 
-    public function handleRequest(): void {
+    public function handleRequest(): void
+    {
         $method = $_SERVER['REQUEST_METHOD'];
         $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 
@@ -59,37 +62,44 @@ class Router {
         }
     }
 
-    private function jsonResponse(array $data, int $statusCode = 200): void {
+    private function jsonResponse(array $data, int $statusCode = 200): void
+    {
         http_response_code($statusCode);
         echo json_encode($data);
         exit;
     }
 
-    private function getJsonInput(): array {
+    private function getJsonInput(): array
+    {
         $raw = file_get_contents('php://input');
         $data = json_decode($raw, true);
         return is_array($data) ? $data : [];
     }
 
-    private function isAuthorised(): bool {
+    private function isAuthorised(): bool
+    {
         $secret = $this->config['auth']['session_secret'];
-        if (empty($secret)) return false;
+        if (empty($secret))
+            return false;
 
         $authHeader = $_SERVER['HTTP_AUTHORIZATION'] ?? $_SERVER['REDIRECT_HTTP_AUTHORIZATION'] ?? '';
-        if (empty($authHeader)) return false;
+        if (empty($authHeader))
+            return false;
 
         $token = str_starts_with($authHeader, 'Bearer ') ? substr($authHeader, 7) : $authHeader;
         return $token === $secret;
     }
 
-    private function getBookingCount(string $location): int {
+    private function getBookingCount(string $location): int
+    {
         $stmt = $this->db->prepare("SELECT COUNT(*) as count FROM retreat_bookings WHERE location = ?");
         $stmt->execute([$location]);
         $row = $stmt->fetch();
-        return (int)($row['count'] ?? 0);
+        return (int) ($row['count'] ?? 0);
     }
 
-    private function getAvailability(): void {
+    private function getAvailability(): void
+    {
         try {
             $accraCount = $this->getBookingCount('Accra');
             $mauritiusCount = $this->getBookingCount('Mauritius');
@@ -100,13 +110,13 @@ class Router {
             $this->jsonResponse([
                 'Accra' => [
                     'count' => $accraCount,
-                    'cap'   => $accraCap,
-                    'full'  => $accraCount >= $accraCap
+                    'cap' => $accraCap,
+                    'full' => $accraCount >= $accraCap
                 ],
                 'Mauritius' => [
                     'count' => $mauritiusCount,
-                    'cap'   => $mauritiusCap,
-                    'full'  => $mauritiusCount >= $mauritiusCap
+                    'cap' => $mauritiusCap,
+                    'full' => $mauritiusCount >= $mauritiusCap
                 ]
             ]);
         } catch (Exception $e) {
@@ -114,7 +124,8 @@ class Router {
         }
     }
 
-    private function postPreorder(): void {
+    private function postPreorder(): void
+    {
         $input = $this->getJsonInput();
 
         if (empty($input['name']) || empty($input['email']) || !filter_var($input['email'], FILTER_VALIDATE_EMAIL)) {
@@ -130,14 +141,14 @@ class Router {
                 $input['note'] ?? null
             ]);
 
-            $insertId = (int)$this->db->lastInsertId();
+            $insertId = (int) $this->db->lastInsertId();
 
             // Email notification to Temple
             $this->emailService->sendPreorderNotification([
-                'name'  => $input['name'],
+                'name' => $input['name'],
                 'email' => $input['email'],
                 'phone' => $input['phone'] ?? null,
-                'note'  => $input['note'] ?? null,
+                'note' => $input['note'] ?? null,
             ]);
 
             // Auto-response to subscriber
@@ -154,7 +165,8 @@ class Router {
         }
     }
 
-    private function postRetreat(): void {
+    private function postRetreat(): void
+    {
         $input = $this->getJsonInput();
 
         if (empty($input['name']) || empty($input['partner']) || empty($input['email']) || empty($input['phone']) || empty($input['location'])) {
@@ -186,17 +198,17 @@ class Router {
                 $input['note'] ?? null
             ]);
 
-            $insertId = (int)$this->db->lastInsertId();
+            $insertId = (int) $this->db->lastInsertId();
 
             // Email notification to Temple
             $this->emailService->sendRetreatNotification([
-                'name'        => $input['name'],
-                'partner'     => $input['partner'],
-                'email'       => $input['email'],
-                'phone'       => $input['phone'],
-                'location'    => $input['location'],
+                'name' => $input['name'],
+                'partner' => $input['partner'],
+                'email' => $input['email'],
+                'phone' => $input['phone'],
+                'location' => $input['location'],
                 'virtualTier' => $input['virtualTier'] ?? null,
-                'note'        => $input['note'] ?? null,
+                'note' => $input['note'] ?? null,
             ]);
 
             // Auto-response to subscriber
@@ -214,7 +226,8 @@ class Router {
         }
     }
 
-    private function postEnquiry(): void {
+    private function postEnquiry(): void
+    {
         $input = $this->getJsonInput();
 
         $required = ['name', 'organization', 'email', 'eventDate', 'audienceSize', 'topic', 'message'];
@@ -237,18 +250,18 @@ class Router {
                 $input['message']
             ]);
 
-            $insertId = (int)$this->db->lastInsertId();
+            $insertId = (int) $this->db->lastInsertId();
 
             // Email notification to Temple
             $this->emailService->sendEnquiryNotification([
-                'name'         => $input['name'],
-                'email'        => $input['email'],
+                'name' => $input['name'],
+                'email' => $input['email'],
                 'organization' => $input['organization'],
-                'eventDate'    => $input['eventDate'],
+                'eventDate' => $input['eventDate'],
                 'audienceSize' => $input['audienceSize'],
-                'topic'        => $input['topic'],
-                'budget'       => $input['budget'] ?? null,
-                'message'      => $input['message']
+                'topic' => $input['topic'],
+                'budget' => $input['budget'] ?? null,
+                'message' => $input['message']
             ]);
 
             $this->jsonResponse(['ok' => true, 'id' => $insertId], 201);
@@ -257,7 +270,8 @@ class Router {
         }
     }
 
-    private function getAdminSubmissions(): void {
+    private function getAdminSubmissions(): void
+    {
         if (!$this->isAuthorised()) {
             $this->jsonResponse(['error' => 'Unauthorised'], 401);
         }
@@ -267,9 +281,9 @@ class Router {
 
             // Preorders
             $preStmt = $this->db->query("SELECT id, name, email, phone, note, followed_up as followedUp, created_at as createdAt FROM preorder_submissions ORDER BY created_at DESC");
-            $preorders = array_map(function($row) {
-                $row['id'] = (int)$row['id'];
-                $row['followedUp'] = (bool)$row['followedUp'];
+            $preorders = array_map(function ($row) {
+                $row['id'] = (int) $row['id'];
+                $row['followedUp'] = (bool) $row['followedUp'];
                 return $row;
             }, $preStmt->fetchAll());
 
@@ -280,36 +294,37 @@ class Router {
             } else {
                 $retStmt = $this->db->query("SELECT id, name, partner, email, phone, location, virtual_tier as virtualTier, note, followed_up as followedUp, created_at as createdAt FROM retreat_bookings ORDER BY created_at DESC");
             }
-            $retreats = array_map(function($row) {
-                $row['id'] = (int)$row['id'];
-                $row['followedUp'] = (bool)$row['followedUp'];
+            $retreats = array_map(function ($row) {
+                $row['id'] = (int) $row['id'];
+                $row['followedUp'] = (bool) $row['followedUp'];
                 return $row;
             }, $retStmt->fetchAll());
 
             // Enquiries
             $enqStmt = $this->db->query("SELECT id, name, organization, email, event_date as eventDate, audience_size as audienceSize, topic, budget, message, followed_up as followedUp, created_at as createdAt FROM speaking_enquiries ORDER BY created_at DESC");
-            $enquiries = array_map(function($row) {
-                $row['id'] = (int)$row['id'];
-                $row['followedUp'] = (bool)$row['followedUp'];
+            $enquiries = array_map(function ($row) {
+                $row['id'] = (int) $row['id'];
+                $row['followedUp'] = (bool) $row['followedUp'];
                 return $row;
             }, $enqStmt->fetchAll());
 
             $this->jsonResponse([
                 'preorders' => $preorders,
-                'retreats'  => $retreats,
+                'retreats' => $retreats,
                 'enquiries' => $enquiries
             ]);
         } catch (Exception $e) {
-            $this->jsonResponse(['error' => 'Failed to fetch submissions', 'details' => $e->getMessage()], 500);
+            $this->jsonResponse(['error' => 'Failed to fetch submissions'], 500);
         }
     }
 
-    private function patchFollowedUp(string $type, string $idStr): void {
+    private function patchFollowedUp(string $type, string $idStr): void
+    {
         if (!$this->isAuthorised()) {
             $this->jsonResponse(['error' => 'Unauthorised'], 401);
         }
 
-        $rowId = (int)$idStr;
+        $rowId = (int) $idStr;
         if ($rowId <= 0) {
             $this->jsonResponse(['error' => 'Invalid id'], 400);
         }
@@ -339,7 +354,8 @@ class Router {
         }
     }
 
-    private function getMergedSettings(): array {
+    private function getMergedSettings(): array
+    {
         $stmt = $this->db->query("SELECT setting_key, setting_value FROM settings");
         $rows = $stmt->fetchAll();
         $dbMap = [];
@@ -356,14 +372,16 @@ class Router {
         return $result;
     }
 
-    private function getAdminSettings(): void {
+    private function getAdminSettings(): void
+    {
         if (!$this->isAuthorised()) {
             $this->jsonResponse(['error' => 'Unauthorised'], 401);
         }
         $this->jsonResponse($this->getMergedSettings());
     }
 
-    private function putAdminSettings(): void {
+    private function putAdminSettings(): void
+    {
         if (!$this->isAuthorised()) {
             $this->jsonResponse(['error' => 'Unauthorised'], 401);
         }
@@ -396,7 +414,8 @@ class Router {
         }
     }
 
-    private function getPublicSettings(): void {
+    private function getPublicSettings(): void
+    {
         $this->jsonResponse($this->getMergedSettings());
     }
 }

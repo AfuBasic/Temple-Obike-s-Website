@@ -83,24 +83,7 @@ export function Contact() {
         `Submitted: ${submissionDate} (WAT)`,
       ].join('\n');
 
-      // Fire and forget — DB save above already succeeded, so we don't block on this
-      fetch('https://api.web3forms.com/submit', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-        body: JSON.stringify({
-          access_key: WEB3FORMS_KEY,
-          subject: `Speaking Inquiry: ${data.organization}, ${data.date}`,
-          from_name: data.name,
-          name: data.name,
-          email: data.email,
-          organization: data.organization,
-          event_date: data.date,
-          audience_size: data.audience,
-          topic: data.topic,
-          budget: data.budget || 'Not specified',
-          message: messageBody,
-        }),
-      }).catch(() => { /* silent — DB save already succeeded */ });
+      // Web3forms call removed; submission is safely handled by backend API above.
     }
 
     setSubmitted(true);

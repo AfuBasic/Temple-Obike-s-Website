@@ -295,62 +295,37 @@ export default function Retreat() {
     setErrors({});
     setStatus('sending');
     try {
-      // Save to database (required) and send email (best-effort) in parallel.
-      // Success requires DB write to succeed so the enquiry appears in admin.
-      const [dbRes, emailRes] = await Promise.allSettled([
-        fetch(`${BASE_URL}/api/submissions/retreat`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            name: form.name,
-            partner: form.partner,
-            email: form.email,
-            phone: form.phone,
-            location: form.location,
-            virtualTier: form.virtualTier || undefined,
-            note: form.note || undefined,
-          }),
-        }).then(async r => {
-          if (r.status === 409) {
-            const body = await r.json().catch(() => ({}));
-            if (body?.error === 'LOCATION_FULL') throw new Error('LOCATION_FULL');
-          }
-          return { ok: r.ok };
+      const r = await fetch(`${BASE_URL}/api/submissions/retreat`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: form.name,
+          partner: form.partner,
+          email: form.email,
+          phone: form.phone,
+          location: form.location,
+          virtualTier: form.virtualTier || undefined,
+          note: form.note || undefined,
         }),
-        fetch('https://api.web3forms.com/submit', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            access_key: WEB3FORMS_KEY,
-            to: 'templescounsel@gmail.com',
-            subject: `Gold Retreat Booking, ${form.location}${form.location === 'Virtual' ? ` · ${virtualTierLabel(form.virtualTier)}` : ''}`,
-            from_name: form.name,
-            email: form.email,
-            replyto: form.email,
-            phone: form.phone,
-            partner: form.partner,
-            location: form.location,
-            ...(form.location === 'Virtual' && { virtual_package: virtualTierLabel(form.virtualTier) }),
-            note: form.note || 'Not provided',
-            botcheck: '',
-            autoresponse: true,
-            autoresponse_subject: emailSubject,
-            autoresponse_message: emailMessage
-              .replace('{name}', form.name)
-              .replace('{location_part}', form.location ? `, ${form.location}` : ''),
-          }),
-        }).then(r => r.json()),
-      ]);
-      if (dbRes.status === 'rejected' && (dbRes.reason as Error)?.message === 'LOCATION_FULL') {
-        setStatus('full');
-        return;
+      });
+
+      if (r.status === 409) {
+        const body = await r.json().catch(() => ({}));
+        if (body?.error === 'LOCATION_FULL') {
+          setStatus('full');
+          return;
+        }
       }
-      const dbOk = dbRes.status === 'fulfilled' && (dbRes.value as { ok: boolean }).ok;
-      // Success requires the DB write to succeed so the enquiry is always
-      // visible in the admin dashboard. Email is best-effort notification only.
-      setStatus(dbOk ? 'sent' : 'error');
-      if (dbOk) setForm({ name: '', partner: '', email: '', phone: '', location: '', virtualTier: '', note: '', botcheck: '' });
-    } catch { setStatus('error'); }
+
+      if (r.ok) {
+        setStatus('sent');
+        setForm({ name: '', partner: '', email: '', phone: '', location: '', virtualTier: '', note: '', botcheck: '' });
+      } else {
+        setStatus('error');
+      }
+    } catch {
+      setStatus('error');
+    }
   };
 
   return (

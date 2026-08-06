@@ -52,42 +52,18 @@ export default function FerrgBook() {
     }
     setStatus('sending');
     try {
-      // Save to database (required) and send email (best-effort) in parallel.
-      // Success requires DB write to succeed so the enquiry appears in admin.
-      const [dbRes, emailRes] = await Promise.allSettled([
-        fetch(`${BASE_URL}/api/submissions/preorder`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            name: data.name,
-            email: data.email,
-            phone: data.phone || undefined,
-            note: data.note || undefined,
-          }),
-        }).then(r => ({ ok: r.ok })),
-        fetch('https://api.web3forms.com/submit', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            access_key: WEB3FORMS_KEY,
-            to: 'templescounsel@gmail.com',
-            subject: 'Pre-Order: New Book, Temple Obike',
-            from_name: data.name,
-            email: data.email,
-            replyto: data.email,
-            phone: data.phone || 'Not provided',
-            note: data.note || 'Not provided',
-            botcheck: data.botcheck ?? '',
-            autoresponse: true,
-            autoresponse_subject: emailSubject,
-            autoresponse_message: emailMessage.replace('{name}', data.name),
-          }),
-        }).then(r => r.json()),
-      ]);
-      const dbOk = dbRes.status === 'fulfilled' && (dbRes.value as { ok: boolean }).ok;
-      // Success requires the DB write to succeed so the enquiry is always
-      // visible in the admin dashboard. Email is best-effort notification only.
-      if (dbOk) {
+      const r = await fetch(`${BASE_URL}/api/submissions/preorder`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: data.name,
+          email: data.email,
+          phone: data.phone || undefined,
+          note: data.note || undefined,
+        }),
+      });
+
+      if (r.ok) {
         setStatus('sent');
         reset();
       } else {
