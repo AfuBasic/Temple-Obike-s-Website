@@ -300,7 +300,7 @@ class Router {
                 'enquiries' => $enquiries
             ]);
         } catch (Exception $e) {
-            $this->jsonResponse(['error' => 'Failed to fetch submissions'], 500);
+            $this->jsonResponse(['error' => 'Failed to fetch submissions', 'details' => $e->getMessage()], 500);
         }
     }
 
