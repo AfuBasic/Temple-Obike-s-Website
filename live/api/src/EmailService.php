@@ -13,13 +13,13 @@ class EmailService {
     /**
      * Send email via direct SMTP socket (STARTTLS authentication)
      */
-    private function send(string $to, string $subject, string $htmlBody, ?string $replyTo = null): bool {
+    private function send(string $to, string $subject, string $htmlBody, ?string $replyTo = null, ?string $customFromName = null): bool {
         $host = $this->config['smtp_host'] ?? 'smtp.zeptomail.com';
         $port = (int)($this->config['smtp_port'] ?? 587);
         $user = $this->config['smtp_user'] ?? '';
         $pass = $this->config['smtp_pass'] ?? '';
         $fromEmail = $this->config['from_email'] ?? 'noreply@templeobike.com';
-        $fromName  = $this->config['from_name'] ?? 'Temple Obike';
+        $fromName  = $customFromName ?? ($this->config['from_name'] ?? 'Temple Obike');
 
         // Fallback to php mail() if SMTP credentials are missing
         if (empty($host) || empty($user) || empty($pass)) {
@@ -187,7 +187,7 @@ HTML;
         
         $recipients = ['templeobike@gmail.com'];
         foreach ($recipients as $recipient) {
-            $this->send($recipient, $subject, $html, $data['email']);
+            $this->send($recipient, $subject, $html, $data['email'], 'Temple Obike Site');
         }
     }
 
@@ -231,7 +231,7 @@ HTML;
         
         $recipients = ['templeobike@gmail.com'];
         foreach ($recipients as $recipient) {
-            $this->send($recipient, $subject, $html, $data['email']);
+            $this->send($recipient, $subject, $html, $data['email'], 'Temple Obike Site');
         }
     }
 
@@ -270,7 +270,7 @@ HTML;
         
         $recipients = ['templeobike@gmail.com'];
         foreach ($recipients as $recipient) {
-            $this->send($recipient, $subject, $html, $data['email']);
+            $this->send($recipient, $subject, $html, $data['email'], 'Temple Obike Site');
         }
     }
 

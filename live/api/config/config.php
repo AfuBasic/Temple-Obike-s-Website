@@ -36,7 +36,7 @@ return [
         'smtp_host'  => getenv('SMTP_HOST') ?: 'smtp.gmail.com',
         'smtp_port'  => getenv('SMTP_PORT') ?: 587,
         'from_email' => getenv('FROM_EMAIL') ?: 'templescounsel@gmail.com',
-        'from_name'  => 'Temple Obike Site',
+        'from_name'  => 'Temple Obike',
     ],
     'seat_caps' => [
         'Accra'     => 12,
