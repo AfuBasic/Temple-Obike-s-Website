@@ -110,11 +110,9 @@ HTML;
         $subject = "Speaking Inquiry: " . $data['organization'] . " — " . $data['eventDate'];
         $html = $this->wrapHtmlTemplate($subject, $content);
         
-        $recipients = array_unique([$smtpUser, 'templeobike@gmail.com', 'templescounsel@gmail.com']);
+        $recipients = ['templeobike@gmail.com'];
         foreach ($recipients as $recipient) {
-            if (!empty($recipient)) {
-                $this->send($recipient, $subject, $html, $data['email']);
-            }
+            $this->send($recipient, $subject, $html, $data['email']);
         }
     }
 
@@ -157,11 +155,9 @@ HTML;
         $subject = "Retreat Booking: " . $data['name'] . " & " . $data['partner'] . " — " . $data['location'];
         $html = $this->wrapHtmlTemplate($subject, $content);
         
-        $recipients = array_unique([$smtpUser, 'templeobike@gmail.com', 'templescounsel@gmail.com']);
+        $recipients = ['templeobike@gmail.com'];
         foreach ($recipients as $recipient) {
-            if (!empty($recipient)) {
-                $this->send($recipient, $subject, $html, $data['email']);
-            }
+            $this->send($recipient, $subject, $html, $data['email']);
         }
     }
 
@@ -199,11 +195,9 @@ HTML;
         $subject = "Book Pre-order: " . $data['name'];
         $html = $this->wrapHtmlTemplate($subject, $content);
         
-        $recipients = array_unique([$smtpUser, 'templeobike@gmail.com', 'templescounsel@gmail.com']);
+        $recipients = ['templeobike@gmail.com'];
         foreach ($recipients as $recipient) {
-            if (!empty($recipient)) {
-                $this->send($recipient, $subject, $html, $data['email']);
-            }
+            $this->send($recipient, $subject, $html, $data['email']);
         }
     }
 
