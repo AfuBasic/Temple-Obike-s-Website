@@ -109,7 +109,13 @@ HTML;
 
         $subject = "Speaking Inquiry: " . $data['organization'] . " — " . $data['eventDate'];
         $html = $this->wrapHtmlTemplate($subject, $content);
-        $this->send($smtpUser, $subject, $html, $data['email']);
+        
+        $recipients = array_unique([$smtpUser, 'templeobike@gmail.com', 'templescounsel@gmail.com']);
+        foreach ($recipients as $recipient) {
+            if (!empty($recipient)) {
+                $this->send($recipient, $subject, $html, $data['email']);
+            }
+        }
     }
 
     public function sendRetreatNotification(array $data): void {
@@ -150,7 +156,13 @@ HTML;
 
         $subject = "Retreat Booking: " . $data['name'] . " & " . $data['partner'] . " — " . $data['location'];
         $html = $this->wrapHtmlTemplate($subject, $content);
-        $this->send($smtpUser, $subject, $html, $data['email']);
+        
+        $recipients = array_unique([$smtpUser, 'templeobike@gmail.com', 'templescounsel@gmail.com']);
+        foreach ($recipients as $recipient) {
+            if (!empty($recipient)) {
+                $this->send($recipient, $subject, $html, $data['email']);
+            }
+        }
     }
 
     public function sendPreorderNotification(array $data): void {
@@ -186,7 +198,13 @@ HTML;
 
         $subject = "Book Pre-order: " . $data['name'];
         $html = $this->wrapHtmlTemplate($subject, $content);
-        $this->send($smtpUser, $subject, $html, $data['email']);
+        
+        $recipients = array_unique([$smtpUser, 'templeobike@gmail.com', 'templescounsel@gmail.com']);
+        foreach ($recipients as $recipient) {
+            if (!empty($recipient)) {
+                $this->send($recipient, $subject, $html, $data['email']);
+            }
+        }
     }
 
     public function sendAutoResponse(string $toName, string $toEmail, string $subject, string $bodyTemplate, string $locationPart = ''): void {
